@@ -25,7 +25,7 @@ const configSql = {
     user: getUser(),
     password: getContra(),
     server: "localhost",
-    database: "VentaVehiculos",
+    database: "AutosUsados",
     options: {
         encrypt: false,
         trustServerCertificate: true,

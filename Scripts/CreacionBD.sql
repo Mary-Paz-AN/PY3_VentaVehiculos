@@ -1,8 +1,8 @@
 ------- Creación de la base de datos------------
-CREATE DATABASE VentaVehiculos;
+CREATE DATABASE AutosUsados;
 GO
 
-USE VentaVehiculos;
+USE AutosUsados;
 GO
 
 ---------- Creación de las tablas ---------
@@ -43,7 +43,7 @@ GO
 CREATE TABLE Reservacion (
 	IdReservacion INT PRIMARY KEY NOT NULL,
 	NumeroCedula INT NOT NULL,
-	FechaDeVisita DATE NOT NULL,
+	FechaDeVisita DATETIMEOFFSET(2) NOT NULL,
 	Lugar VARCHAR(25) NOT NULL,
 	FOREIGN KEY (NumeroCedula) REFERENCES InformacionContacto(NumeroCedula));
 GO
@@ -65,7 +65,7 @@ GO
 CREATE TABLE Materiales (
 	Placa INT PRIMARY KEY NOT NULL,
 	MaterialAsientos VARCHAR(45) NOT NULL,
-	MaterialTapizado varchar(25) NOT NULL, 
+	MaterialTapizado VARCHAR(25) NOT NULL, 
 	FOREIGN KEY (Placa) REFERENCES Vehiculo(Placa));
 GO
 
@@ -118,8 +118,8 @@ CREATE TABLE Publicacion (
 	RecibeVehiculoPago BIT NOT NULL,
 	EstadoPago VARCHAR(30),
 	AsociadoALeasing BIT NOT NULL,
-	FechaPublicacion DATE DEFAULT GETDATE(),
-	FechaEdicion DATE,  -- Solo se agrega cuando se hace un UPDATE
+	FechaPublicacion DATETIMEOFFSET(2) DEFAULT GETDATE(),
+	FechaEdicion DATETIMEOFFSET(2),  -- Solo se agrega cuando se hace un UPDATE
 	FOREIGN KEY (NumeroCedula) REFERENCES Usuario(NumeroCedula),
 	FOREIGN KEY (Placa) REFERENCES Vehiculo(Placa));
 GO
