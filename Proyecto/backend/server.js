@@ -1,6 +1,6 @@
 //Dependency for the proper functioning of the server
 const express = require("express");
-const { getConnection, sql } = require('./conexion');
+const { getConnection, sql } = require('./managers/conexion');
 
 //Constants
 const app = express();

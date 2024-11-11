@@ -17,7 +17,6 @@ CREATE TABLE Usuario (
 	ApellidoDos VARCHAR(45),
 	Nacionalidad VARCHAR(45) NOT NULL,
 	FechaNacimiento DATE NOT NULL,
-	TieneProcesoPenal BIT NOT NULL,
 	UNIQUE(Usuario));
 GO
 
@@ -42,10 +41,22 @@ GO
 ----- Reservacion ------
 CREATE TABLE Reservacion (
 	IdReservacion INT PRIMARY KEY NOT NULL,
-	NumeroCedula INT NOT NULL,
+	IdentificadorUsuario INT NOT NULL,
+	IdentificadorEmpresa INT NOT NULL,
 	FechaDeVisita DATETIMEOFFSET(2) NOT NULL,
 	Lugar VARCHAR(25) NOT NULL,
-	FOREIGN KEY (NumeroCedula) REFERENCES InformacionContacto(NumeroCedula));
+	FOREIGN KEY (IdentificadorUsuario) REFERENCES InformacionContacto(NumeroCedula),
+	FOREIGN KEY (IdentificadorEmpresa) REFERENCES InformacionContacto(NumeroCedula));
+GO
+
+------ Pago -----
+CREATE TABLE Pago (
+	IdPago INT PRIMARY KEY NOT NULL,
+	IdReservacion INT NOT NULL,
+	Monto INT NOT NULL,
+	MétodoPago VARCHAR(30) NOT NULL,
+	FechaTransaccion DATETIMEOFFSET(2) DEFAULT GETDATE(),
+	FOREIGN KEY (IdReservacion) REFERENCES Reservacion(IdReservacion));
 GO
 
 ----- Vehiculo -----
@@ -58,7 +69,7 @@ CREATE TABLE Vehiculo (
 	Motor VARCHAR(30) NOT NULL,
 	SistemaSonido VARCHAR(30) NOT NULL,
 	TipoTableroMando VARCHAR(30) NOT NULL,
-	CantidadPertas INT NOT NULL);
+	CantidadPuertas INT NOT NULL);
 GO
 
 ------ Materiales ------
@@ -116,7 +127,6 @@ CREATE TABLE Publicacion (
 	PrecioColones INT NOT NULL,
 	PrecioNegociable BIT NOT NULL,
 	RecibeVehiculoPago BIT NOT NULL,
-	EstadoPago VARCHAR(30),
 	AsociadoALeasing BIT NOT NULL,
 	FechaPublicacion DATETIMEOFFSET(2) DEFAULT GETDATE(),
 	FechaEdicion DATETIMEOFFSET(2),  -- Solo se agrega cuando se hace un UPDATE
