@@ -1,11 +1,11 @@
-------- Creación de la base de datos------------
+------- Creaciï¿½n de la base de datos------------
 CREATE DATABASE AutosUsados;
 GO
 
 USE AutosUsados;
 GO
 
----------- Creación de las tablas ---------
+---------- Creaciï¿½n de las tablas ---------
 ----- Usuario ---
 CREATE TABLE Usuario (
 	NumeroCedula INT PRIMARY KEY NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE Pago (
 	IdPago INT PRIMARY KEY NOT NULL,
 	IdReservacion INT NOT NULL,
 	Monto INT NOT NULL,
-	MétodoPago VARCHAR(30) NOT NULL,
+	MetodoPago VARCHAR(30) NOT NULL,
 	FechaTransaccion DATETIMEOFFSET(2) DEFAULT GETDATE(),
 	FOREIGN KEY (IdReservacion) REFERENCES Reservacion(IdReservacion));
 GO
