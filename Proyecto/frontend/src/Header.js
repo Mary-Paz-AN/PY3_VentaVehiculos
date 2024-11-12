@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 import { Container, Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -32,7 +33,7 @@ const Header = () => {
                 </Navbar.Brand>
 
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
+                <Navbar.Collapse id="basic-navbar-nav" className='textStyle'>
                     <Nav className="ms-auto">
                         <Nav.Link href="#home" aria-label={t('inicio')}>{t('inicio')}</Nav.Link>
                         <Nav.Link href="#home" aria-label={t('autos')}>{t('autos')}</Nav.Link>
@@ -56,9 +57,11 @@ const Header = () => {
                                     <NavDropdown.Item onClick={() => cambiarIdioma('es')} aria-label={t('espanol')}>{t('espanol')}</NavDropdown.Item>
                                     <NavDropdown.Item onClick={() => cambiarIdioma('en')} aria-label={t('ingles')}>{t('ingles')}</NavDropdown.Item>
                                 </NavDropdown>
-                                <Button aria-label={t('registrarse')} style={{marginRight: '5px', marginBottom: '5px'}} variant="outline-primary" onClick={registrarse}>
+                                <div style={{margin: '5px'}}></div>
+                                <Button aria-label={t('registrarse')} variant="outline-primary" onClick={registrarse}>
                                     {t('registrarse')}
                                 </Button>
+                                <div style={{margin: '5px'}}></div>
                                 <Button aria-label={t('inicioSesion')} variant="outline-success" onClick={iniciarSesion}>
                                     {t('inicioSesion')}
                                 </Button>

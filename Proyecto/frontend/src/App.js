@@ -1,13 +1,40 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Carousel, Button } from 'react-bootstrap';
+import { Container, Carousel, Button, Card, Alert } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import { AuthProvider } from './Usuario/AuthContext';
 import { useTranslation } from 'react-i18next';
+import { getUsuario } from './Usuario/Acceso';
+//import { useNavigate } from 'react-router-dom';
  
 function App() {
   const { t } = useTranslation();
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [show, setShow] = useState(false);
+  //const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 987);
+    };
+    handleResize(); 
+    window.addEventListener('resize', handleResize); 
+    return () => {
+      window.removeEventListener('resize', handleResize); 
+    };
+  }, []);
+
+  // Verifica si el usuario esta registrado e inicio sesion
+  const esUsuarioRegistrado = () => {
+    const usuario = getUsuario();
+
+    if(usuario === null) {
+      setShow(true);
+    }
+    //navigate('/');
+  };
 
   return (
     <div className="App">
@@ -18,30 +45,104 @@ function App() {
               <img
                 className="d-block w-100"
                 src="/images/Carrusel1.png"
-                alt="Primera Imagen"
+                alt={t('imagen1C')}
               />
               <Carousel.Caption className="carousel-caption-custom">
+                {isSmallScreen ? (
+                  <h1>Ventas Mi Cacharrito</h1>
+                ) : (
+                  <><h1>Ventas Mi Cacharrito</h1>
+                  <p>{t('descriCionC')}</p>
+                  <Button className='buttonStyle'>{t('verAutosB')}</Button></>
+                )}
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
               <img
                 className="d-block w-100"
                 src="/images/Carrusel2.png"
-                alt="Segunda Imagen"
+                alt={t('imagen2C')}
               />
               <Carousel.Caption className="carousel-caption-custom">
+                {isSmallScreen ? (
+                  <h1>Ventas Mi Cacharrito</h1>
+                ) : (
+                  <><h1>Ventas Mi Cacharrito</h1>
+                  <p>{t('descriCionC')}</p>
+                  <Button className='buttonStyle'>{t('verAutosB')}</Button></>
+                )}
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
               <img
                 className="d-block w-100"
                 src="/images/Carrusel3.png"
-                alt="Tercera Imagen"
+                alt={t('imagen3C')}
               />
               <Carousel.Caption className="carousel-caption-custom">
+                {isSmallScreen ? (
+                  <h1>Ventas Mi Cacharrito</h1>
+                ) : (
+                  <><h1>Ventas Mi Cacharrito</h1>
+                  <p>{t('descriCionC')}</p>
+                  <Button className='buttonStyle'>{t('verAutosB')}</Button></>
+                )}
               </Carousel.Caption>
             </Carousel.Item>
           </Carousel>
+
+          {/* Inicio cards para ir a otras sesiones*/}
+          <Container className="textStyle">
+            <div className="row">
+              <div className="col-12 col-md-4 mb-4">
+                <Card style={{ width: '100%', height: '100%' }}>
+                  <Card.Body>
+                    <Card.Title>{t('pubTituloCard')}</Card.Title>
+                    <Card.Text>
+                      {t('publiTextCard')}
+                    </Card.Text>
+                    <Button variant="primary" onClick={esUsuarioRegistrado}>{t('pubButtonCard')}</Button>
+                  </Card.Body>
+                </Card>
+              </div>
+
+              <div className="col-12 col-md-4 mb-4">
+                <Card style={{ width: '100%', height: '100%' }}>
+                  <Card.Body>
+                    <Card.Title>{t('compTituloCard')}</Card.Title>
+                    <Card.Text>
+                      {t('compTextCard')}
+                    </Card.Text>
+                    <Button variant="primary">{t('compButtonCard')}</Button>
+                  </Card.Body>
+                </Card>
+              </div>
+
+              <div className="col-12 col-md-4 mb-4">
+                <Card style={{ width: '100%', height: '100%' }}>
+                  <Card.Body>
+                    <Card.Title>{t('resTituloCard')}</Card.Title>
+                    <Card.Text>
+                      {t('resTextCard')}
+                    </Card.Text>
+                    <Button variant="primary" onClick={esUsuarioRegistrado}>{t('resButtonCard')}</Button>
+                  </Card.Body>
+                </Card>
+              </div>
+            </div>
+          </Container>
+
+          {/* Ventana de advertencia */}
+          { show ? (
+            <Alert variant="warning" className="textStyle" onClose={() => setShow(false)} dismissible>
+            <Alert.Heading>{t('advertencia')}</Alert.Heading>
+            <p>
+              {t('advertenciaRegister')}
+            </p>
+          </Alert>
+          ):(<></>)}
+
+          <div style={{margin: '20px'}}></div>
         <Footer />
       </AuthProvider>
     </div>
