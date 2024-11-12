@@ -21,11 +21,54 @@
   margin: 10px; 
 }
 
+.custom-carousel {
+  position: relative;
+  min-height: 300px;
+  margin-bottom: 30px !important;
+}
+  
+.custom-carousel .carousel-item img {
+  object-fit: contain; /* La imagen se ajusta al contenedor sin recortarse */
+  width: 80vw; /* Se mantiene el 80vw para pantallas grandes */
+  height: auto; /* Se mantiene el 80vh para pantallas grandes */
+  object-fit: cover;
+  
+}
+  
+.carousel-caption-custom {
+  position: absolute;
+  bottom: 20%; /* Ajusta según sea necesario */
+  left: 50%;
+  transform: translateX(-50%);
+  color: white; /* Cambia el color si es necesario */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Añade sombra para mejorar la legibilidad */
+  height: 20vh;
+}
+  
 
-@media (max-width: 600px) {
+
+@media (max-width: 768px) {
   .footerStyle {
     flex-direction: column;     
     text-align: center;        
+  }
+
+  .custom-carousel {
+    width: 100vw !important; /* Carrusel ocupa el ancho completo de la pantalla móvil */
+    height: 10vh !important; /* Ajusta la altura para pantallas móviles */
+    margin-bottom: 50px !important;
+    margin-top: 2vh !important; /* Reducir el margen superior en móviles */
+  }
+
+  .custom-carousel .carousel-item img {
+    object-fit: contain !important; /* La imagen se mantiene sin recortes */
+    width: 100% !important; /* Ocupar el ancho completo */
+    height: auto !important; /* Dejar que la altura se ajuste automáticamente */
+  }
+
+  .carousel-caption-custom {
+    font-size: 1rem !important; /* Ajusta el tamaño de la fuente para móviles */
+    bottom: 10% !important; /* Ajusta la posición en dispositivos móviles */
   }
 }
 
