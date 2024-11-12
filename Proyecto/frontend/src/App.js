@@ -40,52 +40,52 @@ function App() {
     <div className="App">
       <AuthProvider>
         <Header />
-          <Carousel className="custom-carousel">
-            <Carousel.Item>
+          <Carousel className="custom-carousel" role="region" aria-label="Image Carousel" aria-hidden="true">
+            <Carousel.Item role="group" aria-roledescription="slide">
               <img
                 className="d-block w-100"
                 src="/images/Carrusel1.png"
                 alt={t('imagen1C')}
               />
-              <Carousel.Caption className="carousel-caption-custom">
+              <Carousel.Caption className="carousel-caption-custom" aria-live="polite">
                 {isSmallScreen ? (
                   <h1>Ventas Mi Cacharrito</h1>
                 ) : (
                   <><h1>Ventas Mi Cacharrito</h1>
                   <p>{t('descriCionC')}</p>
-                  <Button className='buttonStyle'>{t('verAutosB')}</Button></>
+                  <Button className='buttonStyle' aria-label={t('verAutosB')}>{t('verAutosB')}</Button></>
                 )}
               </Carousel.Caption>
             </Carousel.Item>
-            <Carousel.Item>
+            <Carousel.Item role="group" aria-roledescription="slide">
               <img
                 className="d-block w-100"
                 src="/images/Carrusel2.png"
                 alt={t('imagen2C')}
               />
-              <Carousel.Caption className="carousel-caption-custom">
+              <Carousel.Caption className="carousel-caption-custom" aria-live="polite">
                 {isSmallScreen ? (
                   <h1>Ventas Mi Cacharrito</h1>
                 ) : (
                   <><h1>Ventas Mi Cacharrito</h1>
                   <p>{t('descriCionC')}</p>
-                  <Button className='buttonStyle'>{t('verAutosB')}</Button></>
+                  <Button className='buttonStyle' aria-label={t('verAutosB')}>{t('verAutosB')}</Button></>
                 )}
               </Carousel.Caption>
             </Carousel.Item>
-            <Carousel.Item>
+            <Carousel.Item role="group" aria-roledescription="slide">
               <img
                 className="d-block w-100"
                 src="/images/Carrusel3.png"
                 alt={t('imagen3C')}
               />
-              <Carousel.Caption className="carousel-caption-custom">
+              <Carousel.Caption className="carousel-caption-custom" aria-live="polite">
                 {isSmallScreen ? (
                   <h1>Ventas Mi Cacharrito</h1>
                 ) : (
                   <><h1>Ventas Mi Cacharrito</h1>
                   <p>{t('descriCionC')}</p>
-                  <Button className='buttonStyle'>{t('verAutosB')}</Button></>
+                  <Button className='buttonStyle' aria-label={t('verAutosB')}>{t('verAutosB')}</Button></>
                 )}
               </Carousel.Caption>
             </Carousel.Item>
@@ -101,7 +101,7 @@ function App() {
                     <Card.Text>
                       {t('publiTextCard')}
                     </Card.Text>
-                    <Button variant="primary" onClick={esUsuarioRegistrado}>{t('pubButtonCard')}</Button>
+                    <Button variant="primary" onClick={esUsuarioRegistrado} aria-label={t('pubButtonCard')}>{t('pubButtonCard')}</Button>
                   </Card.Body>
                 </Card>
               </div>
@@ -113,7 +113,7 @@ function App() {
                     <Card.Text>
                       {t('compTextCard')}
                     </Card.Text>
-                    <Button variant="primary">{t('compButtonCard')}</Button>
+                    <Button variant="primary" aria-label={t('compButtonCard')}>{t('compButtonCard')}</Button>
                   </Card.Body>
                 </Card>
               </div>
@@ -125,7 +125,7 @@ function App() {
                     <Card.Text>
                       {t('resTextCard')}
                     </Card.Text>
-                    <Button variant="primary" onClick={esUsuarioRegistrado}>{t('resButtonCard')}</Button>
+                    <Button variant="primary" onClick={esUsuarioRegistrado} aria-label={t('resButtonCard')}>{t('resButtonCard')}</Button>
                   </Card.Body>
                 </Card>
               </div>
@@ -134,7 +134,13 @@ function App() {
 
           {/* Ventana de advertencia */}
           { show ? (
-            <Alert variant="warning" className="textStyle" onClose={() => setShow(false)} dismissible>
+            <Alert 
+              variant="warning" 
+              className="textStyle" 
+              onClose={() => setShow(false)} 
+              role="alert"
+              aria-live="assertive"
+              dismissible>
             <Alert.Heading>{t('advertencia')}</Alert.Heading>
             <p>
               {t('advertenciaRegister')}
