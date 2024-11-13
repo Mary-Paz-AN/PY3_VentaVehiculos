@@ -15,6 +15,10 @@ const Header = () => {
         i18n.changeLanguage(lng);
     };
 
+    const inicio = () => {
+        navigate('/');
+    }
+
     const iniciarSesion = () => {
         navigate('/usuario/iniciarSesion');
     };
@@ -26,7 +30,7 @@ const Header = () => {
     return (
         <Navbar expand="lg" className="bg-body-tertiary" aria-label={t('barraNavegacion')}>
             <Container>
-                <Navbar.Brand href="#home">
+                <Navbar.Brand onClick={inicio} >
                     <img 
                         src='/images/logoPeq.png'
                         alt={t('altLogo')}/>
@@ -35,7 +39,7 @@ const Header = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" className='textStyle'>
                     <Nav className="ms-auto">
-                        <Nav.Link href="#home" aria-label={t('inicio')}>{t('inicio')}</Nav.Link>
+                        <Nav.Link onClick={inicio} aria-label={t('inicio')}>{t('inicio')}</Nav.Link>
                         <Nav.Link href="#home" aria-label={t('autos')}>{t('autos')}</Nav.Link>
 
                         {isLogIn ? (
