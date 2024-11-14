@@ -300,10 +300,9 @@ const Registrarse = () => {
 
                                     {/* Pregunatar por el correo */}
                                     <Form.Group className="mb-3" controlId="emailInput">
-                                        <Form.Label style={{color: "#1f365d"}}>{t('placeHolderCorreo')}</Form.Label>
+                                        <Form.Label style={{color: "#1f365d"}}>{t('correo')}</Form.Label>
                                         <Form.Control 
                                             type="email" 
-                                            placeholder={t('placeHolderCorreo')} 
                                             value={data.correo}
                                             onChange={handleChange}
                                             name = "correo"

@@ -102,7 +102,8 @@ i18n.use(initReactI18next).init({
             campoFechaNacimiento2: "Debe ser mayor de 18 años para registrarse en el sitio.",
             campoProvCan: "Los datos de la dirección no deben estar vacíos.",
             campoDistrito: "El distrito debe tener más de 3 letras.",
-
+            direccionUsuario: "Direccion",
+            descripDireccion: "Provincia, Cantón, Distrito",
         },
     },
     en: {
@@ -203,7 +204,8 @@ i18n.use(initReactI18next).init({
           campoFechaNacimiento2: "You must be over 18 years old to register on the site.",
           campoProvCan: "The address information cannot be empty.",
           campoDistrito: "The district must have more than 3 letters.",
-
+          direccionUsuario: "Adress",
+          descripDireccion: "Province, Canton, District",
       },
     },
   },

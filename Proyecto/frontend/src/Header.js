@@ -27,6 +27,10 @@ const Header = () => {
         navigate('/usuario/registrarse');
     };
 
+    const miCuenta = () => {
+        navigate('/usuario/miCuenta');
+    }
+
     return (
         <Navbar expand="lg" className="bg-body-tertiary" aria-label={t('barraNavegacion')}>
             <Container>
@@ -40,14 +44,14 @@ const Header = () => {
                 <Navbar.Collapse id="basic-navbar-nav" className='textStyle'>
                     <Nav className="ms-auto">
                         <Nav.Link onClick={inicio} aria-label={t('inicio')}>{t('inicio')}</Nav.Link>
-                        <Nav.Link href="#home" aria-label={t('autos')}>{t('autos')}</Nav.Link>
+                        <Nav.Link href="#home" aria-label={t('autos')}>{t('autos')}</Nav.Link>{/** */}
 
                         {isLogIn ? (
                             <>
-                                <Nav.Link href="#home" aria-label={t('publicacion')}>{t('publicacion')}</Nav.Link>
-                                <Nav.Link href="#home" aria-label={t('reserva')}>{t('reserva')}</Nav.Link>
+                                <Nav.Link href="#home" aria-label={t('publicacion')}>{t('publicacion')}</Nav.Link>{/** */}
+                                <Nav.Link href="#home" aria-label={t('reserva')}>{t('reserva')}</Nav.Link>{/** */}
                                 <NavDropdown id="basic-nav-dropdown" title={t('cuenta')} aria-label={t('menuCuenta')} aria-haspopup="true">
-                                    <NavDropdown.Item href="#home" aria-label={t('infoCuenta')}>{t('infoCuenta')}</NavDropdown.Item>
+                                    <NavDropdown.Item onClick={miCuenta} aria-label={t('infoCuenta')}>{t('infoCuenta')}</NavDropdown.Item>
                                     <NavDropdown.Item onClick={cerrarSesion} aria-label={t('cerrarSesion')}>{t('cerrarSesion')}</NavDropdown.Item>
                                 </NavDropdown>
                                 <NavDropdown id="basic-nav-dropdown" title={t('idioma')} aria-label={t('menuIdioma')} aria-haspopup="true">

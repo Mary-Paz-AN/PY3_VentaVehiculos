@@ -8,6 +8,7 @@ import './index.css';
 import Inicio from './Inicio';
 import IniciarSesion from './Usuario/IniciarSesion';
 import Registrarse from './Usuario/Registrarse';
+import InfoCuenta from './Usuario/InfoCuenta';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +19,7 @@ root.render(
           <Route path="/" element={<Inicio />} />
           <Route path="/usuario/iniciarSesion" element={<IniciarSesion />} />
           <Route path="/usuario/registrarse" element={<Registrarse />} />
+          <Route path="/usuario/miCuenta" element={<InfoCuenta />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
