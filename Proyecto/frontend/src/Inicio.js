@@ -6,13 +6,13 @@ import Header from './Header';
 import Footer from './Footer';
 import { useTranslation } from 'react-i18next';
 import { getUsuario } from './Usuario/Acceso';
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
  
 function Inicio() {
   const { t } = useTranslation();
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [show, setShow] = useState(false);
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -25,14 +25,25 @@ function Inicio() {
     };
   }, []);
 
+  // Abre la ventana de mis publicaciones
+  const crearPublicacion = () => {
+    navigate('/publicaciones/crearPublicacion');
+  }
+
   // Verifica si el usuario esta registrado e inicio sesion
-  const esUsuarioRegistrado = () => {
+  const esUsuarioRegistrado = (tipo) => {
     const usuario = getUsuario();
 
     if(usuario === null) {
       setShow(true);
-    }
-    //else navigate('/');
+    } else {
+      //Si es una publicación lo lleva al apartado
+      if(tipo === 1) {
+        crearPublicacion();
+      }
+
+    } 
+    
   };
 
   return (
@@ -99,7 +110,7 @@ function Inicio() {
                   <Card.Text>
                     {t('publiTextCard')}
                   </Card.Text>
-                  <Button variant="primary" onClick={esUsuarioRegistrado} aria-label={t('pubButtonCard')}>{t('pubButtonCard')}</Button>
+                  <Button variant="primary" onClick={() => esUsuarioRegistrado(1)} aria-label={t('pubButtonCard')}>{t('pubButtonCard')}</Button>
                 </Card.Body>
               </Card>
             </div>
@@ -123,7 +134,7 @@ function Inicio() {
                   <Card.Text>
                     {t('resTextCard')}
                   </Card.Text>
-                  <Button variant="primary" onClick={esUsuarioRegistrado} aria-label={t('resButtonCard')}>{t('resButtonCard')}</Button>
+                  <Button variant="primary" onClick={() => esUsuarioRegistrado(2)} aria-label={t('resButtonCard')}>{t('resButtonCard')}</Button>
                 </Card.Body>
               </Card>
             </div>
@@ -138,12 +149,12 @@ function Inicio() {
             onClose={() => setShow(false)} 
             role="alert"
             aria-live="assertive"
-            dismissible>
-          <Alert.Heading>{t('advertencia')}</Alert.Heading>
-          <p>
-            {t('advertenciaRegister')}
-          </p>
-        </Alert>
+              dismissible>
+            <Alert.Heading>{t('advertencia')}</Alert.Heading>
+            <p>
+              {t('advertenciaRegister')}
+            </p>
+          </Alert>
         )}
 
         <div style={{margin: '20px'}}></div>

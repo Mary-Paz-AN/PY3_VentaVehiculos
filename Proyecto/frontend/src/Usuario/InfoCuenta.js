@@ -20,7 +20,7 @@ const InfoCuenta = () => {
         direccion: ''
     });
 
-    // Cargas la información al iniciar ventana
+    // Carga la información al iniciar ventana
     useEffect(() => {
         fetchInfo();
     }, []);

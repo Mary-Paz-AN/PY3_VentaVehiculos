@@ -8,8 +8,8 @@ import './i18n';
 
 const Header = () => {
     const { isLogIn, cerrarSesion } = useAuth();
-    const navigate = useNavigate();
     const { t, i18n } = useTranslation();
+    const navigate = useNavigate();
 
     const cambiarIdioma = (lng) => {
         i18n.changeLanguage(lng);
@@ -31,6 +31,10 @@ const Header = () => {
         navigate('/usuario/miCuenta');
     }
 
+    const misPublicaciones = () => {
+        navigate('/publicaciones/misPublicaciones');
+    }
+
     return (
         <Navbar expand="lg" className="bg-body-tertiary" aria-label={t('barraNavegacion')}>
             <Container>
@@ -48,7 +52,7 @@ const Header = () => {
 
                         {isLogIn ? (
                             <>
-                                <Nav.Link href="#home" aria-label={t('publicacion')}>{t('publicacion')}</Nav.Link>{/** */}
+                                <Nav.Link onClick={misPublicaciones} aria-label={t('publicacion')}>{t('publicacion')}</Nav.Link>
                                 <Nav.Link href="#home" aria-label={t('reserva')}>{t('reserva')}</Nav.Link>{/** */}
                                 <NavDropdown id="basic-nav-dropdown" title={t('cuenta')} aria-label={t('menuCuenta')} aria-haspopup="true">
                                     <NavDropdown.Item onClick={miCuenta} aria-label={t('infoCuenta')}>{t('infoCuenta')}</NavDropdown.Item>
