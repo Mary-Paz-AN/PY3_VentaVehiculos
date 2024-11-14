@@ -95,7 +95,7 @@ function Inicio() {
             <div className="col-12 col-md-4 mb-4">
               <Card style={{ width: '100%', height: '100%' }}>
                 <Card.Body>
-                  <Card.Title>{t('pubTituloCard')}</Card.Title>
+                  <Card.Title style={{color: "#1f365d"}}>{t('pubTituloCard')}</Card.Title>
                   <Card.Text>
                     {t('publiTextCard')}
                   </Card.Text>
@@ -107,7 +107,7 @@ function Inicio() {
             <div className="col-12 col-md-4 mb-4">
               <Card style={{ width: '100%', height: '100%' }}>
                 <Card.Body>
-                  <Card.Title>{t('compTituloCard')}</Card.Title>
+                  <Card.Title style={{color: "#1f365d"}}>{t('compTituloCard')}</Card.Title>
                   <Card.Text>
                     {t('compTextCard')}
                   </Card.Text>
@@ -119,7 +119,7 @@ function Inicio() {
             <div className="col-12 col-md-4 mb-4">
               <Card style={{ width: '100%', height: '100%' }}>
                 <Card.Body>
-                  <Card.Title>{t('resTituloCard')}</Card.Title>
+                  <Card.Title style={{color: "#1f365d"}}>{t('resTituloCard')}</Card.Title>
                   <Card.Text>
                     {t('resTextCard')}
                   </Card.Text>

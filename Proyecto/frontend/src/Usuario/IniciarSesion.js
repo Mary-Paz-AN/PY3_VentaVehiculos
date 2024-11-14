@@ -159,7 +159,7 @@ const IniciarSesion = () => {
                     <Col md={6} lg={4} className="mx-auto">
                         <Card className="bg-white my-5 mx-auto" style={{ borderRadius: '1rem', maxWidth: '500px' }} role="form" aria-describedby="iniciar-sesion-description">
                             <Card.Body className="p-5 d-flex flex-column">
-                                <h2 id="log-in-title" className="fw-bold mb-2 text-center">{t('inicioSesion')}</h2>
+                                <h2 id="log-in-title" className="fw-bold mb-2 text-center" style={{color: "#1f365d"}}>{t('inicioSesion')}</h2>
                                 <p id="log-in-description" className="text-muted mb-4 text-center">{t('mensajeInicioSesion')}</p>
 
                                 {/* Tabs de selección */}
@@ -175,7 +175,7 @@ const IniciarSesion = () => {
                                         {/* Formulario para el User */}
                                         <Form aria-labelledby="inicio-sesion-usuario-form">
                                             <Form.Group className="mb-3" controlId="usuarioInput">
-                                                <Form.Label>{t('usuario')}</Form.Label>
+                                                <Form.Label style={{color: "#1f365d"}}>{t('usuario')}</Form.Label>
                                                 <Form.Control 
                                                     type="text" 
                                                     placeholder={t('placeHolderUsuario')} 
@@ -187,7 +187,7 @@ const IniciarSesion = () => {
                                                 <Form.Text id="usuarioHelp" className="text-muted">{t('descripUser')}</Form.Text>
                                             </Form.Group>
                                             <Form.Group className="mb-3" controlId="usuarioPasswordInput">
-                                                <Form.Label>{t('contra')}</Form.Label>
+                                                <Form.Label style={{color: "#1f365d"}}>{t('contra')}</Form.Label>
                                                 <Form.Control 
                                                     type="password" 
                                                     placeholder={t('placeHolderContra')}
@@ -205,7 +205,7 @@ const IniciarSesion = () => {
                                         {/* Formulario para wl correo */}
                                         <Form aria-labelledby="correo-login-form">
                                             <Form.Group className="mb-3" controlId="emailInput">
-                                                <Form.Label>{t('placeHolderCorreo')}</Form.Label>
+                                                <Form.Label style={{color: "#1f365d"}}>{t('placeHolderCorreo')}</Form.Label>
                                                 <Form.Control 
                                                     type="email" 
                                                     placeholder={t('placeHolderCorreo')} 
@@ -216,7 +216,7 @@ const IniciarSesion = () => {
                                                     aria-describedby="emailHelp" />
                                             </Form.Group>
                                             <Form.Group className="mb-3" controlId="correoPasswordInput">
-                                                <Form.Label>{t('contra')}</Form.Label>
+                                                <Form.Label style={{color: "#1f365d"}}>{t('contra')}</Form.Label>
                                                 <Form.Control 
                                                     type="password" 
                                                     placeholder={t('placeHolderContra')} 
