@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-i18n.use(initReactI18next).init({
+i18n.use(initReactI18next).init( {
   resources: {
     es: {
         translation: {
@@ -181,7 +181,6 @@ i18n.use(initReactI18next).init({
             campoTraccion: "El campo del tipo de tracción no puede estar vacío.",
             campoTransmision: "El campo de transmisión no puede estar vacío.",
             campoDimensiones: "Las dimensiones deben ser mayores a 0.0.",
-          },
             precioNegocible: "¿El precio es negociable?",
             vehiculoComoPago: "¿Recibe un vehículo como pago?",
             fotosInternas: "Fotos internas",
