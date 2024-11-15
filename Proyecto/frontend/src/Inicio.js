@@ -37,7 +37,7 @@ function Inicio() {
     if(usuario === null) {
       setShow(true);
     } else {
-      //Si es una publicación lo lleva al apartado
+      //Si es una publicación lo lleva al apartado 
       if(tipo === 1) {
         crearPublicacion();
       }

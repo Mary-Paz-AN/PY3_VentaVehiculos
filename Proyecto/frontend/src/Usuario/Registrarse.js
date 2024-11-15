@@ -29,6 +29,7 @@ const Registrarse = () => {
         distrito: ''
     });
 
+    // Las listas para los selects
     const identificacionTipos = ["Cédula Juridica", "Cédula Fisica", "DIMEX", "NITE"];
     const provincias = ["San José", "Alajuela", "Cartago", "Heredia", "Guanacaste", "Puntarenas", "Limón"];
     const sanjose = ["San José", "Aluajelita", "Vázques de Coronado", "Acostas", "Tibás", "Moravia", "Montes de Oca", "Turrubares", "Dota", "Curridabat", "Pérez Zeledon", "Escazú", "León Cortes Castro", "Desamparados", "Puriscal", "Tarrazú", "Aserrí", "Mora", "Goicochea", "Santa Ana"];
@@ -39,7 +40,7 @@ const Registrarse = () => {
     const puntarenas = ["Puntarenas", "Esparza", "Buenos Aires", "Montes de Oro", "Osa", "Quepos", "Golfito", "Coto Brus", "Parrita", "Corredores", "Grabito", "Monteverde", "Puerto Jiménez"];
     const limon= ["Limón", "Pococí", "Siquirres", "Talamanca", "Matina", "Guácimo"];
     
-
+    // Maneja los cambios de los inputs
     const handleChange = (e) => {
         const { name, value } = e.target;
         setData({ ...data, [name]: value });
@@ -290,7 +291,7 @@ const Registrarse = () => {
             <Container className="flex-grow-1 d-flex justify-content-center align-items-center" role="main" aria-labelledby="registrarse-title">
                 <Row className="w-100">
                     <Col md={8} lg={6} className="mx-auto">
-                        <Card className="bg-white my-5 mx-auto" style={{ borderRadius: '1rem', maxWidth: '800px', width: '100%' }} role="form" aria-describedby="iniciar-sesion-description">
+                        <Card className="bg-white my-5 mx-auto" style={{ borderRadius: '1rem', maxWidth: '800px', width: '100%' }} role="form" aria-describedby="registro-description">
                             <Card.Body className="p-5 d-flex flex-column">
                                 <h2 id="registrarsetitle" className="fw-bold mb-2 text-center" style={{color: "#1f365d"}}>{t('registrarse')}</h2>
                                 <p id="registrarse-description" className="text-muted mb-4 text-center">{t('mensajeRegistrarse')}</p>
@@ -305,6 +306,7 @@ const Registrarse = () => {
                                             type="email" 
                                             value={data.correo}
                                             onChange={handleChange}
+                                            placeholder={t('placeHolderCorreo')}
                                             name = "correo"
                                             aria-required="true" 
                                             aria-describedby="emailHelp" />

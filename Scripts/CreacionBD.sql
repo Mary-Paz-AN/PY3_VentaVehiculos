@@ -8,7 +8,7 @@ GO
 ---------- Creaci�n de las tablas ---------
 ----- Usuario ---
 CREATE TABLE Usuario (
-	NumeroCedula INT PRIMARY KEY NOT NULL,
+	NumeroCedula INT PRIMARY KEY NOT NULL, 
 	Usuario VARCHAR(45) NOT NULL,
 	Contrasena VARCHAR(15) NOT NULL,
 	TipoIdentificacion VARCHAR(45) NOT NULL,
@@ -61,7 +61,7 @@ GO
 
 ----- Vehiculo -----
 CREATE TABLE Vehiculo (
-	Placa INT PRIMARY KEY NOT NULL,
+	Placa VARCHAR(6) PRIMARY KEY NOT NULL,
 	Marca VARCHAR(30) NOT NULL, 
 	Modelo VARCHAR(30) NOT NULL,
 	Anio INT NOT NULL,--
@@ -69,12 +69,13 @@ CREATE TABLE Vehiculo (
 	Motor VARCHAR(30) NOT NULL,
 	SistemaSonido VARCHAR(30) NOT NULL,
 	TipoTableroMando VARCHAR(30) NOT NULL,
-	CantidadPuertas INT NOT NULL);
+	CantidadPuertas INT NOT NULL,
+	Estado INT NOT NULL);
 GO
 
 ------ Materiales ------
 CREATE TABLE Materiales (
-	Placa INT PRIMARY KEY NOT NULL,
+	Placa VARCHAR(6) PRIMARY KEY NOT NULL,
 	MaterialAsientos VARCHAR(45) NOT NULL,
 	MaterialTapizado VARCHAR(25) NOT NULL, 
 	FOREIGN KEY (Placa) REFERENCES Vehiculo(Placa));
@@ -82,7 +83,7 @@ GO
 
 ------ Sensores ------
 CREATE TABLE Sensores (
-	Placa INT PRIMARY KEY NOT NULL,
+	Placa VARCHAR(6) PRIMARY KEY NOT NULL,
 	ProximidadTraseros BIT NOT NULL,
 	ProximidadDelanteros BIT NOT NULL,
 	ProximidadLateral BIT NOT NULL,
@@ -93,7 +94,7 @@ GO
 
 ------ Mecanica ------
 CREATE TABLE Mecanica (
-	Placa INT PRIMARY KEY NOT NULL,
+	Placa VARCHAR(6) PRIMARY KEY NOT NULL,
 	Traccion VARCHAR(10) NOT NULL,
 	TipoTransmicion VARCHAR(30) NOT NULL,
 	VentanasElectricas BIT NOT NULL,
@@ -103,7 +104,7 @@ GO
 
 ------ Dimensiones ------
 CREATE TABLE Dimensiones (
-	Placa INT PRIMARY KEY NOT NULL,
+	Placa VARCHAR(6) PRIMARY KEY NOT NULL,
 	Largo REAL NOT NULL,
 	Ancho REAL NOT NULL,
 	Alto REAL NOT NULL
@@ -113,7 +114,7 @@ GO
 ------ Fotos ------
 CREATE TABLE Fotos (
 	ID INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	Placa INT NOT NULL,
+	Placa VARCHAR(6) NOT NULL,
 	Imagen VARBINARY(MAX) NOT NULL,
 	EsInterna BIT NOT NULL, --
 	FOREIGN KEY (Placa) REFERENCES Vehiculo(Placa));
@@ -123,7 +124,7 @@ GO
 CREATE TABLE Publicacion (
 	IdPublicacion INT PRIMARY KEY IDENTITY(1, 1),
 	NumeroCedula INT NOT NULL,
-	Placa INT NOT NULL,
+	Placa VARCHAR(6) NOT NULL,
 	PrecioColones INT NOT NULL,
 	PrecioNegociable BIT NOT NULL,
 	RecibeVehiculoPago BIT NOT NULL,
