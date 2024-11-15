@@ -11,6 +11,7 @@ import Registrarse from './Usuario/Registrarse';
 import InfoCuenta from './Usuario/InfoCuenta';
 import Publicaciones from './Publicaciones/Publicaciones';
 import CrearPublicacion from './Publicaciones/CrearPublicacion';
+import BuscarAutos from './Busqueda/Resultados';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,6 +25,7 @@ root.render(
           <Route path="/usuario/miCuenta" element={<InfoCuenta />} />
           <Route path="/publicaciones/misPublicaciones" element={<Publicaciones />} />
           <Route path="//publicaciones/crearPublicacion" element={<CrearPublicacion />} />
+          <Route path="/buscarAutos" element={<BuscarAutos />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
