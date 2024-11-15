@@ -46,6 +46,10 @@ function Inicio() {
     
   };
 
+  const irPublicacionesAutos = () =>{
+    navigate('/buscarAutos');
+  }
+
   return (
     <div className="App">
       <Header />
@@ -122,7 +126,7 @@ function Inicio() {
                   <Card.Text>
                     {t('compTextCard')}
                   </Card.Text>
-                  <Button variant="primary" aria-label={t('compButtonCard')}>{t('compButtonCard')}</Button>
+                  <Button variant="primary" aria-label={t('compButtonCard')} onClick={irPublicacionesAutos}>{t('compButtonCard')}</Button>
                 </Card.Body>
               </Card>
             </div>

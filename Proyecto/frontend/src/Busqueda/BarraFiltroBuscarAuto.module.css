@@ -1,0 +1,27 @@
+.barraLateral{
+    height: 100%;
+    width: 100%;
+}
+
+.contenedorTitulo{
+    display: flex;
+    justify-content: center;
+}
+
+.filtros{
+    display: flex;
+    justify-content: left;
+    height: 70px;
+    width: 100%;
+    flex-direction: column;
+}
+
+.filtrosDimensiones{
+    display: flex;
+    justify-content: space-between;
+    height: 150px;
+    width: 100%;
+    flex-direction: column;
+    align-items:flex-start;
+    padding-bottom: 20px;
+}
