@@ -356,7 +356,7 @@ const CrearPublicacion = () => {
 
                                     {/* Tablero */}
                                     <Form.Group className="mb-3" controlId="tableroInput">
-                                        <Form.Label style={{color: "#1f365d"}}>{t('tableroMando')}</Form.Label>
+                                        <Form.Label style={{color: "#1f365d"}}>{t('tablero')}</Form.Label>
                                         <Form.Select 
                                             aria-label="Select del tablero del vehiculo" 
                                             name='tablero'
@@ -388,7 +388,7 @@ const CrearPublicacion = () => {
 
                                     {/* Estado del vehiculo */}
                                     <Form.Group className="mb-3" controlId="estadoInput">
-                                        <Form.Label style={{color: "#1f365d"}}>{t('estadoVehiculo')}</Form.Label>
+                                        <Form.Label style={{color: "#1f365d"}}>{t('estadoV')}</Form.Label>
                                         <Form.Select 
                                             aria-label="Select del estado del vehiculo" 
                                             name='estado'
@@ -421,7 +421,7 @@ const CrearPublicacion = () => {
                                     
                                     {/* Material Tapizado */}
                                     <Form.Group className="mb-3" controlId="tapizadoInput">
-                                        <Form.Label style={{color: "#1f365d"}}>{t('tapizado')}</Form.Label>
+                                        <Form.Label style={{color: "#1f365d"}}>{t('tapizadoM')}</Form.Label>
                                         <Form.Select 
                                             aria-label="Select del material del tapizado" 
                                             name='tapizado'
@@ -480,7 +480,7 @@ const CrearPublicacion = () => {
                                         <Form.Check 
                                             type="checkbox"
                                             id="camaraRetroceso"
-                                            label={t('camaraRetroceso')}
+                                            label={t('camaraRetro')}
                                             name="camaraRetroceso"
                                             checked={data.camaraRetroceso}
                                             onChange={handleChange}
@@ -494,7 +494,7 @@ const CrearPublicacion = () => {
                                         <Form.Check 
                                             type="checkbox"
                                             id="camara360"
-                                            label={t('camara360')}
+                                            label={t('camara360g')}
                                             name="camara360"
                                             checked={data.camara360}
                                             onChange={handleChange}
@@ -566,7 +566,7 @@ const CrearPublicacion = () => {
                                     <br/>
                                     
                                     {/* Dimensiones */}
-                                    <h3 style={{color: "#1f365d"}}>{t('dimensiones')}</h3>
+                                    <h3 style={{color: "#1f365d"}}>{t('dimensionesVehiculo')}</h3>
                                     <p>{t('descripDimensiones')}</p>
                                     
                                     {/* Largo */}
@@ -584,7 +584,7 @@ const CrearPublicacion = () => {
 
                                     {/* Alto */}
                                     <Form.Group className="mb-3" controlId="altoInput">
-                                        <Form.Label style={{color: "#1f365d"}}>{t('alto')}</Form.Label>
+                                        <Form.Label style={{color: "#1f365d"}}>{t('altura')}</Form.Label>
                                         <Form.Control 
                                             type="number" 
                                             step="0.01" 
@@ -597,7 +597,7 @@ const CrearPublicacion = () => {
 
                                     {/* Ancho */}
                                     <Form.Group className="mb-3" controlId="anchoInput">
-                                        <Form.Label style={{color: "#1f365d"}}>{t('ancho')}</Form.Label>
+                                        <Form.Label style={{color: "#1f365d"}}>{t('anchura')}</Form.Label>
                                         <Form.Control 
                                             type="number" 
                                             step="0.01" 
@@ -657,7 +657,7 @@ const CrearPublicacion = () => {
                                         <Form.Check 
                                             type="checkbox"
                                             id="leasing"
-                                            label={t('leasing')}
+                                            label={t('asociadoLeasing')}
                                             name="leasing"
                                             checked={data.leasing}
                                             onChange={handleChange}
