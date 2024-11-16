@@ -196,6 +196,7 @@ i18n.use(initReactI18next).init( {
             hibrido: "Híbrido",
             vidriosElectricos: "¿Tiene ventanas eléctricas?",
             espejosElectricos: "Espejos eléctricos",
+            electricoVidrio: "Ventanas eléctricas",//
             sensoresTraseros: "Sensores de proximidad traseros",
             sensoresDelanteros: "Sensores de proximidad delanteros",
             camaraRetroceso: "Cámara de retroceso",
@@ -216,7 +217,14 @@ i18n.use(initReactI18next).init( {
             plastico: "Plástico",
             estereo: "Estéreo 7.1",
             estandar: "Estándar",
-            plantillaAuto: "Usar como plantilla"
+            plantillaAuto: "Usar como plantilla",
+            foto: "Foto ",
+            fotoGrande: "Foto Grande Vehiculo",
+            infoGeneral: "General",//
+            equpamiento: "Equipamiento",
+            tabDimensiones: "Dimensiones",
+            pago: "Pago",
+
         },
     },
     en: {
@@ -431,6 +439,9 @@ i18n.use(initReactI18next).init( {
           plastico: "Plastic",
           estereo: "Stereo 7.1",
           estandar: "Standard",
+          foto: "Image ",
+          fotoGrande: "Car Big Image",
+          
       },
     },
   },

@@ -162,7 +162,7 @@ const IniciarSesion = () => {
                                 <h2 id="log-in-title" className="fw-bold mb-2 text-center" style={{color: "#1f365d"}}>{t('inicioSesion')}</h2>
                                 <p id="log-in-description" className="text-muted mb-4 text-center">{t('mensajeInicioSesion')}</p>
 
-                                {/* Tabs de selección */}
+                                {/* Tabs selección inicio de sesión */}
                                 <Tabs
                                     id="login-tabs"
                                     activeKey={activeTab}
