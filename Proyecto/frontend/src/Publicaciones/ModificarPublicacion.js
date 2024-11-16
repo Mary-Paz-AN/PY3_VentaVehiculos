@@ -49,7 +49,6 @@ const ModificarPublicacion = () => {
     // Carga los datos de la plantilla si es que se usa una
     useEffect(() => {
         //Logica api
-        console.log(idPublicacion);
 
         const nuevaData = {
             placa: 'NUT-879',
@@ -124,6 +123,7 @@ const ModificarPublicacion = () => {
     // Vuelve a mis publicaciones 
     const misPublicaciones = () => {
         navigate('/publicaciones/misPublicaciones');
+        console.log(idPublicacion);
     };
 
     //Verifica que los datos cumplan con sus requisitos
