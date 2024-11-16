@@ -13,6 +13,7 @@ import Publicaciones from './Publicaciones/Publicaciones';
 import CrearPublicacion from './Publicaciones/CrearPublicacion';
 import VerPublicacion from './Publicaciones/VerPublicacion';
 import BuscarAutos from './Busqueda/Resultados';
+import CompararAutos from './Busqueda/Comparaciones/PaginaComparaciones';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -28,6 +29,7 @@ root.render(
           <Route path="/publicaciones/crearPublicacion/:data" element={<CrearPublicacion />} />
           <Route path="/publicaciones/verPublicacion/:idPublicacion" element={<VerPublicacion />} />
           <Route path="/buscarAutos" element={<BuscarAutos />} />
+          <Route path="/compararAutos" element={<CompararAutos />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
