@@ -49,6 +49,35 @@ const VerPublicacion = () => {
         fotosExternas: [],
     });
 
+    // Función para unir las fotos
+    const unirFotos = (internas, externas) => {
+        const resultado = [];
+        let j = 0;
+
+        for (let i = 0; i < 8; i++) {
+
+            if(i < 4) {
+                resultado.push(internas[i]);
+            } else {
+                resultado.push(externas[j]);
+                j++;
+            }
+            
+        }
+
+        return resultado;
+    };
+
+    //Crea una lista con la lista de las externas y internas
+    const crearGrupo = (internas, externas) => {
+        const resultado = [];
+
+        resultado.push(internas);
+        resultado.push(externas);
+
+        return resultado;
+    };
+
     useEffect(() => {
         const nuevaData = {
             placa: 'NUT-879',
@@ -62,7 +91,7 @@ const VerPublicacion = () => {
             cantidadPuertas: '4',
             estado: '2',
             asientos: 'Tela',
-            tapizado: 'Plastico',
+            tapizado: 'Plástico',
             sensorTrasero: false,
             sensorDelantero: false,
             sensorLateral: false,
@@ -79,15 +108,19 @@ const VerPublicacion = () => {
             negociable: true,
             recibeVehiculo: false,
             leasing: false,
-            fotos: ['/images/car.jpg', '/images/car.jpg', '/images/car.jpg', '/images/Carrusel1.png', '/images/car.jpg', '/images/car.jpg', '/images/car.jpg', '/images/Carrusel2.png'],
+            fotosInternas: ['/images/car.jpg', '/images/car.jpg', '/images/car.jpg', '/images/Carrusel1.png'], 
+            fotosExternas: ['/images/car.jpg', '/images/car.jpg', '/images/car.jpg', '/images/Carrusel2.png'],
         };
     
         setData(nuevaData);
-        setImagenGrande(nuevaData.fotos[0]); 
-        setFotos(nuevaData.fotos);
+        setImagenGrande(nuevaData.fotosExternas[0]); 
+
+        // Crear un solo arreglo de fotos
+        const fotosUnidas = unirFotos(nuevaData.fotosInternas, nuevaData.fotosExternas);
+        setFotos(fotosUnidas);
 
         // Dividir las fotos en grupo de 4
-        const grupo = dividirArray(nuevaData.fotos, 4);
+        const grupo = crearGrupo(nuevaData.fotosInternas, nuevaData.fotosExternas);
         setGrupoFotos(grupo)
     
     }, []); 
@@ -111,14 +144,6 @@ const VerPublicacion = () => {
         setImagenGrande(nuevaImagen);
     };
 
-    // Función para dividir las fotos en bloques de 4
-    const dividirArray = (array, size) => {
-        const result = [];
-        for (let i = 0; i < array.length; i += size) {
-            result.push(array.slice(i, i + size));
-        }
-        return result;
-    };
 
 
     return (
@@ -148,7 +173,7 @@ const VerPublicacion = () => {
                             <img src={imagenGrande} alt={t('fotoGrande')}/>
                         </Row>
 
-                        {/* Carrusel para las fotosd pequeñas */}
+                        {/* Carrusel para las fotos pequeñas */}
                         <Row className='smallImages'>
                             <Carousel
                                 interval={null} 
@@ -175,7 +200,7 @@ const VerPublicacion = () => {
 
                     </Col>
 
-                    <Col xs={6} md={4}>
+                    <Col xs={12} md={4}>
                         <Tabs
                             id={key}
                             onSelect={(k) => setKey(k)}

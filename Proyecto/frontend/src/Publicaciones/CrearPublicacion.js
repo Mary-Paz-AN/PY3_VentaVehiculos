@@ -12,6 +12,7 @@ const CrearPublicacion = () => {
     const { plantilla } = useParams();
     const [show, setShow] = useState(false);
     const [mensaje, setMensaje] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
     const [data, setData] = useState({
@@ -53,15 +54,23 @@ const CrearPublicacion = () => {
             try {
                 // Decodifica y parsea la plantilla desde la URL
                 const decodedPlantilla = JSON.parse(decodeURIComponent(plantilla));
-                setData(prevData => ({
+                setData((prevData) => ({
                     ...prevData,
                     ...decodedPlantilla,
                 }));
             } catch (error) {
-                console.error("Error al decodificar la plantilla:", error);
+                console.error('Error al decodificar la plantilla:', error);
+            } finally {
+                setIsLoading(false);
             }
+        } else {
+            setIsLoading(false);
         }
     }, [plantilla]);
+
+    if (isLoading) {
+        return <div>Cargando......</div>;
+    }
 
     // Lista para precargar los selects
     const tiposVehiculo = ["Sedán", "Camioneta", "Sedán de lujo", "SUV", "Miniván"];

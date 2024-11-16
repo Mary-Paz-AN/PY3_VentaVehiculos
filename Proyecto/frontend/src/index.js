@@ -26,7 +26,7 @@ root.render(
           <Route path="/usuario/registrarse" element={<Registrarse />} />
           <Route path="/usuario/miCuenta" element={<InfoCuenta />} />
           <Route path="/publicaciones/misPublicaciones" element={<Publicaciones />} />
-          <Route path="/publicaciones/crearPublicacion/:data" element={<CrearPublicacion />} />
+          <Route path="/publicaciones/crearPublicacion/:plantilla" element={<CrearPublicacion />} />
           <Route path="/publicaciones/verPublicacion/:idPublicacion" element={<VerPublicacion />} />
           <Route path="/buscarAutos" element={<BuscarAutos />} />
           <Route path="/compararAutos" element={<CompararAutos />} />
