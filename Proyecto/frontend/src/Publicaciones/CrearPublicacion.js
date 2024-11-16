@@ -1,14 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Card, Col, Alert, Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';
 import { getUsuario } from '../Usuario/Acceso';
 
 const CrearPublicacion = () => {
     const { t } = useTranslation();
+    const { plantilla } = useParams();
     const [show, setShow] = useState(false);
     const [mensaje, setMensaje] = useState('');
     const navigate = useNavigate();
@@ -45,6 +46,22 @@ const CrearPublicacion = () => {
         fotosInternas: [],
         fotosExternas: [],
     });
+
+    // Carga los datos de la plantilla si es que se usa una
+    useEffect(() => {
+        if (plantilla) {
+            try {
+                // Decodifica y parsea la plantilla desde la URL
+                const decodedPlantilla = JSON.parse(decodeURIComponent(plantilla));
+                setData(prevData => ({
+                    ...prevData,
+                    ...decodedPlantilla,
+                }));
+            } catch (error) {
+                console.error("Error al decodificar la plantilla:", error);
+            }
+        }
+    }, [plantilla]);
 
     // Lista para precargar los selects
     const tiposVehiculo = ["Sedán", "Camioneta", "Sedán de lujo", "SUV", "Miniván"];
