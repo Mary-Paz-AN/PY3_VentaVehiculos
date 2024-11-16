@@ -122,19 +122,19 @@ const CrearPublicacion = () => {
             errores.push(t('campoPlaca1'));
         } else {
             let esValida = true;
-
+            // Verificar si ya se publico el carro
             //Se eliminaran guiones y espacios
             const nuevaPlaca = placa.replace(/-/g, " ").replace(/\s+/g, '');
             
             //verificar el largo
             const largo = nuevaPlaca.length;
-            if(largo !== 6) {
+            if(largo !== 7) {
                 errores.push(t('campoPlaca2'));
                 esValida = false;
             } else {
                 //Seprar las letras y numeros para comprobar el formato
                 const letras = nuevaPlaca.split(0, 2);
-                const numeros = nuevaPlaca.split(3, 5);
+                const numeros = nuevaPlaca.split(4, 5);
 
                 const contieneLetras = /^[a-zA-Z]+$/.test(letras); //true si solo tiene letras
                 const contieneNumeros =  /^\d+$/.test(numeros); //true si solo tiene num
