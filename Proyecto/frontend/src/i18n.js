@@ -225,9 +225,10 @@ i18n.use(initReactI18next).init( {
             equpamiento: "Equipamiento",
             tabDimensiones: "Dimensiones",
             pago: "Pago",
-            cargando: "Cargando formulario...",//
-            modificar: "Modificar Publicación",
-            mensajeModificar: "Modifique los datos que vea necesarios"
+            cargando: "Cargando el formulario...",
+            modificar: "Modificar publicación",
+            mensajeModificar: "Modifique los datos que considere necesarios.",
+
         },
     },
     en: {
@@ -450,7 +451,9 @@ i18n.use(initReactI18next).init( {
           equpamiento: "Equipment",
           tabDimensiones: "Dimensions",
           pago: "Payment",
-          
+          cargando: "Loading the form...",
+          modificar: "Edit Publication",
+          mensajeModificar: "Edit the data you deem necessary.",
       },
     },
   },
