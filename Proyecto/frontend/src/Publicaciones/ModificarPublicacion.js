@@ -5,14 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';
-import { getUsuario } from '../Usuario/Acceso';
 
-const CrearPublicacion = () => {
+const ModificarPublicacion = () => {
     const { t } = useTranslation();
-    const { plantilla } = useParams();
+    const { idPublicacion } = useParams();
     const [show, setShow] = useState(false);
     const [mensaje, setMensaje] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
     const [data, setData] = useState({
@@ -50,30 +48,44 @@ const CrearPublicacion = () => {
 
     // Carga los datos de la plantilla si es que se usa una
     useEffect(() => {
-        if (plantilla) {
-            try {
-                // Decodifica y parsea la plantilla desde la URL
-                const decodedPlantilla = JSON.parse(decodeURIComponent(plantilla));
-                setData((prevData) => ({
-                    ...prevData,
-                    ...decodedPlantilla,
-                }));
-            } catch (error) {
-                console.error('Error al decodificar la plantilla:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        } else {
-            setIsLoading(false);
-        }
-    }, [plantilla]);
+        //Logica api
+        console.log(idPublicacion);
 
-    if (isLoading) {
-        return (
-            <Container className="flex-grow-1 d-flex justify-content-center align-items-center" aria-labelledby="cargando">
-                <h1 style={{color: "#1f365d"}}>{t('cargando')}</h1>
-            </Container>);
-    }
+        const nuevaData = {
+            placa: 'NUT-879',
+            marca: 'Toyota',
+            modelo: 'SM-99',
+            anio: '2015',
+            tipo: 'Sedán',
+            motor: 'Diesel',
+            sistemaSonido: 'Estándar',
+            tablero: 'Ambos',
+            cantidadPuertas: '4',
+            estado: '2',
+            asientos: 'Tela',
+            tapizado: 'Plástico',
+            sensorTrasero: false,
+            sensorDelantero: false,
+            sensorLateral: false,
+            camaraRetroceso: true,
+            camara360: false,
+            traccion: '4x4',
+            vidriosElec: true,
+            espejosElec: true,
+            transmision: 'Manual',
+            largo: 120.0,
+            alto: 60.0,
+            ancho: 80.0,
+            precio: 10000.0,
+            negociable: true,
+            recibeVehiculo: false,
+            leasing: false,
+            fotosInternas: ['/images/car.jpg', '/images/car.jpg', '/images/car.jpg', '/images/Carrusel1.png'], 
+            fotosExternas: ['/images/car.jpg', '/images/car.jpg', '/images/car.jpg', '/images/Carrusel2.png'],
+        };
+    
+        setData(nuevaData);
+    }, []);
 
     // Lista para precargar los selects
     const tiposVehiculo = ["Sedán", "Camioneta", "Sedán de lujo", "SUV", "Miniván"];
@@ -117,42 +129,6 @@ const CrearPublicacion = () => {
     //Verifica que los datos cumplan con sus requisitos
     const verificarDatos = () => {
         const errores = [];
-
-        // Validar la placa
-        const placa = data.placa;
-
-        if(placa === '') {
-            errores.push(t('campoPlaca1'));
-        } else {
-            let esValida = true;
-            // Verificar si ya se publico el carro
-            //Se eliminaran guiones y espacios
-            const nuevaPlaca = placa.replace(/-/g, " ").replace(/\s+/g, '');
-            
-            //verificar el largo
-            const largo = nuevaPlaca.length;
-            if(largo !== 7) {
-                errores.push(t('campoPlaca2'));
-                esValida = false;
-            } else {
-                //Seprar las letras y numeros para comprobar el formato
-                const letras = nuevaPlaca.split(0, 2);
-                const numeros = nuevaPlaca.split(4, 5);
-
-                const contieneLetras = /^[a-zA-Z]+$/.test(letras); //true si solo tiene letras
-                const contieneNumeros =  /^\d+$/.test(numeros); //true si solo tiene num
-
-                if(!contieneLetras || !contieneNumeros) {
-                    errores.push(t('campoPlaca3'));
-                    esValida = false;
-                }
-            }
-
-            //Comprobar validez de la placa y las multas
-            if(esValida) {
-                console.log('valida');
-            }
-        }
 
         // Validar marca
         if(data.marca === '') {
@@ -259,11 +235,9 @@ const CrearPublicacion = () => {
     }
 
     // Guarda los datos
-    const registrarAuto = () => {
+    const modificarAuto = () => {
         if(verificarDatos()) {
             //Logica del API
-            const user = getUsuario();
-            console.log(user);
             misPublicaciones();
         }
     }
@@ -271,13 +245,13 @@ const CrearPublicacion = () => {
     return (
         <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
             <Header />
-            <Container className="flex-grow-1 d-flex justify-content-center align-items-center" role="main" aria-labelledby="registrar-auto-title">
+            <Container className="flex-grow-1 d-flex justify-content-center align-items-center" role="main" aria-labelledby="modificar-auto-title">
                 <Row className="w-100">
                     <Col md={8} lg={6} className="mx-auto">
-                        <Card className="bg-white my-5 mx-auto" style={{ borderRadius: '1rem', maxWidth: '800px', width: '100%' }} role="form" aria-describedby="registro-auto-description">
+                        <Card className="bg-white my-5 mx-auto" style={{ borderRadius: '1rem', maxWidth: '800px', width: '100%' }} role="form" aria-describedby="modificar-auto-description">
                             <Card.Body className="p-5 d-flex flex-column">
-                                <h2 id="registrarAutoTitle" className="fw-bold mb-2 text-center" style={{color: "#1f365d"}}>{t('registrarAuto')}</h2>
-                                <p id="registrar-Auto-description" className="text-muted mb-4 text-center">{t('mensajeRegistrarse')}</p>
+                                <h2 id="modificarAutoTitle" className="fw-bold mb-2 text-center" style={{color: "#1f365d"}}>{t('modificar')}</h2>
+                                <p id="modificar-Auto-description" className="text-muted mb-4 text-center">{t('mensajeModificar')}</p>
 
                                 {/* Formulario para el auto */}
                                 <Form aria-labelledby="registrar-auto-form">
@@ -288,11 +262,11 @@ const CrearPublicacion = () => {
                                         <Form.Control 
                                             type="text" 
                                             value={data.placa}
-                                            onChange={handleChange}
-                                            placeholder={t('placeHolderPlaca')}
                                             name = "placa"
                                             aria-required="true" 
-                                            aria-describedby="placaHelp" />
+                                            aria-describedby="placaHelp" 
+                                            disabled
+                                            readOnly/>
                                         <Form.Text id="placaHelp" className="text-muted">{t('descripPlaca')}</Form.Text>
                                     </Form.Group>
 
@@ -725,8 +699,8 @@ const CrearPublicacion = () => {
 
                                 <br/>
 
-                                <Button variant="primary" size="lg" className="mb-3" onClick={registrarAuto} aria-label="Registrar Auto">
-                                    {t('registrarAuto')}
+                                <Button variant="primary" size="lg" className="mb-3" onClick={modificarAuto} aria-label="Modificar Auto">
+                                    {t('modificar')}
                                 </Button>
                             </Card.Body>
                         </Card>
@@ -755,4 +729,4 @@ const CrearPublicacion = () => {
     
 };
 
-export default CrearPublicacion;
+export default ModificarPublicacion;

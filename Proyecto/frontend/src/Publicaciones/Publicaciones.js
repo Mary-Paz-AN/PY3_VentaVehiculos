@@ -95,6 +95,11 @@ const Publicaciones = () => {
         navigate(`/publicaciones/verPublicacion/${idPublicacion}`);
     }
 
+    // Navega a la ventana para modificar la publicacion
+    const modificarPublicacion = (idPublicacion) => {
+        navigate(`/publicaciones/modificarPublicacion/${idPublicacion}`);
+    }
+
     return (
         <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
             <Header />
@@ -160,7 +165,7 @@ const Publicaciones = () => {
                                                     <Button onClick={() => verPublicacion(publicacion.id)} variant="primary" style={{ width: '100%' }}>⌕</Button>
                                                 </Col>
                                                 <Col xs={12} md={4} className="text-center">
-                                                    <Button variant="success" style={{ width: '100%' }}>✎</Button>{/** */}
+                                                    <Button onClick={() => modificarPublicacion(publicacion.id)} variant="success" style={{ width: '100%' }}>✎</Button>
                                                 </Col>
                                                 <Col xs={12} md={4} className="text-center">
                                                     <Button variant="danger" style={{ width: '100%' }}>🗑</Button>{/** */}

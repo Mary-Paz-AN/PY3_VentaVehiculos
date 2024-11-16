@@ -12,6 +12,7 @@ import InfoCuenta from './Usuario/InfoCuenta';
 import Publicaciones from './Publicaciones/Publicaciones';
 import CrearPublicacion from './Publicaciones/CrearPublicacion';
 import VerPublicacion from './Publicaciones/VerPublicacion';
+import ModificarPublicacion from './Publicaciones/ModificarPublicacion';
 import BuscarAutos from './Busqueda/Resultados';
 import CompararAutos from './Busqueda/Comparaciones/PaginaComparaciones';
 
@@ -28,6 +29,7 @@ root.render(
           <Route path="/publicaciones/misPublicaciones" element={<Publicaciones />} />
           <Route path="/publicaciones/crearPublicacion/:plantilla" element={<CrearPublicacion />} />
           <Route path="/publicaciones/verPublicacion/:idPublicacion" element={<VerPublicacion />} />
+          <Route path="/publicaciones/modificarPublicacion/:idPublicacion" element={<ModificarPublicacion />} />
           <Route path="/buscarAutos" element={<BuscarAutos />} />
           <Route path="/compararAutos" element={<CompararAutos />} />
         </Routes>

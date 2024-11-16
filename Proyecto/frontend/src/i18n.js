@@ -225,7 +225,9 @@ i18n.use(initReactI18next).init( {
             equpamiento: "Equipamiento",
             tabDimensiones: "Dimensiones",
             pago: "Pago",
-
+            cargando: "Cargando formulario...",//
+            modificar: "Modificar Publicación",
+            mensajeModificar: "Modifique los datos que vea necesarios"
         },
     },
     en: {

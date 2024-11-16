@@ -27,7 +27,7 @@ function Inicio() {
 
   // Abre la ventana de mis publicaciones
   const crearPublicacion = () => {
-    navigate('/publicaciones/crearPublicacion');
+    navigate(`/publicaciones/crearPublicacion/${null}`);
   }
 
   // Verifica si el usuario esta registrado e inicio sesion
