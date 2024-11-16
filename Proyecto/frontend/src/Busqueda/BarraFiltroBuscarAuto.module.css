@@ -25,3 +25,18 @@
     align-items:flex-start;
     padding-bottom: 20px;
 }
+
+.botonFiltrar{
+    background-color: #1f365d;
+    border: 0px;
+    color: white;
+    font-size: 30px;
+    height: 50px;
+    width: auto;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+.botonFiltrar:hover{
+    transform: scale(1.1);
+}

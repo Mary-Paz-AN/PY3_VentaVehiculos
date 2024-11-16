@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './BarraFiltroBuscarAuto.module.css';
 
-const BarraFiltroBusquedaAutos = () => {
+const BarraFiltroBusquedaAutos = ({ onSearch }) => {
   const { t } = useTranslation();
   const [filters, setFilters] = useState({
     marca: '',
@@ -84,16 +84,6 @@ const BarraFiltroBusquedaAutos = () => {
           <input type="checkbox" name="aceptaVehiculos" checked={filters.aceptaVehiculos} onChange={handleChange} />
           {t('vehiculoComoPago')}
         </label>
-      </div>
-
-      <div class = {styles.filtros}>
-        <label>{t('fotosInternas')}</label>
-        <input type="file" name="fotosInternas" multiple onChange={handleChange} accept="image/*" />
-      </div>
-
-      <div class = {styles.filtros}>
-        <label>{t('fotosExternas')}</label>
-        <input type="file" name="fotosExternas" multiple onChange={handleChange} accept="image/*" />
       </div>
 
       <div class = {styles.filtros}>
@@ -228,7 +218,14 @@ const BarraFiltroBusquedaAutos = () => {
 
       <div class = {styles.filtros}>
         <label>{t('estadoVehiculo')}</label>
-        <input type="number" name="estadoVehiculo" min="1" max="5" value={filters.estadoVehiculo} onChange={handleChange} />
+        <select name="estadoVehiculo" value={filters.estadoVehiculo} onChange={handleChange}>
+          <option value="">{t('seleccione')}</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
       </div>
 
       <div class = {styles.filtros}>
@@ -236,6 +233,10 @@ const BarraFiltroBusquedaAutos = () => {
           <input type="checkbox" name="leasing" checked={filters.leasing} onChange={handleChange} />
           {t('leasing')}
         </label>
+      </div>
+
+      <div class = {styles.filtros}>
+        <button onClick={ onSearch } class = {styles.botonFiltrar}>{t('filtrar')}</button>
       </div>
     </div>
   );
