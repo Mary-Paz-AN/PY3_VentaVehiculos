@@ -23,6 +23,7 @@ const Registrarse = () => {
         apellido1: '',
         apellido2: '',
         nacionalidad: '',
+        telefono: '',
         fechaNacimiento: '',
         provincia: '',
         canton: '',
@@ -239,6 +240,22 @@ const Registrarse = () => {
             errores.push(t('campoNacionalidad'));
         }
 
+        // Verificar telefono
+        const telefono = data.telefono;
+
+        if(telefono === '') {
+            errores.push(t('campoTelefono1'));
+        } else {
+            // Se quitan los guiones y espacios para guardar el dato de esa manera
+            const nuevoTelefono = telefono.replace(/-/g, " ").replace(/\s+/g, '');
+
+            //Validar que solo posean numeros y no letras
+            const soloNum = /^\d+$/.test(nuevoTelefono);
+            if(!soloNum) {
+                errores.push(t('campoTelefono2'));
+            }
+        }
+
         // Verificar fecha
         const date = data.fechaNacimiento;
 
@@ -422,6 +439,19 @@ const Registrarse = () => {
                                             name = "nacionalidad"
                                             aria-required="true" 
                                             aria-describedby="helpNacionalidad" />
+                                    </Form.Group>
+
+                                    {/* Teléfono */}
+                                    <Form.Group className="mb-3" controlId="telefonoInput">
+                                        <Form.Label style={{color: "#1f365d"}}>{t('telefono')}</Form.Label>
+                                        <Form.Control 
+                                            type="text" 
+                                            placeholder={t('placeHolderTelefono')}
+                                            value={data.telefono}
+                                            onChange={handleChange}
+                                            name = "telefono"
+                                            aria-required="true" 
+                                            aria-describedby="helpTelefono" />
                                     </Form.Group>
 
                                     {/* Fecha Nacimiento */}

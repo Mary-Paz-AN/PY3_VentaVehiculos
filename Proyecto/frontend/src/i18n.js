@@ -228,7 +228,10 @@ i18n.use(initReactI18next).init( {
             cargando: "Cargando el formulario...",
             modificar: "Modificar publicación",
             mensajeModificar: "Modifique los datos que considere necesarios.",
-
+            telefono: "Teléfono",
+            placeHolderTelefono: "Ingrese su número de teléfono",
+            campoTelefono1: "El campo de teléfono no puede estar vacío.",
+            campoTelefono2: "El número de teléfono solo debe contener números."
         },
     },
     en: {
@@ -454,6 +457,10 @@ i18n.use(initReactI18next).init( {
           cargando: "Loading the form...",
           modificar: "Edit Publication",
           mensajeModificar: "Edit the data you deem necessary.",
+          telefono: "Phone",
+          placeHolderTelefono: "Enter your phone number",
+          campoTelefono1: "The phone field cannot be empty.",
+          campoTelefono2: "The phone number must contain only numbers."
       },
     },
   },

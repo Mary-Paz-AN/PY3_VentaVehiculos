@@ -16,6 +16,7 @@ const InfoCuenta = () => {
         identificacion: '',
         nombreCompleto: '',
         nacionalidad: '',
+        telefono: '',
         fechaNacimiento: '',
         direccion: ''
     });
@@ -37,6 +38,7 @@ const InfoCuenta = () => {
             identificacion: '123456789',
             nombreCompleto: 'Mary Paz Álvarez Navarrete',
             nacionalidad: 'Costarricense',
+            telefono: '87460234',
             fechaNacimiento: '2005-10-04',
             direccion: 'Limón, Limón, Limón',
         }));
@@ -127,6 +129,18 @@ const InfoCuenta = () => {
                                             name = "nacionalidad"
                                             aria-required="true" 
                                             aria-describedby="infoNacionalidad" 
+                                            readOnly/>
+                                    </Form.Group>
+
+                                    {/* Teléfono */}
+                                    <Form.Group className="mb-3" controlId="telefonoInput">
+                                        <Form.Label style={{color: "#1f365d"}}>{t('telefono')}</Form.Label>
+                                        <Form.Control 
+                                            type="text" 
+                                            value={data.telefono}
+                                            name = "telefono"
+                                            aria-required="true" 
+                                            aria-describedby="infoTelefono" 
                                             readOnly/>
                                     </Form.Group>
 
