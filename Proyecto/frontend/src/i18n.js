@@ -235,7 +235,8 @@ i18n.use(initReactI18next).init( {
             fetchRegistroUsuario: "Hubo un error al registrar al usuario, por favor, intente nuevamente.",
             fetchUsuario: "Usuario o contraseña incorrectos.",
             fetchCorreo: "Correo electrónico o contraseña incorrectos.",
-            fetchCuenta: "Hubo un error al cargar los datos, por favor, intente nuevamente."
+            fetchCuenta: "Hubo un error al cargar los datos, por favor, intente nuevamente.",
+            fechaPublicacion: "Fecha de publicación"
 
         },
     },
@@ -469,8 +470,8 @@ i18n.use(initReactI18next).init( {
           fetchRegistroUsuario: "An error occurred while registering the user. Please try again.",
           fetchUsuario: "Incorrect username or password.",
           fetchCorreo: "Incorrect email or password.",
-          fetchCuenta: "An error occurred while loading the data. Please try again."
-
+          fetchCuenta: "An error occurred while loading the data. Please try again.",
+          fechaPublicacion: "Publication date"
       },
     },
   },

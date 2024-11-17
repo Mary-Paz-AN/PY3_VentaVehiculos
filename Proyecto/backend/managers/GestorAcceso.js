@@ -1,4 +1,4 @@
-// Se importa la clase Uusario
+// Se importa la clase Usario
 const Usuario = require('../models/Usuario');
 const { getConnection, sql } = require('./conexion');
 
@@ -80,7 +80,24 @@ class GestorAcceso {
             nuevoUsuario.setDirrecion(datos.provincia, datos.canton, datos.distrito);
 
             const user = nuevoUsuario.getUsuario();
-    
+
+            // Insertar la infromacion en la base de datos
+            const resultado = await crearCuentaBD(user);
+
+            if (resultado) {
+                return { success: true, message: 'Usuario registrado correctamente' };
+            } else {
+                throw new Error('Error al registrar usuario');
+            }
+
+        } catch (error) {
+            console.error('Error en crearU:', error);
+            throw new Error('Error al registrar usuario. Por favor, vuelva a inténtalo.');
+        }
+    }
+
+    async crearCuentaBD(usuer) {
+        try {
             // Obtiene una conexión a la base de datos
             const pool = await getConnection();
             const request =  pool.request();

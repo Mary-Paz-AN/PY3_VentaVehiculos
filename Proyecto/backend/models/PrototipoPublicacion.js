@@ -1,0 +1,4 @@
+class PrototipoPublicacion {
+    constructor() {};
+    colonar() {};
+}
