@@ -12,4 +12,4 @@ class AdaptadorPayPal extends SistemaPago{
   }
 }
 
-module.exports = AdaptadorPayPal;
+export default AdaptadorPayPal;

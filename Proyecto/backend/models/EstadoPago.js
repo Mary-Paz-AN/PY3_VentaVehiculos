@@ -4,4 +4,4 @@ const EstadoPago = Object.freeze({
     FALLIDO: 3
 });
 
-module.exports = EstadoPago;
+export default EstadoPago;

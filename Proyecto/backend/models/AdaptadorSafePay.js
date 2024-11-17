@@ -12,4 +12,4 @@ class AdaptadorSafetyPay extends SistemaPago{
   }
 }
 
-module.exports = AdaptadorSafetyPay;
+export default AdaptadorSafetyPay;

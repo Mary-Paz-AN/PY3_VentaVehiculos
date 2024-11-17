@@ -12,4 +12,4 @@ class AdaptadorGooglePay extends SistemaPago{
   }
 }
 
-module.exports = AdaptadorGooglePay;
+export default AdaptadorGooglePay;

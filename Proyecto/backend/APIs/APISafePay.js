@@ -30,4 +30,4 @@ class APISafetyPay {
   }
 }
 
-module.exports = APISafetyPay;
+export default APISafetyPay;

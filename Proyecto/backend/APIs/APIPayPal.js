@@ -19,4 +19,4 @@ class APIPayPal {
   }
 }
 
-module.exports = APIPayPal;
+export default APIPayPal;

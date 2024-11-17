@@ -1,4 +1,4 @@
-import EstadoPago from "./EstadoPago"
+import EstadoPago from "./EstadoPago";
 
 class Pago{
   constructor(sistemaC){
@@ -17,7 +17,8 @@ class Pago{
     } catch (error) {
       this.Estado = EstadoPago.FALLIDO;
     }
+    return this.Estado;
   }
 }
 
-module.exports = Pago;
+export default Pago;

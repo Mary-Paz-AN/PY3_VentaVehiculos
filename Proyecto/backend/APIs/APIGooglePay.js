@@ -32,4 +32,4 @@ class APIGooglePay {
   }
 }
 
-module.exports = APIGooglePay;
+export default APIGooglePay;

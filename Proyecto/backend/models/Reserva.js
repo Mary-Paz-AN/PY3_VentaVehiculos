@@ -16,4 +16,4 @@ class Reservacion{
   }
 }
 
-module.exports = Reservacion;
+export default Reservacion;

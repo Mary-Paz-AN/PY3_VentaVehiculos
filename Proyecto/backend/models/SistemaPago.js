@@ -10,4 +10,4 @@ class SistemaPago{
   }
 }
 
-module.exports = SistemaPago;
+export default SistemaPago;
