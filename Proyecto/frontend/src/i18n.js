@@ -231,7 +231,12 @@ i18n.use(initReactI18next).init( {
             telefono: "Teléfono",
             placeHolderTelefono: "Ingrese su número de teléfono",
             campoTelefono1: "El campo de teléfono no puede estar vacío.",
-            campoTelefono2: "El número de teléfono solo debe contener números."
+            campoTelefono2: "El número de teléfono solo debe contener números.",
+            fetchRegistroUsuario: "Hubo un error al registrar al usuario, por favor, intente nuevamente.",
+            fetchUsuario: "Usuario o contraseña incorrectos.",
+            fetchCorreo: "Correo electrónico o contraseña incorrectos.",
+            fetchCuenta: "Hubo un error al cargar los datos, por favor, intente nuevamente."
+
         },
     },
     en: {
@@ -460,7 +465,12 @@ i18n.use(initReactI18next).init( {
           telefono: "Phone",
           placeHolderTelefono: "Enter your phone number",
           campoTelefono1: "The phone field cannot be empty.",
-          campoTelefono2: "The phone number must contain only numbers."
+          campoTelefono2: "The phone number must contain only numbers.",
+          fetchRegistroUsuario: "An error occurred while registering the user. Please try again.",
+          fetchUsuario: "Incorrect username or password.",
+          fetchCorreo: "Incorrect email or password.",
+          fetchCuenta: "An error occurred while loading the data. Please try again."
+
       },
     },
   },

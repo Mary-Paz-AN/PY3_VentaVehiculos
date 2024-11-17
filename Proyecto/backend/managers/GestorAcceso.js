@@ -17,7 +17,7 @@ class GestorAcceso {
             request.input('contrasena', sql.VarChar, contrasena);
 
             //Ejecutar el store procedure
-            const resultado = await request.execute('sp_IniciarSesionUsuario');
+            const resultado = await request.execute('logU');
             
             //Verificar que el usuario sea correcto
             if (resultado.recordset.length > 0) {
@@ -27,7 +27,7 @@ class GestorAcceso {
             }
 
         } catch (error) {
-            console.error('Error en el sp_iniciarSesionUsuario:', error);
+            console.error('Error en logU:', error);
             throw new Error('Hubo un problema al iniciar sesión. Por favor, vuelva a inténtalo.');
         }
     }
@@ -44,7 +44,7 @@ class GestorAcceso {
             request.input('contrasena', sql.VarChar, contrasena);
 
             //Ejecutar el store procedure
-            const resultado = await request.execute('sp_IniciarSesionCorreo');
+            const resultado = await request.execute('logC');
             
             //Verificar que el usuario sea correcto
             if (resultado.recordset.length > 0) {
@@ -54,7 +54,7 @@ class GestorAcceso {
             }
 
         } catch (error) {
-            console.error('Error en el sp_iniciarSesionCorreo:', error);
+            console.error('Error en logC:', error);
             throw new Error('Hubo un problema al iniciar sesión. Por favor, vuelva a inténtalo.');
         }
     }
@@ -78,29 +78,31 @@ class GestorAcceso {
             );
         
             nuevoUsuario.setDirrecion(datos.provincia, datos.canton, datos.distrito);
+
+            const user = nuevoUsuario.getUsuario();
     
             // Obtiene una conexión a la base de datos
             const pool = await getConnection();
             const request =  pool.request();
     
             // Asignar los parámetros de entrada
-            request.input('cedula', sql.VarChar, nuevoUsuario.infoUsuario.cedula)
-            request.input('usuario', sql.VarChar, nuevoUsuario.usuario)
-            request.input('contrasena', sql.VarChar, nuevoUsuario.contrasena)
-            request.input('tipoIdentificacion', sql.VarChar, nuevoUsuario.infoUsuario.tipoIdentificacion)
-            request.input('nombre', sql.VarChar, nuevoUsuario.infoUsuario.nombre)
-            request.input('apellido1', sql.VarChar, nuevoUsuario.infoUsuario.apellido1)
-            request.input('apellido2', sql.VarChar, nuevoUsuario.infoUsuario.apellido2)
-            request.input('nacionalidad', sql.VarChar, nuevoUsuario.infoUsuario.nacionalidad)
-            request.input('fechaNacimiento', sql.Date, nuevoUsuario.infoUsuario.fechaNacimiento)
-            request.input('correo', sql.VarChar, nuevoUsuario.correo)
-            request.input('telefono', sql.VarChar, nuevoUsuario.infoUsuario.telefono)
-            request.input('provincia', sql.VarChar, nuevoUsuario.direccion.provincia)
-            request.input('canton', sql.VarChar, nuevoUsuario.direccion.canton)
-            request.input('distrito', sql.VarChar, nuevoUsuario.direccion.distrito)
+            request.input('cedula', sql.VarChar, user.cedula)
+            request.input('usuario', sql.VarChar, user.usuario)
+            request.input('contrasena', sql.VarChar, user.contrasena)
+            request.input('tipoIdentificacion', sql.VarChar, user.tipoIdentificacion)
+            request.input('nombre', sql.VarChar, user.nombre)
+            request.input('apellido1', sql.VarChar, user.apellido1)
+            request.input('apellido2', sql.VarChar, user.apellido2)
+            request.input('nacionalidad', sql.VarChar, user.nacionalidad)
+            request.input('fechaNacimiento', sql.Date, user.fechaNacimiento)
+            request.input('correo', sql.VarChar, user.correo)
+            request.input('telefono', sql.VarChar, user.telefono)
+            request.input('provincia', sql.VarChar, user.provincia)
+            request.input('canton', sql.VarChar, user.canton)
+            request.input('distrito', sql.VarChar, user.distrito)
                 
             //Ejecutar el store procedure
-            const resultado = await request.execute('sp_CrearUsuario');
+            const resultado = await request.execute('crearU');
 
             // Verificar que se creo el usuario
             if (resultado && resultado.rowsAffected && resultado.rowsAffected[0] > 0) {
@@ -110,8 +112,40 @@ class GestorAcceso {
             }
 
         } catch (error) {
-            console.error('Error en el sp_CrearUsuario:', error);
+            console.error('Error en crearU:', error);
             throw new Error('Error al registrar usuario. Por favor, vuelva a inténtalo.');
+        }
+    }
+
+    //Método para conseguir la informacoión del usuari por medio de su usuario
+    async infoUsuario(usuario) {
+        try {
+            // Iniciar la conexión a la BD
+            const pool = await getConnection();
+            const request = pool.request();
+            
+            // Asignar los parámetros de entrada
+            request.input('usuario', sql.VarChar, usuario);
+
+            //Ejecutar el store procedure
+            const resultado = await request.execute('infoU');
+            
+            // Verificar que el resultado si exista
+            if (resultado.recordset.length > 0) {
+                const usuarioData = resultado.recordset[0];
+
+                if (usuarioData.fechaNacimiento) {
+                    usuarioData.fechaNacimiento = usuarioData.fechaNacimiento.toISOString().split('T')[0];
+                }
+                
+                return usuarioData;
+            } else {
+                return false;
+            }
+
+        } catch (error) {
+            console.error('Error en el infoU:', error);
+            throw new Error('Hubo un problema consiguiendo la información. Por favor, vuelva a inténtalo.');
         }
     }
 

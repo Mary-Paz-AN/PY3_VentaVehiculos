@@ -294,11 +294,31 @@ const Registrarse = () => {
     };
 
     // Verifica si los datos son correctos y despues crear el usuario
-    const anadirUsuario = () => {
+    const anadirUsuario = async () => {
 
         if (validarDatos()) {
-            navigate('/usuario/iniciarSesion');
-            // Lógica adicional para la API
+            try {
+                const respuesta = await fetch('/api/cuenta/registrarse', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+        
+                if (respuesta.ok) {
+                    navigate('/usuario/iniciarSesion');
+                } else {
+                    throw new Error(`Error: ${respuesta.status}`);
+                }
+                
+
+            } catch (error) {
+                console.error('Error:', t('fetchRegistroUsuario'));
+                setMensaje(t('fetchRegistroUsuario'));
+                setShow(true);
+            }
+            
         }
     };
 

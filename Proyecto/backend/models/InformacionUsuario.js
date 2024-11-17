@@ -30,3 +30,5 @@ class InformacionUsuario {
         return info;
     }
 }
+
+module.exports = InformacionUsuario;

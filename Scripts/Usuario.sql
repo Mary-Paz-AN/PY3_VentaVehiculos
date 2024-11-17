@@ -13,6 +13,10 @@ BEGIN
 END;
 GO
 
+-- Sinonimo
+CREATE SYNONYM logU FOR sp_IniciarSesionUsuario;
+GO
+
 --Store procedure par ainicir sesion con correo
 CREATE PROCEDURE sp_IniciarSesionCorreo
 	@correo VARCHAR(45),
@@ -24,6 +28,10 @@ BEGIN
     INNER JOIN InformacionContacto AS I ON U.NumeroCedula = I.NumeroCedula
     WHERE I.CorreoElectronico = @correo AND U.Contrasena = @contrasena;
 END;
+GO
+
+-- Sinonimo
+CREATE SYNONYM logC FOR sp_IniciarSesionCorreo;
 GO
 
 -- Store procedure para crear un usuario
@@ -96,10 +104,52 @@ BEGIN
         );
     END TRY
     BEGIN CATCH
-        -- Si ocurre un error, mostrar el mensaje del porque
+        -- Si hay un error, mostrar el mensaje del porque
         SELECT ERROR_MESSAGE() AS ErrorMensaje;
     END CATCH
 END;
 GO
 
+-- Sinonimo
+CREATE SYNONYM crearU FOR sp_CrearUsuario;
+GO
+
+-- Crear vista para conseguir la información del usuario
+CREATE VIEW vw_InfoUsuario AS
+SELECT 
+    U.Usuario AS usuario,
+    I.CorreoElectronico AS correo,
+    U.TipoIdentificacion AS tipoIdentificacion,
+    U.NumeroCedula AS identificacion,
+    CONCAT(U.Nombre, ' ', U.ApellidoUno, ' ', U.ApellidoDos) AS nombreCompleto,
+    U.Nacionalidad AS nacionalidad,
+    I.Telefono AS telefono,
+	U.FechaNacimiento  AS fechaNacimiento,
+    CONCAT(D.Provincia, ' ', D.Canton, ' ', D.Distrito) AS direccion
+FROM Usuario AS U
+INNER JOIN InformacionContacto AS I ON U.NumeroCedula = I.NumeroCedula
+INNER JOIN Direccion AS D ON U.NumeroCedula = D.NumeroCedula;
+GO
+
 -- Store procedure para conseguir toda la información del usuario
+CREATE PROCEDURE sp_InfoUsuario
+    @usuario VARCHAR(45)
+AS
+BEGIN
+    SELECT 
+        usuario,
+        correo,
+        tipoIdentificacion,
+        identificacion,
+        nombreCompleto,
+        nacionalidad,
+        telefono,
+		fechaNacimiento,
+        direccion
+    FROM vw_InfoUsuario
+    WHERE usuario = @usuario OR correo = @usuario;
+END;
+GO
+
+CREATE SYNONYM infoU FOR sp_InfoUsuario;
+GO

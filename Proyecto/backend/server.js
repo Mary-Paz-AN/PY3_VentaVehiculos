@@ -1,27 +1,21 @@
-//Dependency for the proper functioning of the server
+// Dependency for the proper functioning of the server
 const express = require("express");
-const { getConnection, sql } = require('./managers/conexion');
+const rutasUsuario = require('./routes/RutasUsuario'); 
 
-//Constants
+// Constants
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => console.log(`The server started on  http://localhost:${PORT}`));
-app.use(express.static("build"));
-app.use(express.urlencoded({ extended: true}));
-app.use(express.json());
+// Manejo de JSONS
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/usuario', async (req, res) => {
-    try {
-        //Iniciar la conexión con la base de datos para hacer consultado
-        const pool = await getConnection();
-        const request = pool.request();
-        
-        // Ejecutar la consulta
-        const result = await request.query('SELECT * FROM Usuario');
-        res.json(result.recordset); 
-    } catch (err) {
-        console.error('Error al ejecutar el procedimiento almacenado:', err);
-        res.status(500).send('Error al ejecutar el procedimiento almacenado');
-    }
-});
+// Rutas
+// Usar las rutas para la gestión de los usuarios
+app.use('/api/cuenta', rutasUsuario); 
+
+// Archivos del frontend 
+app.use(express.static("build")); 
+
+// Iniicar el servidor
+app.listen(PORT, () => console.log(`The server started on http://localhost:${PORT}`));

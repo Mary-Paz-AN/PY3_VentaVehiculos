@@ -19,3 +19,5 @@ class Direccion {
         return direccion;
     }
 }
+
+module.exports = Direccion;

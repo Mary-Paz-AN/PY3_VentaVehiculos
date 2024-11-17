@@ -124,16 +124,66 @@ const IniciarSesion = () => {
     };
 
     // Verifica si las credenciales del inicio de sesion son correctas
-    const verificarSesion = () => {
+    const verificarSesion = async () => {
         errores = [];
 
         // Verifica los dato dependiendo de la pestaña activa
-        const esValido = activeTab === 'usuario' ? verificarUsuario() : verificarCorreo();
+        if(activeTab === 'usuario') {
+            const sesion = { usuario: data.user, contrasena: data.contra };
 
-        if (esValido) {
-            iniciarSesion(data.user || data.correo);
-            navigate('/');
-            // Lógica adicional para la API
+            if(verificarUsuario()) {
+                try {
+                    const respuesta = await fetch('/api/cuenta/iniciarSesion/usuario', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(sesion),
+                    });
+            
+                    if (respuesta.ok) {
+                        iniciarSesion(data.user);
+                        navigate('/');
+                    } else {
+                        throw new Error(`Error: ${respuesta.status}`);
+                    }
+                    
+    
+                } catch (error) {
+                    console.error('Error:', t('fetchUsuario'));
+                    setMensaje(t('fetchUsuario'));
+                    setShow(true);
+                }
+            }
+
+        } else {
+            if(verificarCorreo()) {
+                const sesion = { usuario: data.correo, contrasena: data.contraCorreo };
+
+                try {
+                    const respuesta = await fetch('/api/cuenta/iniciarSesion/correo', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(sesion),
+                    });
+            
+                    if (respuesta.ok) {
+                        iniciarSesion(data.correo);
+                        navigate('/');
+                    } else {
+                        throw new Error(`Error: ${respuesta.status}`);
+                    }
+                    
+    
+                } catch (error) {
+                    console.error('Error:', t('fetchCorreo'));
+                    setMensaje(t('fetchCorreo'));
+                    setShow(true);
+                }
+            }
+
         }
     }
 

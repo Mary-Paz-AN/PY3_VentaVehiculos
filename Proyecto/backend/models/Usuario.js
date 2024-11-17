@@ -1,5 +1,7 @@
-// Creación de la clase Usuario
+const InformacionUsuario = require('./InformacionUsuario'); 
+const Direccion = require('./Direccion');
 
+// Creación de la clase Usuario
 class Usuario {
 
     constructor(usuarioC, correoC, contrasenaC)  {
@@ -44,3 +46,5 @@ class Usuario {
         return usuario;
     }
 }
+
+module.exports = Usuario;

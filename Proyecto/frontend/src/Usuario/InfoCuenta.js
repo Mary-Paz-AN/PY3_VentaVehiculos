@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Card, Col, Form } from 'react-bootstrap';
+import { Container, Row, Card, Col, Form, Alert } from 'react-bootstrap';
 import { getUsuario } from './Acceso';
 import { useTranslation } from 'react-i18next';
 import Header from '../Header';
@@ -8,46 +8,53 @@ import Footer from '../Footer';
 
 const InfoCuenta = () => {
     const { t } = useTranslation();
-
-    const [data, setData] = useState({
-        user: '',
-        correo: '',
-        tipoIdentificacion: '',
-        identificacion: '',
-        nombreCompleto: '',
-        nacionalidad: '',
-        telefono: '',
-        fechaNacimiento: '',
-        direccion: ''
-    });
+    const [data, setData] = useState({});
+    const [show, setShow] = useState(false);
+    const [mensaje, setMensaje] = useState('');
 
     // Carga la información al iniciar ventana
     useEffect(() => {
-        fetchInfo();
-    }, []);
-
-    // Fetch data from APi
-    const fetchInfo = () => {
         const user = getUsuario();
-        console.log(user);
-        setData((prevData) => ({
-            ...prevData,
-            user: user,
-            correo: 'mary@example.com',
-            tipoIdentificacion: 'Cédula Fisica',
-            identificacion: '123456789',
-            nombreCompleto: 'Mary Paz Álvarez Navarrete',
-            nacionalidad: 'Costarricense',
-            telefono: '87460234',
-            fechaNacimiento: '2005-10-04',
-            direccion: 'Limón, Limón, Limón',
-        }));
         
-    }
+        fetch(`/api/cuenta/informacion/${user}`)
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('Error: ' + res.statusText);
+                }
+
+                return res.json();
+            })
+            .then((dataFetch) => {
+                setData(dataFetch);
+            })
+            .catch((err) => {
+                console.error(t('fetchCuenta'), err);
+                setMensaje(t('fetchCuenta'));
+                setShow(true);
+            }
+        );
+
+    }, [t]);
+
 
     return (
         <div className="d-flex flex-column min-vh-100">
             <Header />
+
+            {show && (
+                <Alert 
+                    variant="warning" 
+                    className="textStyle" 
+                    onClose={() => setShow(false)} 
+                    role="alert"
+                    aria-live="assertive"
+                    dismissible
+                >
+                    <Alert.Heading>{t('advertencia')}</Alert.Heading>
+                    <p>{mensaje}</p>
+                </Alert>
+            )}
+
             <Container className="flex-grow-1 d-flex justify-content-center align-items-center" role="main" aria-labelledby="myAccount-title">
                 <Row className="w-100">
                     <Col md={8} lg={6} className="mx-auto">
@@ -75,7 +82,7 @@ const InfoCuenta = () => {
                                         <Form.Label style={{color: "#1f365d"}}>{t('usuario')}</Form.Label>
                                         <Form.Control 
                                             type="text" 
-                                            value={data.user}
+                                            value={data.usuario}
                                             name = "user"
                                             aria-required="true" 
                                             aria-describedby="usuarioInfo" 
