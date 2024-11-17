@@ -69,8 +69,8 @@ CREATE TABLE Vehiculo (
 	Motor VARCHAR(30) NOT NULL,
 	SistemaSonido VARCHAR(30) NOT NULL,
 	TipoTableroMando VARCHAR(30) NOT NULL,
-	CantidadPuertas INT NOT NULL,
-	Estado INT NOT NULL);
+	CantidadPuertas INT NOT NULL,--
+	Estado INT NOT NULL);--
 GO
 
 ------ Materiales ------
@@ -111,15 +111,6 @@ CREATE TABLE Dimensiones (
 	FOREIGN KEY (Placa) REFERENCES Vehiculo(Placa));
 GO
 
------- Fotos ------
-CREATE TABLE Fotos (
-	ID INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	Placa VARCHAR(6) NOT NULL,
-	Imagen VARBINARY(MAX) NOT NULL,
-	EsInterna BIT NOT NULL, --
-	FOREIGN KEY (Placa) REFERENCES Vehiculo(Placa));
-GO
-
 ----- Publicacion ------
 CREATE TABLE Publicacion (
 	IdPublicacion INT PRIMARY KEY IDENTITY(1, 1),
@@ -133,4 +124,13 @@ CREATE TABLE Publicacion (
 	FechaEdicion DATETIMEOFFSET(2),  -- Solo se agrega cuando se hace un UPDATE
 	FOREIGN KEY (NumeroCedula) REFERENCES Usuario(NumeroCedula),
 	FOREIGN KEY (Placa) REFERENCES Vehiculo(Placa));
+GO
+
+------ Fotos ------
+CREATE TABLE Fotos (
+	ID INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+	IdPublicacion INT NOT NULL,
+	Imagen VARBINARY(MAX) NOT NULL,
+	EsInterna BIT NOT NULL, --
+	FOREIGN KEY (IdPublicacion) REFERENCES Publicacion(IdPublicacion));
 GO

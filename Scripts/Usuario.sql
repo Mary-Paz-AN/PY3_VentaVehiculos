@@ -104,8 +104,10 @@ BEGIN
         );
     END TRY
     BEGIN CATCH
-        -- Si hay un error, mostrar el mensaje del porque
+		-- Da un mensaje de erro y realiza un rollback para deshacer insercciones hechas
         SELECT ERROR_MESSAGE() AS ErrorMensaje;
+		ROLLBACK;
+		THROW;
     END CATCH
 END;
 GO
