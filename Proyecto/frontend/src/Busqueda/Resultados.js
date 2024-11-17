@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState , useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header';
@@ -14,26 +14,46 @@ const BuscarAutos = () => {
 
   const [autos, setAutos] = useState([]);
 
-  const traerVehiculos = () => {
-    // Implementación de la función para traer los vehículos
+  const traerVehiculos = async (datosJSON) => {
+    try {
+      const response = await fetch("http://localhost:3001/filtrarAutosBusqueda", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datosJSON), // Convertir el objeto datosJSON a una cadena JSON
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
+      }
+
+      const data = await response.json(); // Suponiendo que el servidor responde con JSON
+      console.log("Vehículos recibidos:", data);
+
+      return data; // Devuelve los datos recibidos si es necesario
+    } catch (error) {
+      console.error("Error al traer los vehículos:", error);
+      return null; // Manejo de errores: devolver null o manejarlo según tu lógica
+    }
   };
 
   const barraRef = useRef();
 
   const handleAgregarAuto = (id, marca, modelo) => {
-    const auto = {id, marca, modelo}
+    const auto = { id, marca, modelo }
     if (barraRef.current) {
       barraRef.current.ingresarAuto(auto);
     }
   };
 
   return (
-    <div class = {styles.contenedorPrincipal}>
+    <div class={styles.contenedorPrincipal}>
       <Header />
 
       <div className={styles.containerFluid}>
         <div className={styles.sidebar}>
-          <BarraFiltroBusquedaAutos onSearch={() => traerVehiculos()} />
+          <BarraFiltroBusquedaAutos onSearch={() => traerVehiculos} />
         </div>
 
         {/* Resultados de búsqueda */}
@@ -64,7 +84,7 @@ const BuscarAutos = () => {
           </div>
         </div>
         <div>
-          <BarraComparaciones/>
+          <BarraComparaciones />
         </div>
       </div>
 

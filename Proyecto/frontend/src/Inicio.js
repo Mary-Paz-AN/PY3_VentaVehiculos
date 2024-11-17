@@ -30,6 +30,10 @@ function Inicio() {
     navigate('/publicaciones/crearPublicacion');
   }
 
+  const crearReservacion = () => {
+    navigate('/reservarAuto');
+  }
+
   // Verifica si el usuario esta registrado e inicio sesion
   const esUsuarioRegistrado = (tipo) => {
     const usuario = getUsuario();
@@ -41,7 +45,9 @@ function Inicio() {
       if(tipo === 1) {
         crearPublicacion();
       }
-
+      if(tipo === 2) {
+        crearReservacion();
+      }
     } 
     
   };

@@ -1,0 +1,26 @@
+.detalleVehiculo {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .fotos {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .foto {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  
+  .vendedorInfo {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  

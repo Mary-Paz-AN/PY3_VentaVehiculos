@@ -50,7 +50,7 @@ const BarraComparaciones = forwardRef((props, ref) => {
   return (
     <div className={`${styles.barraComparaciones} ${isExpanded ? styles.expanded : ''}`}>
       <button className="btn btn-primary barraComparaciones" onClick={toggleBarra}>
-        {isExpanded ? 'Ocultar' : 'Comparar'}
+        {isExpanded ? t('botonOcultar') : t('botonComparar')}
       </button>
 
       {isExpanded && (

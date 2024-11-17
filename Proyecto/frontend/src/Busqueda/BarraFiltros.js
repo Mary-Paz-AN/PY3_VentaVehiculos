@@ -236,7 +236,7 @@ const BarraFiltroBusquedaAutos = ({ onSearch }) => {
       </div>
 
       <div class = {styles.filtros}>
-        <button onClick={ onSearch } class = {styles.botonFiltrar}>{t('filtrar')}</button>
+        <button onClick={ () => onSearch(filters) } class = {styles.botonFiltrar}>{t('filtrar')}</button>
       </div>
     </div>
   );

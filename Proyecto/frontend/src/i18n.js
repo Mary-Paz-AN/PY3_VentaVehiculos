@@ -216,6 +216,11 @@ i18n.use(initReactI18next).init( {
             plastico: "Plástico",
             estereo: "Estéreo 7.1",
             estandar: "Estándar",
+            filtrar: "Aplicar filtros",
+            compararAutos: "Comparar Autos",
+            irComparacion: "Ir a Comparar",
+            botonComparar: "Comparar",
+            botonOcultar: "Ocultar"
         },
     },
     en: {
@@ -430,6 +435,11 @@ i18n.use(initReactI18next).init( {
           plastico: "Plastic",
           estereo: "Stereo 7.1",
           estandar: "Standard",
+          filtrar: "Apply filters",
+          compararAutos: "Compare Cars",
+          irComparacion: "Go compare",
+          botonComparar: "Compare",
+          botonOcultar: "Hide"
       },
     },
   },
