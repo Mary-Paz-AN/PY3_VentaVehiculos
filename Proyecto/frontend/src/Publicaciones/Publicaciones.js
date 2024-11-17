@@ -41,6 +41,7 @@ const Publicaciones = () => {
         //Logica API
         const data = [
             {
+                id: 1,
                 placa: 'NUT-879',
                 marcaModelo: 'Toyota SM-99',
                 tipo: 'Sedán',
@@ -50,6 +51,7 @@ const Publicaciones = () => {
                 foto:'/images/car.jpg'
             },
             {
+                id: 2,
                 placa: 'NUT-879',
                 marcaModelo: 'Toyota SM-99',
                 tipo: 'Sedán',
@@ -59,6 +61,7 @@ const Publicaciones = () => {
                 foto:'/images/car.jpg'
             },
             {
+                id: 3,
                 placa: 'NUT-879',
                 marcaModelo: 'Toyota SM-99',
                 tipo: 'Sedán',
@@ -68,6 +71,7 @@ const Publicaciones = () => {
                 foto:'/images/car.jpg'
             },
             {
+                id: 4,
                 placa: 'NUT-879',
                 marcaModelo: 'Toyota SM-99',
                 tipo: 'Sedán',
@@ -81,9 +85,19 @@ const Publicaciones = () => {
         SetPublicaciones(data);
     };
 
-    // Navega al frmulario para crear una publicacion
+    // Navega al formulario para crear una publicacion
     const crearPublicacion = () => {
-        navigate('/publicaciones/crearPublicacion');
+        navigate(`/publicaciones/crearPublicacion/${null}`);
+    }
+
+    // Navega a la ventana para ver la info de la publicaciones
+    const verPublicacion = (idPublicacion) => {
+        navigate(`/publicaciones/verPublicacion/${idPublicacion}`);
+    }
+
+    // Navega a la ventana para modificar la publicacion
+    const modificarPublicacion = (idPublicacion) => {
+        navigate(`/publicaciones/modificarPublicacion/${idPublicacion}`);
     }
 
     return (
@@ -148,10 +162,10 @@ const Publicaciones = () => {
                                         <Container>
                                             <Row className="justify-content-center g-3">
                                                 <Col xs={12} md={4} className="text-center">
-                                                    <Button variant="primary" style={{ width: '100%' }}>⌕</Button>{/** */}
+                                                    <Button onClick={() => verPublicacion(publicacion.id)} variant="primary" style={{ width: '100%' }}>⌕</Button>
                                                 </Col>
                                                 <Col xs={12} md={4} className="text-center">
-                                                    <Button variant="success" style={{ width: '100%' }}>✎</Button>{/** */}
+                                                    <Button onClick={() => modificarPublicacion(publicacion.id)} variant="success" style={{ width: '100%' }}>✎</Button>
                                                 </Col>
                                                 <Col xs={12} md={4} className="text-center">
                                                     <Button variant="danger" style={{ width: '100%' }}>🗑</Button>{/** */}

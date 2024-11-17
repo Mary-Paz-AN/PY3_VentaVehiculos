@@ -11,6 +11,8 @@ import Registrarse from './Usuario/Registrarse';
 import InfoCuenta from './Usuario/InfoCuenta';
 import Publicaciones from './Publicaciones/Publicaciones';
 import CrearPublicacion from './Publicaciones/CrearPublicacion';
+import VerPublicacion from './Publicaciones/VerPublicacion';
+import ModificarPublicacion from './Publicaciones/ModificarPublicacion';
 import BuscarAutos from './Busqueda/Resultados';
 import CompararAutos from './Busqueda/Comparaciones/PaginaComparaciones';
 import ReservarAuto from './Reservaciones/PantallaReservacion';
@@ -19,14 +21,16 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AuthProvider>
-      <BrowserRouter>  {/* Envuelve la aplicación en BrowserRouter */}
+      <BrowserRouter> 
         <Routes>
           <Route path="/" element={<Inicio />} />
           <Route path="/usuario/iniciarSesion" element={<IniciarSesion />} />
           <Route path="/usuario/registrarse" element={<Registrarse />} />
           <Route path="/usuario/miCuenta" element={<InfoCuenta />} />
           <Route path="/publicaciones/misPublicaciones" element={<Publicaciones />} />
-          <Route path="//publicaciones/crearPublicacion" element={<CrearPublicacion />} />
+          <Route path="/publicaciones/crearPublicacion/:plantilla" element={<CrearPublicacion />} />
+          <Route path="/publicaciones/verPublicacion/:idPublicacion" element={<VerPublicacion />} />
+          <Route path="/publicaciones/modificarPublicacion/:idPublicacion" element={<ModificarPublicacion />} />
           <Route path="/buscarAutos" element={<BuscarAutos />} />
           <Route path="/compararAutos" element={<CompararAutos />} />
           <Route path="/reservarAuto" element={<ReservarAuto />} />

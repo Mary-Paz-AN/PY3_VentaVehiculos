@@ -8,7 +8,7 @@ GO
 ---------- Creaci�n de las tablas ---------
 ----- Usuario ---
 CREATE TABLE Usuario (
-	NumeroCedula INT PRIMARY KEY NOT NULL, 
+	NumeroCedula VARCHAR(12) PRIMARY KEY NOT NULL, 
 	Usuario VARCHAR(45) NOT NULL,
 	Contrasena VARCHAR(15) NOT NULL,
 	TipoIdentificacion VARCHAR(45) NOT NULL,
@@ -22,16 +22,16 @@ GO
 
 ----- InformacionContacto ----
 CREATE TABLE InformacionContacto (
-	NumeroCedula INT PRIMARY KEY NOT NULL,
+	NumeroCedula VARCHAR(12) PRIMARY KEY NOT NULL,
 	CorreoElectronico VARCHAR(45) NOT NULL,
-	Telefono VARCHAR(20),
+	Telefono VARCHAR(10),
 	UNIQUE(CorreoElectronico),
 	FOREIGN KEY (NumeroCedula) REFERENCES Usuario(NumeroCedula));
 GO
 
 ------ Direccion -----
 CREATE TABLE Direccion (
-	NumeroCedula INT PRIMARY KEY NOT NULL,
+	NumeroCedula VARCHAR(12) PRIMARY KEY NOT NULL,
 	Provincia VARCHAR(30) NOT NULL,
 	Canton VARCHAR(30) NOT NULL,
 	Distrito VARCHAR(30) NOT NULL,
@@ -41,8 +41,8 @@ GO
 ----- Reservacion ------
 CREATE TABLE Reservacion (
 	IdReservacion INT PRIMARY KEY NOT NULL,
-	IdentificadorUsuario INT NOT NULL,
-	IdentificadorEmpresa INT NOT NULL,
+	IdentificadorUsuario VARCHAR(12) NOT NULL,
+	IdentificadorEmpresa VARCHAR(12) NOT NULL,
 	FechaDeVisita DATETIMEOFFSET(2) NOT NULL,
 	Lugar VARCHAR(25) NOT NULL,
 	FOREIGN KEY (IdentificadorUsuario) REFERENCES InformacionContacto(NumeroCedula),
@@ -123,7 +123,7 @@ GO
 ----- Publicacion ------
 CREATE TABLE Publicacion (
 	IdPublicacion INT PRIMARY KEY IDENTITY(1, 1),
-	NumeroCedula INT NOT NULL,
+	NumeroCedula VARCHAR(12) NOT NULL,
 	Placa VARCHAR(6) NOT NULL,
 	PrecioColones INT NOT NULL,
 	PrecioNegociable BIT NOT NULL,

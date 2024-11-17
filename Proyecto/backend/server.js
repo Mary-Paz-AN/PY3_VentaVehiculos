@@ -1,15 +1,14 @@
-//Dependency for the proper functioning of the server
+// Dependency for the proper functioning of the server
 const express = require("express");
-const { getConnection, sql } = require('./managers/conexion');
+const rutasUsuario = require('./routes/RutasUsuario'); 
 
-//Constants
+// Constants
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => console.log(`The server started on  http://localhost:${PORT}`));
-app.use(express.static("build"));
-app.use(express.urlencoded({ extended: true}));
-app.use(express.json());
+// Manejo de JSONS
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/usuario', async (req, res) => {
     try {
@@ -98,3 +97,12 @@ app.post('/filtrarAutosBusqueda', async (req, res) => {
     }
   });
   
+// Rutas
+// Usar las rutas para la gestión de los usuarios
+app.use('/api/cuenta', rutasUsuario); 
+
+// Archivos del frontend 
+app.use(express.static("build")); 
+
+// Iniicar el servidor
+app.listen(PORT, () => console.log(`The server started on http://localhost:${PORT}`));

@@ -1,0 +1,38 @@
+.smallImages {
+    display: flex;
+    gap: 10px;
+    padding-bottom: 20px;
+}
+
+.smallImages img {
+    width: 90px; /* Tamaño pequeño para las imágenes */
+    height: auto;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.carouselContainer {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding-bottom: 20px;
+    width: 100%; /* Asegura que ocupe todo el espacio */
+}
+
+.largeImage img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 8px;
+    padding: 0%;
+}
+
+.tituloInfo {
+    font-weight: bold;
+    color: #1f365d;
+}
+
+.datoInfo {
+    text-align: right;
+    color: #333;
+}
