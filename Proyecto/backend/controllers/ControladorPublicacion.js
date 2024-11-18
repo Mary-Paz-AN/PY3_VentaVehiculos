@@ -1,9 +1,9 @@
 // Importar el gestor y crear su instancia para poder usar sus métodos
-const GestorPublicaciones = require('../gestores/GestorPublicaciones');
+import GestorPublicaciones from '../gestores/GestorPublicaciones';
 const gestorPublicaciones = new GestorPublicaciones();
 
 // Crear una publicación
-exports.crearPublicacion = async (req, res) => {
+export async function crearPublicacion(req, res) {
     try {
         const datos = req.body; // Obtener los datos del cuerpo de la solicitud
         const resultado = await gestorPublicaciones.crearPublicacion(datos);
@@ -16,10 +16,10 @@ exports.crearPublicacion = async (req, res) => {
         console.error(error);
         return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
     }
-};
+}
 
 // Modificar una publicación
-exports.modificarPublicacion = async (req, res) => {
+export async function modificarPublicacion(req, res) {
     try {
         const datos = req.body; // Obtener los datos del cuerpo de la solicitud
         const resultado = await gestorPublicaciones.modificarPublicacion(datos);
@@ -32,10 +32,10 @@ exports.modificarPublicacion = async (req, res) => {
         console.error(error);
         return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
     }
-};
+}
 
 // Eliminar una publicación
-exports.eliminarPublicacion = async (req, res) => {
+export async function eliminarPublicacion(req, res) {
     try {
         const { id } = req.params; // Obtener el ID de la publicación desde los parámetros de la URL
         const resultado = await gestorPublicaciones.eliminarPublicacion(id);
@@ -48,10 +48,10 @@ exports.eliminarPublicacion = async (req, res) => {
         console.error(error);
         return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
     }
-};
+}
 
 // Obtener una publicación
-exports.verPublicacion = async (req, res) => {
+export async function verPublicacion(req, res) {
     try {
         const { id } = req.params; // Obtener el ID de la publicación desde los parámetros de la URL
         const datos = await gestorPublicaciones.verPublicacion(id);
@@ -64,10 +64,10 @@ exports.verPublicacion = async (req, res) => {
         console.error(error);
         return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
     }
-};
+}
 
 // Crear publicación a partir de una plantilla
-exports.crearPlantilla = async (req, res) => {
+export async function crearPlantilla(req, res) {
     try {
         const { id, data } = req.body; // Obtener los datos del cuerpo de la solicitud
         const resultado = await gestorPublicaciones.crearPlantilla(id, data);
@@ -80,10 +80,10 @@ exports.crearPlantilla = async (req, res) => {
         console.error(error);
         return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
     }
-};
+}
 
 // Obtener las fotos de una publicación
-exports.getFotos = async (req, res) => {
+export async function getFotos(req, res) {
     try {
         const { id } = req.params; // Obtener el ID de la publicación desde los parámetros de la URL
         const fotos = await gestorPublicaciones.getFotos(id);
@@ -96,4 +96,72 @@ exports.getFotos = async (req, res) => {
         console.error(error);
         return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
     }
-};
+}
+
+export async function filtrarAutos(req, res) {
+    try {
+        // Desestructuramos el JSON del cuerpo de la solicitud
+        const {
+          marca,
+          modelo,
+          año,
+          placa,
+          precio,
+          negociable,
+          aceptaVehiculos,
+          transmisionTipo,
+          puertas,
+          dimensiones: { largo, ancho, alto },
+          materialAsientos,
+          motor,
+          vidriosElectricos,
+          espejosElectricos,
+          sensoresTraseros,
+          sensoresDelanteros,
+          camaraRetroceso,
+          camara360,
+          sensoresLaterales,
+          tablero,
+          tipoTransmision,
+          tapizado,
+          sonido,
+          estadoVehiculo,
+          leasing,
+        } = req.body;
+    
+        const filtrado = gestorPublicaciones.verPublicacionesFiltradas(
+          marca,
+          modelo,
+          año,
+          placa,
+          precio,
+          negociable,
+          aceptaVehiculos,
+          transmisionTipo,
+          puertas,
+          largo,
+          ancho,
+          alto,
+          materialAsientos,
+          motor,
+          vidriosElectricos,
+          espejosElectricos,
+          sensoresTraseros,
+          sensoresDelanteros,
+          camaraRetroceso,
+          camara360,
+          sensoresLaterales,
+          tablero,
+          tipoTransmision,
+          tapizado,
+          sonido,
+          estadoVehiculo,
+          leasing
+        )
+    
+        res.json(filtrado);
+      } catch (err) {
+        console.error("Error al procesar los datos:", err);
+        res.status(500).send("Error interno del servidor");
+      }
+}

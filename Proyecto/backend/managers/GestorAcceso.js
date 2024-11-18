@@ -1,5 +1,5 @@
 // Se importa la clase Usario
-const Usuario = require('../models/Usuario');
+const Usuario = require('../models/Usuario').default;
 const { getConnection, sql } = require('./conexion');
 
 // Creación de la clase del gesstor

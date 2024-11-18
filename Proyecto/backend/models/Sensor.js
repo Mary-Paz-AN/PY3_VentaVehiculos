@@ -44,4 +44,4 @@ class Sensor {
 
 }
 
-module.exports = Sensor;
+export default Sensor;

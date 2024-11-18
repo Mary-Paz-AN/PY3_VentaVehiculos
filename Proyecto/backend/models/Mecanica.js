@@ -38,4 +38,4 @@ class Mecanica {
     }
 }
 
-module.exports = Mecanica;
+export default Mecanica;

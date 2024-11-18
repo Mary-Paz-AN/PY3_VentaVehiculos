@@ -1,8 +1,8 @@
 // Clases relacionadas
-const Material = require('./Material');
-const Sensor = require('./Sensor');
-const Mecanica = require('./Mecanica');
-const Dimension = require('./Dimension');
+import Material from './Material';
+import Sensor from './Sensor';
+import Mecanica from './Mecanica';
+import Dimension from './Dimension';
 
 // Creación de la clase Vehiculo
 class Vehiculo {
@@ -142,4 +142,4 @@ class Vehiculo {
     }
 }
 
-module.exports = Vehiculo;
+export default Vehiculo;

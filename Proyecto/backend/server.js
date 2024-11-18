@@ -1,3 +1,6 @@
+//Controladores de las funciones.
+import { filtrarAutos } from "./controllers/ControladorPublicacion";
+
 // Dependency for the proper functioning of the server
 const express = require("express");
 const cors = require('cors');
@@ -11,6 +14,9 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: 'http://localhost:3001' }));
+
+//Instancias de controladores
+const GestorPublicacionesI = new GestorPublicaciones();
 
 app.get('/usuario', async (req, res) => {
   try {
@@ -28,81 +34,7 @@ app.get('/usuario', async (req, res) => {
 });
 
 app.post('/filtrarAutosBusqueda', async (req, res) => {
-  try {
-    // Desestructuramos el JSON del cuerpo de la solicitud
-    const {
-      marca,
-      modelo,
-      año,
-      placa,
-      precio,
-      negociable,
-      aceptaVehiculos,
-      transmisionTipo,
-      puertas,
-      dimensiones: { largo, ancho, alto },
-      materialAsientos,
-      motor,
-      vidriosElectricos,
-      espejosElectricos,
-      sensoresTraseros,
-      sensoresDelanteros,
-      camaraRetroceso,
-      camara360,
-      sensoresLaterales,
-      tablero,
-      tipoTransmision,
-      tapizado,
-      sonido,
-      estadoVehiculo,
-      leasing,
-    } = req.body;
-
-    console.log({
-      marca,
-      modelo,
-      año,
-      placa,
-      precio,
-      negociable,
-      aceptaVehiculos,
-      transmisionTipo,
-      puertas,
-      largo,
-      ancho,
-      alto,
-      materialAsientos,
-      motor,
-      vidriosElectricos,
-      espejosElectricos,
-      sensoresTraseros,
-      sensoresDelanteros,
-      camaraRetroceso,
-      camara360,
-      sensoresLaterales,
-      tablero,
-      tipoTransmision,
-      tapizado,
-      sonido,
-      estadoVehiculo,
-      leasing,
-    });
-    
-    res.json([]);
-  } catch (err) {
-    console.error("Error al procesar los datos:", err);
-    res.status(500).send("Error interno del servidor");
-  }
-});
-
-app.post('/realizarReservacion', async (req, res) => {
-  try {
-    
-    res.json(result.recordset);
-  } catch (err) {
-    console.log('Error al ejecutar el procedimiento almacenado:', err);
-    res.status(500).send('Error al realizar la ');
-  }
+  filtrarAutos(req, res)
 });
 
 // Rutas

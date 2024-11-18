@@ -33,3 +33,5 @@ class GestorReservaciones{
     return this.Reservaciones.identificadorPago.pago.pagar(monto, identificador);
   }
 }
+
+export default GestorReservaciones;
