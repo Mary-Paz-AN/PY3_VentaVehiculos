@@ -4,4 +4,4 @@ function poseeProcessoPenal(cedula) {
     return cedulas.includes(cedula);
 }
 
-module.exports = { poseeProcessoPenal };
+export { poseeProcessoPenal };
