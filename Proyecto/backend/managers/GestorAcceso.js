@@ -85,18 +85,18 @@ class GestorAcceso {
             const resultado = await crearCuentaBD(user);
 
             if (resultado) {
-                return { success: true, message: 'Usuario registrado correctamente' };
+                return true;
             } else {
                 throw new Error('Error al registrar usuario');
             }
 
         } catch (error) {
-            console.error('Error en crearU:', error);
-            throw new Error('Error al registrar usuario. Por favor, vuelva a inténtalo.');
+            console.error('Error en registrarse:', error);
+            throw new Error(error.message || 'Error al registrar usuario. Por favor, vuelva a intentarlo.');
         }
     }
 
-    async crearCuentaBD(usuer) {
+    async crearCuentaBD(user) {
         try {
             // Obtiene una conexión a la base de datos
             const pool = await getConnection();

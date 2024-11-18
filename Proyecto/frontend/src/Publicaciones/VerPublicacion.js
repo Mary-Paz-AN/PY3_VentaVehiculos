@@ -16,38 +16,7 @@ const VerPublicacion = () => {
     const [key, setKey] = useState('infoGeneral');
     const navigate = useNavigate();
 
-    const [data, setData] = useState({
-        placa: '',
-        marca: '',
-        modelo: '',
-        anio: '',
-        tipo: '',
-        motor: '',
-        sistemaSonido: '',
-        tablero: '',
-        cantidadPuertas: '',
-        estado: '',
-        asientos: '',//eq
-        tapizado: '',//eq
-        sensorTrasero: false,//eq
-        sensorDelantero: false,//eq
-        sensorLateral: false,//eq
-        camaraRetroceso: false,//eq
-        camara360: false,//eq
-        traccion: '',
-        vidriosElec: false,//eq
-        espejosElec: false,//eq
-        transmision: '',
-        largo: 0.0,//d
-        alto: 0.0,//d
-        ancho: 0.0,//d
-        precio: 0.0,//pa
-        negociable: false,//pa
-        recibeVehiculo: false,//pa
-        leasing: false,//pa
-        fotosInternas: [],
-        fotosExternas: [],
-    });
+    const [data, setData] = useState({});
 
     // Función para unir las fotos
     const unirFotos = (internas, externas) => {
@@ -108,6 +77,8 @@ const VerPublicacion = () => {
             negociable: true,
             recibeVehiculo: false,
             leasing: false,
+            fechaPublicacion: '2024-10-04 12:30:89',
+            fechaModificacion: '2024-10-04 12:30:89',
             fotosInternas: ['/images/car.jpg', '/images/car.jpg', '/images/car.jpg', '/images/Carrusel1.png'], 
             fotosExternas: ['/images/car.jpg', '/images/car.jpg', '/images/car.jpg', '/images/Carrusel2.png'],
         };
@@ -249,6 +220,14 @@ const VerPublicacion = () => {
                                     <ListGroup.Item className="d-flex justify-content-between align-items-center">
                                         <span className="tituloInfo">{t('estadoV')}</span>
                                         <span className="datoInfo">{data.estado}</span>
+                                    </ListGroup.Item>
+                                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                                        <span className="tituloInfo">{t('fechaPublicacion')}</span>
+                                        <span className="datoInfo">{data.fechaPublicacion}</span>
+                                    </ListGroup.Item>
+                                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                                        <span className="tituloInfo">{t('fechaModificacion')}</span>
+                                        <span className="datoInfo">{data.fechaModificacion ? data.fechaModificacion : t('fechaModiMenj')}</span>
                                     </ListGroup.Item>
                                 </ListGroup>
                             </Tab>

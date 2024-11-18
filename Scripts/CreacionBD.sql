@@ -116,7 +116,7 @@ CREATE TABLE Publicacion (
 	IdPublicacion INT PRIMARY KEY IDENTITY(1, 1),
 	NumeroCedula VARCHAR(12) NOT NULL,
 	Placa VARCHAR(6) NOT NULL,
-	PrecioColones INT NOT NULL,
+	PrecioColones REAL NOT NULL,
 	PrecioNegociable BIT NOT NULL,
 	RecibeVehiculoPago BIT NOT NULL,
 	AsociadoALeasing BIT NOT NULL,

@@ -241,7 +241,9 @@ i18n.use(initReactI18next).init( {
             fetchUsuario: "Usuario o contraseña incorrectos.",
             fetchCorreo: "Correo electrónico o contraseña incorrectos.",
             fetchCuenta: "Hubo un error al cargar los datos, por favor, intente nuevamente.",
-            fechaPublicacion: "Fecha de publicación"
+            fechaPublicacion: "Fecha de publicación",
+            fechaModificacion: "Fecha de modificación",//
+            fechaModiMenj: "No hay modificaciones",
 
         },
     },
