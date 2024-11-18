@@ -9,4 +9,4 @@ function esCedulaValida(cedula) {
     return cedulas.includes(cedula);
 }
 
-module.exports = { esPlacaValida, esCedulaValida };
+export { esPlacaValida, esCedulaValida };
