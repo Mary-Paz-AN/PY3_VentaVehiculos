@@ -182,7 +182,7 @@ const Publicaciones = () => {
                                 <Card style={{ width: '100%' }}>
                                     <Card.Img variant="top" src='/images/car.jpg' /> {/* Foto base para prueba (Hay que cambiar) */}
                                     <Card.Body>
-                                        <Card.Title>{publicacion.marcaModelo}</Card.Title>
+                                        <Card.Title>{publicacion.marca} {publicacion.modelo}</Card.Title>
                                         <ListGroup variant="flush">
                                             <ListGroup.Item>{t('placa')}: {publicacion.placa}</ListGroup.Item>
                                             <ListGroup.Item>{t('motor')}: {publicacion.motor}</ListGroup.Item>

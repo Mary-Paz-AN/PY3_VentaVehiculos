@@ -72,7 +72,7 @@ const VerPublicacion = () => {
     }, [idPublicacion]); 
 
     useEffect(() => {
-        //Fotos predeterminadas por falta de manejo en ellas (Hay que hacer cambio)
+        //Fotos predeterminadas de prueba (Hay que hacer cambio)
         const fotosInternas = ['/images/ao1.jpg', '/images/ao1-2.jpg', '/images/ao1-3.jpg', '/images/ao1-4.jpg'];
         const fotosExternas = ['/images/ao1-5.jpg', '/images/car.jpg', '/images/Carrusel1.png', '/images/Carrusel2.png'];
 

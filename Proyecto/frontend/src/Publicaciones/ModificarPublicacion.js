@@ -48,43 +48,33 @@ const ModificarPublicacion = () => {
 
     // Carga los datos de la plantilla si es que se usa una
     useEffect(() => {
-        //Logica api
+        //Llama al api para conseguir la infromación
+        fetch(`/api/publicaciones/v1/publicacion/${idPublicacion}`)
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('Error: ' + res.statusText);
+                }
 
-        const nuevaData = {
-            placa: 'NUT-879',
-            marca: 'Toyota',
-            modelo: 'SM-99',
-            anio: '2015',
-            tipo: 'Sedán',
-            motor: 'Diesel',
-            sistemaSonido: 'Estándar',
-            tablero: 'Ambos',
-            cantidadPuertas: '4',
-            estado: '2',
-            asientos: 'Tela',
-            tapizado: 'Plástico',
-            sensorTrasero: false,
-            sensorDelantero: false,
-            sensorLateral: false,
-            camaraRetroceso: true,
-            camara360: false,
-            traccion: '4x4',
-            vidriosElec: true,
-            espejosElec: true,
-            transmision: 'Manual',
-            largo: 120.0,
-            alto: 60.0,
-            ancho: 80.0,
-            precio: 10000.0,
-            negociable: true,
-            recibeVehiculo: false,
-            leasing: false,
-            fotosInternas: ['/images/car.jpg', '/images/car.jpg', '/images/car.jpg', '/images/Carrusel1.png'], 
-            fotosExternas: ['/images/car.jpg', '/images/car.jpg', '/images/car.jpg', '/images/Carrusel2.png'],
-        };
-    
-        setData(nuevaData);
-    }, []);
+                return res.json();
+            })
+            .then((dataFetch) => {
+                setData(dataFetch);
+
+                //Fotos de prueba (Hay que cambiar)
+                setData((prevData) => ({
+                    ...prevData,  
+                    fotosInternas: ['/images/ao1.jpg', '/images/ao1-2.jpg', '/images/ao1-3.jpg', '/images/ao1-4.jpg'],
+                    fotosExternas: ['/images/ao1-5.jpg', '/images/car.jpg', '/images/Carrusel1.png', '/images/Carrusel2.png'],
+                }));
+            })
+            .catch((err) => {
+                console.error("Hubo un error al cargar los datos, por favor, intente nuevamente.", err);
+                setMensaje("Hubo un error al cargar los datos, por favor, intente nuevamente.");
+                setShow(true);
+            }
+        );
+
+    }, [idPublicacion]); 
 
     // Lista para precargar los selects
     const tiposVehiculo = ["Sedán", "Camioneta", "Sedán de lujo", "SUV", "Miniván"];
@@ -123,7 +113,6 @@ const ModificarPublicacion = () => {
     // Vuelve a mis publicaciones 
     const misPublicaciones = () => {
         navigate('/publicaciones/misPublicaciones');
-        console.log(idPublicacion);
     };
 
     //Verifica que los datos cumplan con sus requisitos
@@ -235,10 +224,28 @@ const ModificarPublicacion = () => {
     }
 
     // Guarda los datos
-    const modificarAuto = () => {
+    const modificarAuto = async () => {
         if(verificarDatos()) {
-            //Logica del API
-            misPublicaciones();
+            try {
+                const respuesta = await fetch('/api/publicaciones/v5/publicacion', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json', 
+                    },
+                    body: JSON.stringify(data) 
+                });
+    
+                if (respuesta.ok) {
+                    misPublicaciones(); 
+                } else {
+                    throw new Error(`Error: ${respuesta.status}`);
+                }
+    
+            } catch (error) {
+                console.error('Error: Hubo un error al modificar la publicación', error);
+                setMensaje('Error: Hubo un error al modificar la publicación');
+                setShow(true);
+            }
         }
     }
 
@@ -304,7 +311,7 @@ const ModificarPublicacion = () => {
                                             placeholder={t('placeHolderYear')} 
                                             value={data.anio}
                                             onChange={handleChange}
-                                            name = "year"
+                                            name = "anio"
                                             aria-required="true" 
                                             aria-describedby="yearHelp" />
                                     </Form.Group>
@@ -314,7 +321,7 @@ const ModificarPublicacion = () => {
                                         <Form.Label style={{color: "#1f365d"}}>{t('tipo')}</Form.Label>
                                         <Form.Select 
                                             aria-label="Select tipo de carrocería" 
-                                            name='tipoVehiculo'
+                                            name='tipo'
                                             value={data.tipo}
                                             onChange={handleChange}
                                         >
@@ -411,7 +418,7 @@ const ModificarPublicacion = () => {
                                         <Form.Label style={{color: "#1f365d"}}>{t('asiento')}</Form.Label>
                                         <Form.Select 
                                             aria-label="Select del material del asiento" 
-                                            name='asiento'
+                                            name='asientos'
                                             value={data.asientos}
                                             onChange={handleChange}
                                         >
@@ -606,7 +613,7 @@ const ModificarPublicacion = () => {
                                             step="0.01" 
                                             value={data.ancho}
                                             onChange={handleChange}
-                                            name = "user"
+                                            name = "ancho"
                                             aria-required="true" 
                                             aria-describedby="anchoHelp" />
                                     </Form.Group>
@@ -621,7 +628,7 @@ const ModificarPublicacion = () => {
                                             step="0.01"  
                                             value={data.precio}
                                             onChange={handleChange}
-                                            name = "user"
+                                            name = "precio"
                                             aria-required="true" 
                                             aria-describedby="precioHelp" />
                                         <Form.Text id="precioHelp" className="text-muted">{t('descripPrecio')}</Form.Text>

@@ -7,7 +7,6 @@ class GestorPublicaciones {
     // Crear una publicacion desde 0
     async crearPublicacion(datos) {
         try {
-            console.log(datos);
             //Crea una instancia de pubicación
             const nuevaPublicacion = new Publicacion(
                 datos.cedula, 
@@ -302,7 +301,6 @@ class GestorPublicaciones {
             request.input('ancho', sql.Real, datos.alto);
             request.input('alto', sql.Real, datos.ancho);
 
-            request.input('cedula', sql.VarChar, datos.cedulaUsuario);
             request.input('precio', sql.Real, datos.precio);
             request.input('negociable', sql.Bit, datos.negociable);
             request.input('recibeVehiculo', sql.Bit, datos.recibeVehiculo);

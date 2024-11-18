@@ -16,7 +16,7 @@ router.post('/v2/publicacion', controladorPublicaciones.crearPublicacion);
 router.post('/v3/publicacion', controladorPublicaciones.crearPlantilla);
 
 // Ruta para modificar una publicación
-router.put('/misPublicaciones', controladorPublicaciones.modificarPublicacion);
+router.put('/v5/publicacion', controladorPublicaciones.modificarPublicacion);
 
 // Ruta para eliminar una publicación
 router.delete('/v4/publicacion/:idPublicacion', controladorPublicaciones.eliminarPublicacion);
