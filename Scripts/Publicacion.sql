@@ -358,7 +358,7 @@ BEGIN
         BEGIN TRANSACTION;
 
         -- Eliminar Fotos
-        DELETE FROM Fotos WHERE IdPublicacion = @id;
+        --DELETE FROM Fotos WHERE IdPublicacion = @id;
 
 		-- Conseguir la placa asociada a la publicación
 		DECLARE @placa VARCHAR(6);
@@ -413,7 +413,7 @@ SELECT
 	V.Placa AS placa,
 	V.Marca AS marca,
 	V.Modelo AS modelo,
-	v.Anio AS anio,
+	V.Anio AS anio,
 	V.Motor AS motor,
 	V.TipoVehiculo AS tipo,
 	V.SistemaSonido AS sistemaSonido,
@@ -460,6 +460,7 @@ BEGIN
 		marca,
 		modelo,
 		anio,
+		motor,
 		tipo,
 		sistemaSonido,
 		tablero,
@@ -493,17 +494,18 @@ SELECT
 	V.Placa AS placa,
 	V.Marca AS marca,
 	V.Modelo AS modelo,
-	v.Anio AS anio,
-	V.TipoVehiculo AS tipo,
-	F.Imagen AS foto
+	V.Anio AS anio,
+	V.Motor AS motor,
+	V.TipoVehiculo AS tipo
+	--F.Imagen AS foto
 FROM Publicacion AS P
-INNER JOIN Vehiculo AS V ON P.Placa = V.Placa
-CROSS APPLY (
-    SELECT TOP 1 Imagen 
-    FROM Fotos AS F 
-    WHERE F.IdPublicacion = P.IdPublicacion
-	ORDER BY F.EsInterna DESC
-) AS F;
+INNER JOIN Vehiculo AS V ON P.Placa = V.Placa;
+--CROSS APPLY (
+--    SELECT TOP 1 Imagen 
+--    FROM Fotos AS F 
+--    WHERE F.IdPublicacion = P.IdPublicacion
+--	ORDER BY F.EsInterna DESC
+--) AS F;
 GO
 
 -- Procedure para buscar las publicaciones de un usuario
@@ -519,8 +521,9 @@ BEGIN
 	marca,
 	modelo,
 	anio,
-	tipo,
-	foto
+	motor,
+	tipo
+	--foto
 	FROM vw_misPublicaciones 
 	WHERE cedula = @cedula;
 END;
@@ -606,7 +609,3 @@ BEGIN
 END;
 
 GO
-
-select * from Vehiculo
-
-delete from vehiculo

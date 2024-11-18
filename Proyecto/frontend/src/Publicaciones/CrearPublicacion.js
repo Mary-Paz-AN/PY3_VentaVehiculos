@@ -81,9 +81,11 @@ const CrearPublicacion = () => {
 
     // Carga los datos de la plantilla si es que se usa una
     useEffect(() => {
-        if (plantilla && plantilla.trim() !== "") { 
+        if (plantilla === "null" || plantilla.trim() === "") { 
+            setPlantilla(false); 
+        } else {
             try {
-                // Decodifica y parsea la plantilla 
+                // Decodifica y parsea la plantilla
                 const decodedPlantilla = JSON.parse(decodeURIComponent(plantilla));
                 setData((prevData) => ({
                     ...prevData,
@@ -96,12 +98,10 @@ const CrearPublicacion = () => {
             } finally {
                 setIsLoading(false);
             }
-        } else {
-            setIsLoading(false);
         }
     }, [plantilla]);
     
-
+    //Loading para la plantilla
     if (isLoading) {
         return (
             <Container className="flex-grow-1 d-flex justify-content-center align-items-center" aria-labelledby="cargando">
@@ -331,6 +331,7 @@ const CrearPublicacion = () => {
 
     // Guarda los datos
     const registrarAuto = async () => {
+        
         if (verificarDatos()) {
             try {
                 /*const formData = new FormData();
@@ -379,8 +380,7 @@ const CrearPublicacion = () => {
                 formData.append("alto", data.alto);
                 formData.append("ancho", data.ancho);*/
 
-                const link = isPlantilla ? '/api/publicaciones/v2/publicacion' : '/api/publicaciones/v2/publicacion';
-                console.log(data);
+                const link = isPlantilla ? '/api/publicaciones/v3/publicacion' : '/api/publicaciones/v2/publicacion';
                 const respuesta = await fetch(link, {
                     method: 'POST',
                     headers: {
