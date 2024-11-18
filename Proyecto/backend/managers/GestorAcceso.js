@@ -1,6 +1,8 @@
 // Se importa la clase Usario
 const Usuario = require('../models/Usuario');
 const { getConnection, sql } = require('./conexion');
+import { esCedulaValida } from '../APIs/APIRegistroCivil';
+import { poseeProcessoPenal } from '../APIs/APITSE';
 
 // Creación de la clase del gesstor
 class GestorAcceso {
