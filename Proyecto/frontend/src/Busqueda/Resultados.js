@@ -16,7 +16,7 @@ const BuscarAutos = () => {
 
   const traerVehiculos = async (datosJSON) => {
     try {
-      const response = await fetch("http://localhost:3001/filtrarAutosBusqueda", {
+      const response = await fetch("/filtrarAutosBusqueda", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,7 +53,7 @@ const BuscarAutos = () => {
 
       <div className={styles.containerFluid}>
         <div className={styles.sidebar}>
-          <BarraFiltroBusquedaAutos onSearch={() => traerVehiculos} />
+          <BarraFiltroBusquedaAutos traerVehiculos={traerVehiculos} />
         </div>
 
         {/* Resultados de búsqueda */}

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './BarraFiltroBuscarAuto.module.css';
 
-const BarraFiltroBusquedaAutos = ({ onSearch }) => {
+const BarraFiltroBusquedaAutos = ({ traerVehiculos }) => {
   const { t } = useTranslation();
   const [filters, setFilters] = useState({
     marca: '',
@@ -42,6 +42,10 @@ const BarraFiltroBusquedaAutos = ({ onSearch }) => {
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
+
+  const enviarFiltros = () => {
+    traerVehiculos(filters)
+  }
 
   return (
     <div className={styles.barraLateral}>
@@ -236,7 +240,7 @@ const BarraFiltroBusquedaAutos = ({ onSearch }) => {
       </div>
 
       <div class = {styles.filtros}>
-        <button onClick={ () => onSearch(filters) } class = {styles.botonFiltrar}>{t('filtrar')}</button>
+        <button onClick={ enviarFiltros } class = {styles.botonFiltrar}>{t('filtrar')}</button>
       </div>
     </div>
   );
