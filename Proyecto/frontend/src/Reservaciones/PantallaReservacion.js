@@ -28,7 +28,7 @@ const ReservarAuto = ({ vehiculo }) => {
     alert(t('¡Reserva completada!'));
   };
 
-  const precioDolares = (vehiculo.precio / tipoCambio).toFixed(2);
+  const precioDolares = 0;//(vehiculo.precio / tipoCambio).toFixed(2);
 
   return (
     <div className={`${styles.reservarAuto} container`}>
