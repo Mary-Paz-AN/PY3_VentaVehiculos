@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { crearPublicacion, crearPlantilla, modificarPublicacion, eliminarPublicacion, getFotos, verPublicacion } from '../controllers/ControladorPublicacion.js';
+import { crearPublicacion, crearPlantilla, modificarPublicacion, eliminarPublicacion, getFotos, verPublicacion, misPublicaciones } from '../controllers/ControladorPublicacion.js';
 
 /* Dependencia para las imagenes
 const multer = require('multer');
@@ -28,6 +28,6 @@ router.get('/publicacion/fotos/:id', getFotos);
 router.get('/v1/publicacion/:idPublicacion', verPublicacion);
 
 // Ruta para obtener las publicaciones de un usuario
-//router.get('/misPubliciones/:cedula', misPublicaciones);
+router.get('/misPubliciones/:cedula', misPublicaciones);
 
 export default router;
