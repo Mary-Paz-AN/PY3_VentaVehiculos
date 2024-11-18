@@ -16,6 +16,7 @@ const BuscarAutos = () => {
 
   const traerVehiculos = async (datosJSON) => {
     try {
+      console.log(datosJSON);
       const response = await fetch("/filtrarAutosBusqueda", {
         method: "POST",
         headers: {

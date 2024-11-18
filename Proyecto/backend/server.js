@@ -87,8 +87,8 @@ app.post('/filtrarAutosBusqueda', async (req, res) => {
       estadoVehiculo,
       leasing,
     });
-
-    res.status(200).send("Datos recibidos correctamente");
+    
+    res.json([]);
   } catch (err) {
     console.error("Error al procesar los datos:", err);
     res.status(500).send("Error interno del servidor");
