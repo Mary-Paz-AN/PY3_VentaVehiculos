@@ -242,13 +242,13 @@ i18n.use(initReactI18next).init( {
             fetchCorreo: "Correo electrónico o contraseña incorrectos.",
             fetchCuenta: "Hubo un error al cargar los datos, por favor, intente nuevamente.",
             fechaPublicacion: "Fecha de publicación",
-            fechaModificacion: "Fecha de modificación",//
-            fechaModiMenj: "No hay modificaciones",
-            alertaCantidadComparacionesMaxima: "No se puede comparar más de tres de autos",
-            alertaCantidadComparacionesMinima: "No se puede comparar menos de dos de autos",
-            alertaComparacionRepetida: "No se pueden comparar los mismos autos",
-            campoIdentV: "La identificación no es valida.",
-            campoIdenP: "La persona de la identificacion posee processos penales abiertos. Por lo que no puede crear una cuenta",
+            fechaModificacion: "Fecha de modificación", 
+            fechaModiMenj: "No se registraron modificaciones", 
+            alertaCantidadComparacionesMaxima: "No es posible comparar más de tres autos", 
+            alertaCantidadComparacionesMinima: "Es necesario comparar al menos dos autos", 
+            alertaComparacionRepetida: "No es posible comparar los mismos autos", 
+            campoIdentV: "La identificación no es válida.", 
+            campoIdenP: "La persona con esta identificación tiene procesos penales abiertos, por lo que no puede crear una cuenta."
         },
     },
     en: {
@@ -488,9 +488,14 @@ i18n.use(initReactI18next).init( {
           fetchCorreo: "Incorrect email or password.",
           fetchCuenta: "An error occurred while loading the data. Please try again.",
           fechaPublicacion: "Publication date",
-          alertaCantidadComparacionesMaxima: "You can't compare more than three cars.",
-          alertaCantidadComparacionesMinima: "You can't compare less than two cars",
-          alertaComparacionRepetida: "You can't compare the same cars",
+          fechaModificacion: "Modification Date", 
+          fechaModiMenj: "No modifications available", 
+          alertaCantidadComparacionesMaxima: "You cannot compare more than three cars", 
+          alertaCantidadComparacionesMinima: "You cannot compare fewer than two cars", 
+          alertaComparacionRepetida: "You cannot compare the same cars", 
+          campoIdentV: "The identification is not valid.", 
+          campoIdenP: "The person with this identification has open criminal proceedings and cannot create an account."
+
       },
     },
   },

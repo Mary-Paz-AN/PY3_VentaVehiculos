@@ -6,18 +6,31 @@ const gestorPublicaciones = new GestorPublicaciones();
 export async function crearPublicacion(req, res) {
     try {
         // Procesar los datos
-        const datos = req.body;  // Los datos normales
-        const fotosInternas = req.files.filter(file => file.fieldname === 'fotosInternas');
-        const fotosExternas = req.files.filter(file => file.fieldname === 'fotosExternas');
-
-        // Aquí puedes procesar los archivos si es necesario, o guardarlos en una base de datos
-
-        console.log(datos);  // Datos de la publicación
-        console.log(fotosInternas);  // Archivos de fotos internas
-        console.log(fotosExternas);  // Archivos de fotos externas
+        const datos = req.body;  
 
         // Llamar al gestor para crear la publicación
-        const resultado = await gestorPublicaciones.crearPublicacionBD(datos, fotosInternas, fotosExternas);
+        const resultado = await gestorPublicaciones.crearPublicacion(datos);
+
+        // Verificar que todo salió bien y devolver la respuesta
+        if (resultado) {
+            return res.status(201).json({ message: 'Publicación creada exitosamente' });
+        } else {
+            return res.status(400).json({ message: 'Error al crear la publicación' });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
+    }
+}
+
+// Crear una publicación por medio de una plantilla
+export async function crearPlantilla(req, res) {
+    try {
+        // Procesar los datos
+        const datos = req.body;  
+
+        // Llamar al gestor para crear la publicación
+        const resultado = await gestorPublicaciones.crearPlantilla(datos);
 
         // Verificar que todo salió bien y devolver la respuesta
         if (resultado) {
@@ -105,8 +118,8 @@ export async function verPublicacion(req, res) {
     }
 }
 
-// Crear publicación a partir de una plantilla
-export async function crearPlantilla(req, res) {
+// Busca las publicaciones del usuario por medio de la cedula
+export async function misPublicaciones(req, res) {
     try {
         const { cedula } = req.params;
         const publicaciones = await gestorPublicaciones.misPublicaciones(cedula);

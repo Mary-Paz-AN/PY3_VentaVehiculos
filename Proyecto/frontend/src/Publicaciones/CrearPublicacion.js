@@ -175,7 +175,7 @@ const CrearPublicacion = () => {
     };
 
     //Verifica que los datos cumplan con sus requisitos
-    const verificarDatos = () => {
+    const verificarDatos = async () => {
         const errores = [];
 
         // Validar la placa
@@ -210,7 +210,17 @@ const CrearPublicacion = () => {
 
             //Comprobar validez de la placa y las multas
             if(esValida) {
-                console.log('valida');
+                //Validar la placa 
+                const valida = await validarPlaca(placa);
+                if(!valida) {
+                    errores.push(t('campoPlaca4'));
+                }
+
+                //Validar multas
+                const noMulta  = await validarMulta(placa);
+                if(!noMulta) {
+                    errores.push(t('campoPlaca5'));
+                }
             }
         }
 
@@ -318,10 +328,64 @@ const CrearPublicacion = () => {
         return true; 
     }
 
+    //Validar si la placa es valida y existe
+    const validarPlaca = async (placa) => {
+        try {
+            const respuesta = await fetch('/api/cuenta/v1/registrarse', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ placa: placa }),
+            });
+    
+            if (respuesta.ok) {
+                const data = await respuesta.json(); 
+
+                return data.valido; 
+            } else {
+                throw new Error(`Error: ${respuesta.status}`);
+            }
+            
+
+        } catch (error) {
+            console.error('Error: Ocurrio un error valdiando los datos');
+            setMensaje('Error: Ocurrio un error valdiando los datos');
+            setShow(true);
+        }
+    }
+
+    //Validar si el vehiculo posee multas o algún otro processo
+    const validarMulta = async (placa) => {
+        try {
+            const respuesta = await fetch('/api/cuenta/v1/registrarse', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ placa: placa }),
+            });
+    
+            if (respuesta.ok) {
+                const data = await respuesta.json(); 
+
+                return data.valido; 
+            } else {
+                throw new Error(`Error: ${respuesta.status}`);
+            }
+            
+
+        } catch (error) {
+            console.error('Error: Ocurrio un error valdiando los datos');
+            setMensaje('Error: Ocurrio un error valdiando los datos');
+            setShow(true);
+        }
+    }
+
     // Guarda los datos
     const registrarAuto = async () => {
-        
-        if (verificarDatos()) {
+        const validos = await verificarDatos();
+        if (validos) {
             try {
                 /*const formData = new FormData();
 
