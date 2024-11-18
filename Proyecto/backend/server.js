@@ -97,7 +97,7 @@ app.post('/filtrarAutosBusqueda', async (req, res) => {
   }
 });
 
-app.get('/usuario', async (req, res) => {
+app.get('/realizarRouter', async (req, res) => {
   try {
     
     res.json(result.recordset);
