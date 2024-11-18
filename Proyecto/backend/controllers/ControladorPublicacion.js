@@ -34,19 +34,8 @@ async function crearPublicacion(req, res) {
 // Crear una publicación
 async function crearPublicacion(req, res) {
     try {
-        // Procesar los datos
-        const datos = req.body;  // Los datos normales
-        const fotosInternas = req.files.filter(file => file.fieldname === 'fotosInternas');
-        const fotosExternas = req.files.filter(file => file.fieldname === 'fotosExternas');
-
-        // Aquí puedes procesar los archivos si es necesario, o guardarlos en una base de datos
-
-        console.log(datos);  // Datos de la publicación
-        console.log(fotosInternas);  // Archivos de fotos internas
-        console.log(fotosExternas);  // Archivos de fotos externas
-
-        // Llamar al gestor para crear la publicación
-        const resultado = await gestorPublicaciones.crearPublicacionBD(datos, fotosInternas, fotosExternas);
+        const datos = req.body; 
+        const resultado = await gestorPublicaciones.crearPublicacion(datos);
 
         // Verificar que todo salió bien y devolver la respuesta
         if (resultado) {

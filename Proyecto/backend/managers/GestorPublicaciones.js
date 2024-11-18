@@ -7,6 +7,7 @@ class GestorPublicaciones {
     // Crear una publicacion desde 0
     async crearPublicacion(datos) {
         try {
+            console.log(datos);
             //Crea una instancia de pubicación
             const nuevaPublicacion = new Publicacion(
                 datos.cedula, 
