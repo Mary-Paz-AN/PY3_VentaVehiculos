@@ -1,5 +1,6 @@
 // Dependency for the proper functioning of the server
 const express = require("express");
+const cors = require('cors');
 const rutasUsuario = require('./routes/RutasUsuario');
 
 // Constants
@@ -9,6 +10,7 @@ const PORT = process.env.PORT || 3001;
 // Manejo de JSONS
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({ origin: 'http://localhost:3001' }));
 
 app.get('/usuario', async (req, res) => {
   try {
@@ -36,8 +38,6 @@ app.post('/filtrarAutosBusqueda', async (req, res) => {
       precio,
       negociable,
       aceptaVehiculos,
-      fotosInternas,
-      fotosExternas,
       transmisionTipo,
       puertas,
       dimensiones: { largo, ancho, alto },
@@ -66,8 +66,6 @@ app.post('/filtrarAutosBusqueda', async (req, res) => {
       precio,
       negociable,
       aceptaVehiculos,
-      fotosInternas,
-      fotosExternas,
       transmisionTipo,
       puertas,
       largo,
@@ -97,7 +95,7 @@ app.post('/filtrarAutosBusqueda', async (req, res) => {
   }
 });
 
-app.get('/realizarRouter', async (req, res) => {
+app.post('/realizarReservacion', async (req, res) => {
   try {
     
     res.json(result.recordset);

@@ -1,7 +1,7 @@
 USE AutosUsados;
 GO
 
--- Procedure para insertar los datos de la publicación
+-- Procedure para insertar los datos de la publicaciï¿½n
 CREATE PROCEDURE sp_crearP
 	@idPublicacion INT OUTPUT,
     @placa VARCHAR(6),
@@ -36,7 +36,7 @@ CREATE PROCEDURE sp_crearP
 AS
 BEGIN
     BEGIN TRY
-        -- Iniciar la transacción
+        -- Iniciar la transacciï¿½n
         BEGIN TRANSACTION
 
         -- Insertar en Vehiculo
@@ -131,14 +131,14 @@ BEGIN
 			@recibeVehiculo, 
 			@leasing);
 
-		--Conseguir el id de la insercción recien hecha
+		--Conseguir el id de la insercciï¿½n recien hecha
 		SET @idPublicacion = SCOPE_IDENTITY();
 
         COMMIT TRANSACTION
 
     END TRY
     BEGIN CATCH
-        -- Mostrar un error y realizar el rollback en caso de que ocurra un error en la insercción de datos
+        -- Mostrar un error y realizar el rollback en caso de que ocurra un error en la insercciï¿½n de datos
         ROLLBACK TRANSACTION
         DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT
         SELECT @ErrorMessage = ERROR_MESSAGE(), 
@@ -157,7 +157,7 @@ CREATE PROCEDURE sp_fotosP
 AS
 BEGIN
     BEGIN TRY
-        -- Iniciar la transacción
+        -- Iniciar la transacciï¿½n
         BEGIN TRANSACTION;
 
         -- Insertar en Fotos
@@ -174,7 +174,7 @@ BEGIN
 
     END TRY
     BEGIN CATCH
-        -- Mostrar un error y realizar el rollback en caso de que ocurra un error en la insercción de datos
+        -- Mostrar un error y realizar el rollback en caso de que ocurra un error en la insercciï¿½n de datos
         DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
         SELECT @ErrorMessage = ERROR_MESSAGE(),
                @ErrorSeverity = ERROR_SEVERITY(),
@@ -219,7 +219,7 @@ CREATE PROCEDURE sp_modiP
 AS
 BEGIN
     BEGIN TRY
-        -- Iniciar la transacción
+        -- Iniciar la transacciï¿½n
         BEGIN TRANSACTION;
 
         -- Actualizar Vehiculo
@@ -280,12 +280,12 @@ BEGIN
             AsociadoALeasing = @leasing
         WHERE Placa = @placa;
 
-        -- Confirmar la transacción
+        -- Confirmar la transacciï¿½n
         COMMIT TRANSACTION;
 
     END TRY
     BEGIN CATCH
-        -- Mostrar un error y realizar el rollback en caso de que ocurra un error en la actualización de datos
+        -- Mostrar un error y realizar el rollback en caso de que ocurra un error en la actualizaciï¿½n de datos
         ROLLBACK TRANSACTION;
         DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
         SELECT @ErrorMessage = ERROR_MESSAGE(), 
@@ -303,7 +303,7 @@ CREATE PROCEDURE sp_modiFotosP
 AS
 BEGIN
     BEGIN TRY
-        -- Iniciar la transacción
+        -- Iniciar la transacciï¿½n
         BEGIN TRANSACTION;
 
         -- Actualizar Fotos
@@ -316,7 +316,7 @@ BEGIN
 
     END TRY
     BEGIN CATCH
-        -- Mostrar un error y realizar el rollback en caso de que ocurra un error en la insercción de datos
+        -- Mostrar un error y realizar el rollback en caso de que ocurra un error en la insercciï¿½n de datos
         DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
         SELECT @ErrorMessage = ERROR_MESSAGE(),
                @ErrorSeverity = ERROR_SEVERITY(),
@@ -335,7 +335,7 @@ SELECT
 FROM Fotos;
 GO
 
---Store procedure para buscar las fotos de una publicación
+--Store procedure para buscar las fotos de una publicaciï¿½n
 CREATE PROCEDURE sp_fotos
 	@id INT
 AS
@@ -348,13 +348,13 @@ BEGIN
 END;
 GO
 
--- Store procedure para eliminar una publicación
+-- Store procedure para eliminar una publicaciï¿½n
 CREATE PROCEDURE sp_eliminarP
 	@id INT
 AS
 BEGIN
     BEGIN TRY
-        -- Iniciar la transacción
+        -- Iniciar la transacciï¿½n
         BEGIN TRANSACTION;
 
         -- Eliminar Fotos
@@ -367,7 +367,7 @@ BEGIN
 
     END TRY
     BEGIN CATCH
-        -- Mostrar un error y realizar el rollback en caso de que ocurra un error en la insercción de datos
+        -- Mostrar un error y realizar el rollback en caso de que ocurra un error en la insercciï¿½n de datos
         DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
         SELECT @ErrorMessage = ERROR_MESSAGE(),
                @ErrorSeverity = ERROR_SEVERITY(),
@@ -378,7 +378,7 @@ BEGIN
 END;
 GO
 
--- View para ver la información de una publicación
+-- View para ver la informaciï¿½n de una publicaciï¿½n
 CREATE VIEW vw_publicacion AS
 SELECT 
 	P.IdPublicacion AS id,
@@ -418,8 +418,9 @@ INNER JOIN Materiales AS MA ON V.Placa = MA.Placa
 INNER JOIN Sensores AS S ON V.Placa = S.Placa
 INNER JOIN Mecanica AS M ON V.Placa = M.Placa
 INNER JOIn Dimensiones AS D ON V.Placa = D.Placa
+GO
 
---Store Procedure para conseguir la información dependiedo del id de la publicación
+--Store Procedure para conseguir la informaciï¿½n dependiedo del id de la publicaciï¿½n
 CREATE PROCEDURE sp_publicacion 
 	@idPublicacion INT
 AS
@@ -503,3 +504,79 @@ BEGIN
 END;
 GO
 
+
+GO
+CREATE PROCEDURE FiltrarDatosVehiculos
+    @marca VARCHAR(30) = NULL,
+    @modelo VARCHAR(30) = NULL,
+    @anio INT = NULL,
+    @placa VARCHAR(6) = NULL,
+    @precio INT = NULL,
+    @negociable BIT = NULL,
+    @aceptaVehiculos BIT = NULL,
+    @transmisionTipo VARCHAR(30) = NULL,
+    @puertas INT = NULL,
+    @largo REAL = NULL,
+	@ancho REAL = NULL,
+	@alto REAL = NULL,
+    @materialAsientos VARCHAR(45) = NULL,
+    @motor VARCHAR(30) = NULL,
+    @vidriosElectricos BIT = NULL,
+    @espejosElectricos BIT = NULL,
+    @sensoresTraseros BIT = NULL,
+    @sensoresDelanteros BIT = NULL,
+    @camaraRetroceso BIT = NULL,
+    @camara360 BIT = NULL,
+    @sensoresLaterales BIT = NULL,
+    @tablero VARCHAR(30) = NULL,
+    @tipoTransmision VARCHAR(30) = NULL,
+    @tapizado VARCHAR(30) = NULL,
+    @sonido VARCHAR(30) = NULL,
+    @estadoVehiculo INT = NULL,
+    @leasing BIT = NULL
+AS
+BEGIN
+    SELECT 
+        *
+    FROM 
+        Vehiculo V
+    INNER JOIN 
+		Publicacion P ON V.Placa = P.Placa
+    LEFT JOIN 
+		Materiales MT ON V.Placa = MT.Placa
+    LEFT JOIN 
+		Sensores S ON V.Placa = S.Placa
+    LEFT JOIN 
+		Mecanica M ON V.Placa = M.Placa
+    LEFT JOIN 
+		Dimensiones D ON V.Placa = D.Placa
+    WHERE
+        (@marca IS NULL OR V.Marca = @marca) AND
+        (@modelo IS NULL OR V.Modelo = @modelo) AND
+        (@anio IS NULL OR V.Anio = @anio) AND
+        (@placa IS NULL OR V.Placa = @placa) AND
+        (@precio IS NULL OR P.PrecioColones = @precio) AND
+        (@negociable IS NULL OR P.PrecioNegociable = @negociable) AND
+        (@aceptaVehiculos IS NULL OR P.RecibeVehiculoPago = @aceptaVehiculos) AND
+        (@transmisionTipo IS NULL OR M.TipoTransmicion = @transmisionTipo) AND
+        (@puertas IS NULL OR V.CantidadPuertas = @puertas) AND
+        (@largo IS NULL OR D.Largo = @largo) AND
+        (@ancho IS NULL OR D.Ancho = @ancho) AND
+        (@alto IS NULL OR D.Alto = @alto) AND
+        (@materialAsientos IS NULL OR MT.MaterialAsientos = @materialAsientos) AND
+        (@motor IS NULL OR V.Motor = @motor) AND
+        (@vidriosElectricos IS NULL OR M.VentanasElectricas = @vidriosElectricos) AND
+        (@espejosElectricos IS NULL OR M.EspejosElectricos = @espejosElectricos) AND
+        (@sensoresTraseros IS NULL OR S.ProximidadTraseros = @sensoresTraseros) AND
+        (@sensoresDelanteros IS NULL OR S.ProximidadDelanteros = @sensoresDelanteros) AND
+        (@camaraRetroceso IS NULL OR S.CamaraRetroceso = @camaraRetroceso) AND
+        (@camara360 IS NULL OR S.Camara360 = @camara360) AND
+        (@sensoresLaterales IS NULL OR S.ProximidadLateral = @sensoresLaterales) AND
+        (@tablero IS NULL OR V.TipoTableroMando = @tablero) AND
+        (@tipoTransmision IS NULL OR M.TipoTransmicion = @tipoTransmision) AND
+        (@tapizado IS NULL OR MT.MaterialTapizado = @tapizado) AND
+        (@sonido IS NULL OR V.SistemaSonido = @sonido) AND
+        (@estadoVehiculo IS NULL OR V.Estado = @estadoVehiculo) AND
+        (@leasing IS NULL OR P.AsociadoALeasing = @leasing);
+END;
+GO
