@@ -36,81 +36,87 @@ GO
 
 -- Store procedure para crear un usuario
 CREATE PROCEDURE sp_CrearUsuario
-	@cedula VARCHAR(12),
+    @cedula VARCHAR(12),
     @usuario VARCHAR(45),
-	@contrasena VARCHAR(15),
+    @contrasena VARCHAR(15),
     @tipoIdentificacion VARCHAR(45),
     @nombre VARCHAR(45),
-	@apellido1 VARCHAR(45),
-    @apellido2 VARCHAR(45),
+    @apellido1 VARCHAR(45),
+    @apellido2 VARCHAR(45) ,
     @nacionalidad VARCHAR(45),
-	@fechaNacimiento DATE,
+    @fechaNacimiento DATE,
     @correo VARCHAR(45),
     @telefono VARCHAR(10),
-	@provincia VARCHAR(30),
-    @canton VARCHAR(30),
-    @distrito VARCHAR(30)
+    @provincia VARCHAR(30),
+    @canton VARCHAR(30),    
+    @distrito VARCHAR(30) 
 AS
 BEGIN
     BEGIN TRY
-        -- Insertar a Usuario
-        INSERT INTO Usuario (
-            NumeroCedula, 
-            Usuario, 
-            Contrasena, 
-            TipoIdentificacion, 
-            Nombre, 
-            ApellidoUno, 
-            ApellidoDos, 
-            Nacionalidad, 
-            FechaNacimiento
-        ) 
-        VALUES (
-            @cedula,
-            @usuario,
-            @contrasena,
-            @tipoIdentificacion,
-            @nombre,
-            @apellido1,
-            @apellido2,
-            @nacionalidad,
-            @fechaNacimiento
-        );
+        -- Iniciar la transacción
+        BEGIN TRANSACTION
 
-        -- Insertar a InformacionContacto
-        INSERT INTO InformacionContacto (
-            NumeroCedula, 
-            CorreoElectronico, 
-            Telefono
-        ) 
-        VALUES (
-            @cedula,
-            @correo,
-            @telefono
-        );
+			-- Insertar a Usuario
+			INSERT INTO Usuario (
+				NumeroCedula, 
+				Usuario, 
+				Contrasena, 
+				TipoIdentificacion, 
+				Nombre, 
+				ApellidoUno, 
+				ApellidoDos, 
+				Nacionalidad, 
+				FechaNacimiento) 
+			VALUES (
+				@cedula,
+				@usuario,
+				@contrasena,
+				@tipoIdentificacion,
+				@nombre,
+				@apellido1,
+				@apellido2,
+				@nacionalidad,
+				@fechaNacimiento);
 
-        -- Insertar a Direccion
-        INSERT INTO Direccion (
-            NumeroCedula, 
-            Provincia, 
-            Canton, 
-            Distrito
-        ) 
-        VALUES (
-            @cedula,
-            @provincia,
-            @canton,
-            @distrito
-        );
+			-- Insertar a InformacionContacto
+			INSERT INTO InformacionContacto (
+				NumeroCedula, 
+				CorreoElectronico, 
+				Telefono) 
+			VALUES (
+				@cedula,
+				@correo,
+				@telefono);
+
+			-- Insertar a Direccion
+			INSERT INTO Direccion (
+				NumeroCedula, 
+				Provincia, 
+				Canton, 
+				Distrito) 
+			VALUES (
+				@cedula,
+				@provincia,
+				@canton,
+				@distrito);
+
+        COMMIT TRANSACTION
+
     END TRY
     BEGIN CATCH
-		-- Da un mensaje de erro y realiza un rollback para deshacer insercciones hechas
-        SELECT ERROR_MESSAGE() AS ErrorMensaje;
-		ROLLBACK;
-		THROW;
+        -- Mostrar un error y realizar el rollback en caso de que ocurra un error en la insercción de datos
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT @ErrorMessage = ERROR_MESSAGE(),
+               @ErrorSeverity = ERROR_SEVERITY(),
+               @ErrorState = ERROR_STATE();
+       
+        ROLLBACK TRANSACTION;
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
     END CATCH
 END;
 GO
+
 
 -- Sinonimo
 CREATE SYNONYM crearU FOR sp_CrearUsuario;

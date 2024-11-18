@@ -16,6 +16,8 @@ const CrearPublicacion = () => {
     const navigate = useNavigate();
 
     const [data, setData] = useState({
+        id: 0,
+        cedula: '',
         placa: '',
         marca: '',
         modelo: '',
