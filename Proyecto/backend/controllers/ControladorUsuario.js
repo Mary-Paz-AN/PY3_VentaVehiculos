@@ -77,4 +77,44 @@ async function infoUsuario(req, res) {
     }
 }
 
-module.exports = { iniciarSesionUsuario, iniciarSesionCorreo, registrarse, infoUsuario };
+// Controlador para verificar la cedula
+async function verificarIdentificacion(req, res) {
+    const { cedula } = req.body;
+    
+    try {
+        const resultado = await gestorAcceso.verificarIdentificacion(cedula);
+
+        // Verificar que se hizó la inserción a la base de datos
+        if (resultado) {
+            return res.status(201).json({ valido: true });
+        } else {
+            return res.status(201).json({ valido: false });
+        }
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ mensaje: 'Error al registrar el usuario. Inténtalo más tarde.' });
+    }
+}
+
+// Controlador verificar si el usuario tiene un processo penal
+async function verificarProcessoPenal(req, res) {
+    const { cedula } = req.body;
+    
+    try {
+        const resultado = await gestorAcceso.verificarProcessoPenal(cedula);
+
+        // Verificar que se hizó la inserción a la base de datos
+        if (resultado) {
+            return res.status(201).json({ valido: true });
+        } else {
+            return res.status(201).json({ valido: false });
+        }
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ mensaje: 'Error al registrar el usuario. Inténtalo más tarde.' });
+    }
+}
+
+module.exports = { iniciarSesionUsuario, iniciarSesionCorreo, registrarse, infoUsuario, verificarIdentificacion, verificarProcessoPenal };

@@ -1,6 +1,9 @@
 // Se importa la clase Usario
 const Usuario = require('../models/Usuario');
 const { getConnection, sql } = require('./conexion');
+const { esCedulaValida } = require('../APIs/APIRegistroCivil');
+const { poseeProcessoPenal } = require('../APIs/APITSE');
+
 
 // Creación de la clase del gesstor
 class GestorAcceso {
@@ -82,7 +85,7 @@ class GestorAcceso {
             const user = nuevoUsuario.getUsuario();
 
             // Insertar la infromacion en la base de datos
-            const resultado = await crearCuentaBD(user);
+            const resultado = await this.crearCuentaBD(user);
 
             if (resultado) {
                 return true;
@@ -167,13 +170,13 @@ class GestorAcceso {
     }
 
     // Método que usa el api del registro civil para validar la cedula
-    verificarIdentificacion(cedula) {
-
+    async verificarIdentificacion(cedula) {
+        return esCedulaValida(cedula);
     }
 
     // Método que usa el api del tse para validar si la persona tiene processos penales
-    verificarProcessoPenal(cedula) {
-
+    async verificarProcessoPenal(cedula) {
+        return poseeProcessoPenal(cedula);
     }
 }
 

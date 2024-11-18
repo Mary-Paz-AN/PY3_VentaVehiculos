@@ -247,6 +247,8 @@ i18n.use(initReactI18next).init( {
             alertaCantidadComparacionesMaxima: "No se puede comparar más de tres de autos",
             alertaCantidadComparacionesMinima: "No se puede comparar menos de dos de autos",
             alertaComparacionRepetida: "No se pueden comparar los mismos autos",
+            campoIdentV: "La identificación no es valida.",
+            campoIdenP: "La persona de la identificacion posee processos penales abiertos. Por lo que no puede crear una cuenta",
         },
     },
     en: {
