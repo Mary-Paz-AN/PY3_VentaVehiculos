@@ -12,7 +12,7 @@ const BuscarAutos = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const [autos, setAutos] = useState([]);
+  const [autos, setAutos] = useState([{"id": 1, "marca": "Toyota", "modelo": "Tercel", "imagen": "/images/Carrusel1.png"}, {"id": 2, "marca": "Hyundai", "modelo": "Elantra", "imagen": "/images/Carrusel2.png"}, {"id": 3, "marca": "Nissan", "modelo": "Sentra", "imagen": "/images/Carrusel3.png"}, {"id": 4, "marca": "Kia", "modelo": "Rio", "imagen": "/images/Carrusel3.png"}]);
 
   const traerVehiculos = async (datosJSON) => {
     try {
@@ -39,7 +39,7 @@ const BuscarAutos = () => {
     }
   };
 
-  const barraRef = useRef();
+  const barraRef = useRef(null);
 
   const handleAgregarAuto = (id, marca, modelo) => {
     const auto = { id, marca, modelo }
@@ -68,8 +68,8 @@ const BuscarAutos = () => {
 
                   <div className="card-body">
                     {/* Marca y modelo */}
-                    <h6 className="card-title">{auto.marca} {auto.modelo}</h6>
-                    <p className="card-text">{t('Descripción breve del auto')}</p>
+                    <h6 className="card-title">{auto.marca}</h6>
+                    <p className="card-text">{auto.modelo}</p>
 
                     {/* Botones Ver y Comparar */}
                     <button className="btn btn-primary mr-2" onClick={() => navigate(`/ver-auto/${auto.id}`)}>
@@ -85,7 +85,7 @@ const BuscarAutos = () => {
           </div>
         </div>
         <div>
-          <BarraComparaciones />
+          <BarraComparaciones ref={barraRef}/>
         </div>
       </div>
 

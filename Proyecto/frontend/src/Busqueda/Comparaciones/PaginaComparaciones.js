@@ -1,13 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Header from '../../Header';
 import Footer from '../../Footer';
 
-const CompararAutos = (placaAutoUno, placaAutoDos, placaAutoTres) => {
+const CompararAutos = (autosSeleccionados) => {
     const { t } = useTranslation();
-    const [autosSeleccionados, setAutosSeleccionados] = useState([]);
 
     return (
         <div>

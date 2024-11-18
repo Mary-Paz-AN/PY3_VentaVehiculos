@@ -244,7 +244,9 @@ i18n.use(initReactI18next).init( {
             fechaPublicacion: "Fecha de publicación",
             fechaModificacion: "Fecha de modificación",//
             fechaModiMenj: "No hay modificaciones",
-
+            alertaCantidadComparacionesMaxima: "No se puede comparar más de tres de autos",
+            alertaCantidadComparacionesMinima: "No se puede comparar menos de dos de autos",
+            alertaComparacionRepetida: "No se pueden comparar los mismos autos",
         },
     },
     en: {
@@ -483,7 +485,10 @@ i18n.use(initReactI18next).init( {
           fetchUsuario: "Incorrect username or password.",
           fetchCorreo: "Incorrect email or password.",
           fetchCuenta: "An error occurred while loading the data. Please try again.",
-          fechaPublicacion: "Publication date"
+          fechaPublicacion: "Publication date",
+          alertaCantidadComparacionesMaxima: "You can't compare more than three cars.",
+          alertaCantidadComparacionesMinima: "You can't compare less than two cars",
+          alertaComparacionRepetida: "You can't compare the same cars",
       },
     },
   },
