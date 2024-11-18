@@ -495,7 +495,7 @@ class GestorPublicaciones {
             
             // Verificar que el resultado si exista
             if (resultado.recordset.length > 0) {
-                return resultado.recordset[0];
+                return resultado.recordset;
             } else {
                 return false;
             }

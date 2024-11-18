@@ -146,11 +146,11 @@ async function verPublicacion (req, res) {
 async function misPublicaciones (req, res) {
     try {
         const { cedula } = req.params;
-        const fotos = await gestorPublicaciones.misPublicaciones(cedula);
+        const publicaciones = await gestorPublicaciones.misPublicaciones(cedula);
 
         //Verificar que existan datos
-        if (fotos) {
-            return res.status(200).json(fotos);
+        if (publicaciones) {
+            return res.status(200).json(publicaciones);
         } else {
             return res.status(404).json({ message: 'Publicaciones no encontradas' });
         }

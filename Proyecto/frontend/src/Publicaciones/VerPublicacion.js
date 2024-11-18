@@ -106,8 +106,6 @@ const VerPublicacion = () => {
         setImagenGrande(nuevaImagen);
     };
 
-
-
     return (
         <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
             <Header />
