@@ -1,5 +1,5 @@
 // Importar el gestor y crear su instancia para poder usar sus métodos
-const GestorAcceso = require('../managers/GestorAcceso'); 
+import GestorAcceso from '../managers/GestorAcceso.js'; 
 const gestorAcceso = new GestorAcceso();
 
 // Controlador para iniciar sesión con usuario y contraseña
@@ -77,4 +77,4 @@ async function infoUsuario(req, res) {
     }
 }
 
-module.exports = { iniciarSesionUsuario, iniciarSesionCorreo, registrarse, infoUsuario };
+export { iniciarSesionUsuario, iniciarSesionCorreo, registrarse, infoUsuario };

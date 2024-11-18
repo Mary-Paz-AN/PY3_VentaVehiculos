@@ -1,8 +1,8 @@
-import Reservacion from "../models/Reserva";
-import Pago from "../models/Pago";
-import APIGooglePay from "../APIs/APIGooglePay";
-import APIPayPal from "../APIs/APIPayPal";
-import APISafetyPay from "../APIs/APISafePay";
+import Reservacion from "../models/Reserva.js";
+import Pago from "../models/Pago.js";
+import APIGooglePay from "../APIs/APIGooglePay.js";
+import APIPayPal from "../APIs/APIPayPal.js";
+import APISafetyPay from "../APIs/APISafePay.js";
 
 class GestorReservaciones{
   constructor(){

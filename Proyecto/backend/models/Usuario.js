@@ -1,5 +1,5 @@
-import InformacionUsuario from './InformacionUsuario'; 
-import Direccion from './Direccion';
+import InformacionUsuario from './InformacionUsuario.js'; 
+import Direccion from './Direccion.js';
 
 // Creación de la clase Usuario
 class Usuario {

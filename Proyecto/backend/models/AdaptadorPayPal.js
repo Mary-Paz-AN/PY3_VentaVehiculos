@@ -1,5 +1,5 @@
-import SistemaPago from "./SistemaPago";
-import APIPayPal from "../APIs/APIPayPal";
+import SistemaPago from "./SistemaPago.js";
+import APIPayPal from "../APIs/APIPayPal.js";
 
 class AdaptadorPayPal extends SistemaPago{
   constructor(){

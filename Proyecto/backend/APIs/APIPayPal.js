@@ -1,6 +1,6 @@
 class APIPayPal {
   constructor() {
-    this.api = "APIPayPal";
+    this.api = "APIPayPal.js";
   }
 
   configurarAPI() {

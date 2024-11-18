@@ -1,5 +1,5 @@
 // Importar el gestor y crear su instancia para poder usar sus métodos
-import GestorPublicaciones from '../gestores/GestorPublicaciones';
+import GestorPublicaciones from "../managers/GestorPublicaciones.js";
 const gestorPublicaciones = new GestorPublicaciones();
 
 // Crear una publicación
@@ -70,7 +70,7 @@ export async function eliminarPublicacion(req, res) {
 };
 
 // Obtener las fotos de una publicación
-async function getFotos (req, res) {
+export async function getFotos (req, res) {
     try {
         const { id } = req.params;
         const fotos = await gestorPublicaciones.getFotos(id);
@@ -116,22 +116,6 @@ export async function crearPlantilla(req, res) {
             return res.status(200).json(publicaciones);
         } else {
             return res.status(404).json({ message: 'Publicaciones no encontradas' });
-        }
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
-    }
-}
-
-// Obtener las fotos de una publicación
-export async function getFotos(req, res) {
-    try {
-        const { id } = req.params; // Obtener el ID de la publicación desde los parámetros de la URL
-        const fotos = await gestorPublicaciones.getFotos(id);
-        if (fotos) {
-            return res.status(200).json(fotos);
-        } else {
-            return res.status(404).json({ message: 'Fotos no encontradas' });
         }
     } catch (error) {
         console.error(error);

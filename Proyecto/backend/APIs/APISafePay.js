@@ -1,6 +1,6 @@
 class APISafetyPay {
   constructor() {
-    this.api = "APISafetyPay";
+    this.api = "APISafetyPay.js";
     this.tokenAutenticacion = null; // Simulación de autenticación
   }
 
@@ -12,7 +12,7 @@ class APISafetyPay {
   autenticar() {
     console.log("Autenticando con SafetyPay...");
     // Simulación de autenticación
-    return "token_secreto_123";
+    return "token_secreto_123.js";
   }
 
   pagar(datos) {

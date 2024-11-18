@@ -1,5 +1,5 @@
-import SistemaPago from "./SistemaPago";
-import APIGooglePay from "../APIs/APIGooglePay";
+import SistemaPago from "./SistemaPago.js";
+import APIGooglePay from "../APIs/APIGooglePay.js";
 
 class AdaptadorGooglePay extends SistemaPago{
   constructor(){

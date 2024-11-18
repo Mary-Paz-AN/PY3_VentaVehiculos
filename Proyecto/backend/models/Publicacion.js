@@ -1,5 +1,5 @@
 //Relación con Vehiculo
-import Vehiculo from './Vehiculo';
+import Vehiculo from './Vehiculo.js';
 
 // Creación de la clase
 class Publicacion {

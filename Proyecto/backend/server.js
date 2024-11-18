@@ -1,11 +1,14 @@
 //Controladores de las funciones.
-import { filtrarAutos } from "./controllers/ControladorPublicacion";
+import { filtrarAutos } from "./controllers/ControladorPublicacion.js";
 
 // Dependency for the proper functioning of the server
-const express = require("express");
-const cors = require('cors');
-const rutasUsuario = require('./routes/RutasUsuario');
-const rutasPublicacion = require('./routes/RutasPublicacion');
+import expressModule from 'express';
+import corsModule from 'cors';
+import rutasUsuario from "./routes/RutasUsuario.js"
+import rutasPublicacion from "./routes/RutasPublicacion.js"
+
+const express = expressModule;
+const cors = corsModule;
 
 // Constants
 const app = express();

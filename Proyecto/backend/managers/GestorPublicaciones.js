@@ -1,5 +1,5 @@
-import Publicacion from '../models/Publicacion';
-import { getConnection, sql } from './conexion';
+import Publicacion from '../models/Publicacion.js';;
+import { getConnection, sql } from './conexion.js';;
 
 // Creación de las clase
 class GestorPublicaciones {

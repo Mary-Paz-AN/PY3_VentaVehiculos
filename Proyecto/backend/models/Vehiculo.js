@@ -1,8 +1,8 @@
 // Clases relacionadas
-import Material from './Material';
-import Sensor from './Sensor';
-import Mecanica from './Mecanica';
-import Dimension from './Dimension';
+import Material from './Material.js';
+import Sensor from './Sensor.js';
+import Mecanica from './Mecanica.js';
+import Dimension from './Dimension.js';
 
 // Creación de la clase Vehiculo
 class Vehiculo {

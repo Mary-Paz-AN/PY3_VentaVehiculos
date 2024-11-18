@@ -1,6 +1,6 @@
 // Se importa la clase Usario
-const Usuario = require('../models/Usuario').default;
-const { getConnection, sql } = require('./conexion');
+import Usuario from '../models/Usuario.js';;
+import { getConnection, sql } from './conexion.js';;
 
 // Creación de la clase del gesstor
 class GestorAcceso {
@@ -177,4 +177,4 @@ class GestorAcceso {
     }
 }
 
-module.exports = GestorAcceso;
+export default GestorAcceso;
