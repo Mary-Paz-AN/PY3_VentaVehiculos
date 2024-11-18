@@ -10,9 +10,9 @@ import { getUsuario } from '../Usuario/Acceso';
 const CrearPublicacion = () => {
     const { t } = useTranslation();
     const { plantilla } = useParams();
+    const [isPlantilla, setPlantilla] = useState(false);
     const [show, setShow] = useState(false);
     const [mensaje, setMensaje] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
     const [data, setData] = useState({
@@ -50,32 +50,53 @@ const CrearPublicacion = () => {
         fotosExternas: [],
     });
 
+    //Conseguir la cedula del usuario
+    useEffect(() => {
+        const user = getUsuario();
+        
+        fetch(`/api/cuenta/informacion/${user}`)
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('Error: ' + res.statusText);
+                }
+
+                return res.json();
+            })
+            .then((dataFetch) => {
+                setData((prevData) => ({
+                    ...prevData,  
+                    cedula: dataFetch.identificacion,
+                }));
+                
+            })
+            .catch((err) => {
+                console.error("Hubo un error al cargar los datos, por favor, intente nuevamente.", err);
+                setMensaje("Hubo un error al cargar los datos, por favor, intente nuevamente.");
+                setShow(true);
+            }
+        );
+
+    }, []);
+
     // Carga los datos de la plantilla si es que se usa una
     useEffect(() => {
-        if (plantilla) {
+        if (plantilla === "null" || plantilla.trim() === "") { 
+            setPlantilla(false); 
+        } else {
             try {
-                // Decodifica y parsea la plantilla desde la URL
+                // Decodifica y parsea la plantilla
                 const decodedPlantilla = JSON.parse(decodeURIComponent(plantilla));
                 setData((prevData) => ({
                     ...prevData,
                     ...decodedPlantilla,
                 }));
+    
+                setPlantilla(true);
             } catch (error) {
                 console.error('Error al decodificar la plantilla:', error);
-            } finally {
-                setIsLoading(false);
             }
-        } else {
-            setIsLoading(false);
         }
     }, [plantilla]);
-
-    if (isLoading) {
-        return (
-            <Container className="flex-grow-1 d-flex justify-content-center align-items-center" aria-labelledby="cargando">
-                <h1 style={{color: "#1f365d"}}>{t('cargando')}</h1>
-            </Container>);
-    }
 
     // Lista para precargar los selects
     const tiposVehiculo = ["Sedán", "Camioneta", "Sedán de lujo", "SUV", "Miniván"];
@@ -89,6 +110,26 @@ const CrearPublicacion = () => {
     const tracciones = ["Sencilla", "4x4"];
     const transmisiones = ["Manual", "Automático", "Dual"];
 
+    //Convierte las imagenes a binario
+    /*const convertirABinario = (files) => {
+        const fileArray = Array.from(files);
+    
+        return Promise.all(
+            fileArray.map((file) => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsArrayBuffer(file);
+                    reader.onload = () => {
+                        const binary = new Uint8Array(reader.result);
+                        resolve(binary); // Resuelve con el binario del archivo
+                    };
+                    reader.onerror = () => reject("Error leyendo el archivo");
+                });
+            })
+        );
+    };*/
+    
+
     // Maneja los cambios de los inputs sea checkbox o sleccionador de archivos
     const handleChange = (e) => {
         const { name, type, value, checked, files } = e.target;
@@ -99,17 +140,34 @@ const CrearPublicacion = () => {
                 nuevoValor = checked;
                 break;
             case "file":
-                nuevoValor = Array.from(files);
+                nuevoValor = files ? Array.from(files) : [];
                 break;
+                
+                /* Hace la conversion a binario
+                if (files) {
+                    convertirABinario(files)
+                        .then((binaries) => {
+                            setData((prevData) => ({
+                                ...prevData,
+                                [name]: binaries, 
+                            }));
+                        })
+                        .catch((error) => console.error(error));
+                }
+                return; */
+
             default:
                 nuevoValor = value;
         }
     
-        setData({
-            ...data,
+        // Actualizamos el estado para los otros tipos de inputs
+        setData((prevData) => ({
+            ...prevData,
             [name]: nuevoValor,
-        });
+        }));
     };
+    
+    
     
     // Vuelve a mis publicaciones 
     const misPublicaciones = () => {
@@ -133,13 +191,13 @@ const CrearPublicacion = () => {
             
             //verificar el largo
             const largo = nuevaPlaca.length;
-            if(largo !== 7) {
+            if(largo !== 6) {
                 errores.push(t('campoPlaca2'));
                 esValida = false;
             } else {
                 //Seprar las letras y numeros para comprobar el formato
-                const letras = nuevaPlaca.split(0, 2);
-                const numeros = nuevaPlaca.split(4, 5);
+                const letras = nuevaPlaca.slice(0, 2);
+                const numeros = nuevaPlaca.slice(3, 5);
 
                 const contieneLetras = /^[a-zA-Z]+$/.test(letras); //true si solo tiene letras
                 const contieneNumeros =  /^\d+$/.test(numeros); //true si solo tiene num
@@ -261,14 +319,79 @@ const CrearPublicacion = () => {
     }
 
     // Guarda los datos
-    const registrarAuto = () => {
-        if(verificarDatos()) {
-            //Logica del API
-            const user = getUsuario();
-            console.log(user);
-            misPublicaciones();
+    const registrarAuto = async () => {
+        
+        if (verificarDatos()) {
+            try {
+                /*const formData = new FormData();
+
+                // Agregar los datos normales
+                formData.append("id", data.cedula);
+                formData.append("cedula", data.cedula);
+                formData.append("placa", data.placa);
+                formData.append("marca", data.marca);
+                formData.append("modelo", data.modelo);
+                formData.append("anio", data.anio);
+                formData.append("tipo", data.tipo);
+                formData.append("motor", data.motor);
+                formData.append("sistemaSonido", data.sistemaSonido);
+                formData.append("tablero", data.tablero);
+                formData.append("cantidadPuertas", data.cantidadPuertas);
+                formData.append("estado", data.estado);
+                formData.append("precio", data.precio);
+                formData.append("negociable", data.negociable);
+                formData.append("recibeVehiculo", data.recibeVehiculo);
+                formData.append("leasing", data.leasing);
+                formData.append("asientos", data.asientos);
+                formData.append("tapizado", data.tapizado);
+
+                // Agregar los valores booleanos
+                formData.append("sensorTrasero", data.sensorTrasero);
+                formData.append("sensorDelantero", data.sensorDelantero);
+                formData.append("sensorLateral", data.sensorLateral);
+                formData.append("camaraRetroceso", data.camaraRetroceso);
+                formData.append("camara360", data.camara360);
+                formData.append("vidriosElec", data.vidriosElec);
+                formData.append("espejosElec", data.espejosElec);
+
+                // Agregar las fotos internas y externas
+                data.fotosInternas.forEach((foto, index) => {
+                    formData.append(`fotosInternas[${index}]`, foto);
+                });
+                data.fotosExternas.forEach((foto, index) => {
+                    formData.append(`fotosExternas[${index}]`, foto);
+                });
+
+                // Agregar datos de dimensiones y mecánica
+                formData.append("traccion", data.traccion);
+                formData.append("transmision", data.transmision);
+                formData.append("largo", data.largo);
+                formData.append("alto", data.alto);
+                formData.append("ancho", data.ancho);*/
+
+                const link = isPlantilla ? '/api/publicaciones/v3/publicacion' : '/api/publicaciones/v2/publicacion';
+                const respuesta = await fetch(link, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', 
+                    },
+                    body: JSON.stringify(data) 
+                });
+    
+                if (respuesta.ok) {
+                    misPublicaciones(); 
+                } else {
+                    throw new Error(`Error: ${respuesta.status}`);
+                }
+    
+            } catch (error) {
+                console.error('Error: Hubo un error al crear la publicación', error);
+                setMensaje('Error: Hubo un error al crear la publicación');
+                setShow(true);
+            }
         }
     }
+    
 
     return (
         <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
@@ -332,7 +455,7 @@ const CrearPublicacion = () => {
                                             placeholder={t('placeHolderYear')} 
                                             value={data.anio}
                                             onChange={handleChange}
-                                            name = "year"
+                                            name = "anio"
                                             aria-required="true" 
                                             aria-describedby="yearHelp" />
                                     </Form.Group>
@@ -342,7 +465,7 @@ const CrearPublicacion = () => {
                                         <Form.Label style={{color: "#1f365d"}}>{t('tipo')}</Form.Label>
                                         <Form.Select 
                                             aria-label="Select tipo de carrocería" 
-                                            name='tipoVehiculo'
+                                            name='tipo'
                                             value={data.tipo}
                                             onChange={handleChange}
                                         >
@@ -439,13 +562,13 @@ const CrearPublicacion = () => {
                                         <Form.Label style={{color: "#1f365d"}}>{t('asiento')}</Form.Label>
                                         <Form.Select 
                                             aria-label="Select del material del asiento" 
-                                            name='asiento'
+                                            name='asientos'
                                             value={data.asientos}
                                             onChange={handleChange}
                                         >
                                             <option value= "" disabled>{t('placeHolderMaterial')}</option>
-                                            {materialesAsiento.map((material, index) => (
-                                                <option key={index} value={material}>{material}</option>
+                                            {materialesAsiento.map((materialAsiento, index) => (
+                                                <option key={index} value={materialAsiento}>{materialAsiento}</option>
                                             ))}
                                         </Form.Select>
                                     </Form.Group>
@@ -634,7 +757,7 @@ const CrearPublicacion = () => {
                                             step="0.01" 
                                             value={data.ancho}
                                             onChange={handleChange}
-                                            name = "user"
+                                            name = "ancho"
                                             aria-required="true" 
                                             aria-describedby="anchoHelp" />
                                     </Form.Group>
@@ -649,7 +772,7 @@ const CrearPublicacion = () => {
                                             step="0.01"  
                                             value={data.precio}
                                             onChange={handleChange}
-                                            name = "user"
+                                            name = "precio"
                                             aria-required="true" 
                                             aria-describedby="precioHelp" />
                                         <Form.Text id="precioHelp" className="text-muted">{t('descripPrecio')}</Form.Text>
@@ -713,7 +836,7 @@ const CrearPublicacion = () => {
 
                                     {/* Fotos expternas */}
                                     <Form.Group className="mb-3" controlId="fotosExternasInput">
-                                        <Form.Label>{t('fotosInternas')}</Form.Label>
+                                        <Form.Label>{t('fotosExternas')}</Form.Label>
                                         <Form.Control
                                             type="file"
                                             multiple

@@ -52,7 +52,7 @@ class GestorPublicaciones {
 
             const publicacion = nuevaPublicacion.getPublicacion();
 
-            const resultado = await crearPublicacionBD(publicacion);
+            const resultado = await this.crearPublicacionBD(publicacion);
             if (resultado) {
                 return true;
             } else {
@@ -116,13 +116,13 @@ class GestorPublicaciones {
 
             // Verificar que se creo la publicacion
             if (resultado && resultado.rowsAffected && resultado.rowsAffected[0] > 0) {
-                try {
+                /*try {
                     // Intentamos agregar las fotos, si algo falla se captura el error
-                    await addFotos(publicacion.fotosInternas, publicacion.fotosExternas, idPublicacion);
+                    await this.addFotos(publicacion.fotosInternas, publicacion.fotosExternas, idPublicacion);
                 } catch (error) {
                     console.error('Error al agregar fotos:', error);
                     throw new Error('Hubo un error al agregar las fotos a la publicación. Por favor, inténtalo de nuevo.');
-                }
+                }*/
                 return true;
             } else {
                 return false;
@@ -190,10 +190,9 @@ class GestorPublicaciones {
     }
 
     //Usar una plantilla para craer una publicación
-    async crearPlantilla(id, data) {
+    async crearPlantilla(data) {
         try {
-
-            const datos = await verPublicacion(id);
+            const datos = await this.verPublicacion(data.id);
 
             if (!datos) {
                 throw Error('Ocurrio un errror consiguiendo los datos');
@@ -249,7 +248,7 @@ class GestorPublicaciones {
                 const publicacion = clon.getPublicacion();
 
                 //Crear la publicacion
-                const resultado = await crearPublicacionBD(publicacion);
+                const resultado = await this.crearPublicacionBD(publicacion);
                 if (resultado) {
                     return true;
                 } else {
@@ -301,7 +300,6 @@ class GestorPublicaciones {
             request.input('ancho', sql.Real, datos.alto);
             request.input('alto', sql.Real, datos.ancho);
 
-            request.input('cedula', sql.VarChar, datos.cedulaUsuario);
             request.input('precio', sql.Real, datos.precio);
             request.input('negociable', sql.Bit, datos.negociable);
             request.input('recibeVehiculo', sql.Bit, datos.recibeVehiculo);
@@ -312,13 +310,13 @@ class GestorPublicaciones {
 
             // Verificar que se creo la publicacion
             if (resultado && resultado.rowsAffected && resultado.rowsAffected[0] > 0) {
-                try {
+                /*try {
                     // Intentamos agregar las fotos, si algo falla se captura el error
-                    await modificarFotos(datos.fotosInternas, datos.fotosExternas, datos.internasId, datos.externasId);
+                    await this.modificarFotos(datos.fotosInternas, datos.fotosExternas, datos.internasId, datos.externasId);
                 } catch (error) {
                     console.error('Error al modificar las fotos:', error);
                     throw new Error('Hubo un error al modificar las fotos de la publicación. Por favor, inténtalo de nuevo.');
-                }
+                }*/
                 return true;
             } else {
                 return false;
@@ -453,7 +451,22 @@ class GestorPublicaciones {
 
             // Verificar que el resultado si exista
             if (resultado.recordset.length > 0) {
-                return resultado.recordset[0];
+                const dataPublicacion = resultado.recordset[0];
+
+                // Pasar a YYYY-MM-DD HH:MM:SS
+                if (dataPublicacion.fechaPublicacion) {
+                    const fechaConHora = dataPublicacion.fechaPublicacion.toISOString();
+                    const [fecha, hora] = fechaConHora.split('T');
+                    dataPublicacion.fechaPublicacion = `${fecha} ${hora.split('.')[0]}`; 
+                }
+
+                if (dataPublicacion.fechaModificacion) {
+                    const fechaConHora = dataPublicacion.fechaModificacion.toISOString();
+                    const [fecha, hora] = fechaConHora.split('T');
+                    dataPublicacion.fechaModificacion = `${fecha} ${hora.split('.')[0]}`; 
+                }
+
+                return dataPublicacion;
             } else {
                 return false;
             }
@@ -479,7 +492,7 @@ class GestorPublicaciones {
 
             // Verificar que el resultado si exista
             if (resultado.recordset.length > 0) {
-                return resultado.recordset[0];
+                return resultado.recordset;
             } else {
                 return false;
             }

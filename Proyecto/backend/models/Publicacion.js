@@ -86,7 +86,7 @@ class Publicacion {
         this.fotosExternas = data.fotosExternas;
 
         if (this.vehiculo) {
-            this.vehiculo.setDatosVehiculo();
+            this.vehiculo.setDatosVehiculo(data);
         }
     }
 

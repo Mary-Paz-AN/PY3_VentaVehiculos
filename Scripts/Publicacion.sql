@@ -277,7 +277,8 @@ BEGIN
             PrecioColones = @precio, 
             PrecioNegociable = @negociable, 
             RecibeVehiculoPago = @recibeVehiculo, 
-            AsociadoALeasing = @leasing
+            AsociadoALeasing = @leasing,
+			FechaEdicion = GETDATE()
         WHERE Placa = @placa;
 
         -- Confirmar la transacci�n
@@ -358,10 +359,31 @@ BEGIN
         BEGIN TRANSACTION;
 
         -- Eliminar Fotos
-        DELETE FROM Fotos WHERE IdPublicacion = @id;
+        --DELETE FROM Fotos WHERE IdPublicacion = @id;
+
+		-- Conseguir la placa asociada a la publicación
+		DECLARE @placa VARCHAR(6);
+		SELECT @placa = Placa
+		FROM Publicacion
+		WHERE IdPublicacion = @id;
 
 		-- Eliminar Publicacion
 		DELETE FROM Publicacion WHERE IdPublicacion = @id;
+
+		--Eliminar Materiales
+		DELETE FROM Materiales WHERE Placa = @placa;
+
+		--Eliminar Sensores
+		DELETE FROM Sensores WHERE Placa = @placa;
+
+		--Eliminar Mecanica
+		DELETE FROM Mecanica WHERE Placa = @placa;
+
+		--Eliminar Dimensiones
+		DELETE FROM Dimensiones WHERE Placa = @placa;
+
+		--Eliminar Vehiculo
+		DELETE FROM Vehiculo WHERE Placa = @placa;
 
         COMMIT TRANSACTION;
 
@@ -392,7 +414,7 @@ SELECT
 	V.Placa AS placa,
 	V.Marca AS marca,
 	V.Modelo AS modelo,
-	v.Anio AS anio,
+	V.Anio AS anio,
 	V.Motor AS motor,
 	V.TipoVehiculo AS tipo,
 	V.SistemaSonido AS sistemaSonido,
@@ -439,6 +461,7 @@ BEGIN
 		marca,
 		modelo,
 		anio,
+		motor,
 		tipo,
 		sistemaSonido,
 		tablero,
@@ -472,17 +495,18 @@ SELECT
 	V.Placa AS placa,
 	V.Marca AS marca,
 	V.Modelo AS modelo,
-	v.Anio AS anio,
-	V.TipoVehiculo AS tipo,
-	F.Imagen AS foto
+	V.Anio AS anio,
+	V.Motor AS motor,
+	V.TipoVehiculo AS tipo
+	--F.Imagen AS foto
 FROM Publicacion AS P
-INNER JOIN Vehiculo AS V ON P.Placa = V.Placa
-CROSS APPLY (
-    SELECT TOP 1 Imagen 
-    FROM Fotos AS F 
-    WHERE F.IdPublicacion = P.IdPublicacion
-	ORDER BY F.EsInterna DESC
-) AS F;
+INNER JOIN Vehiculo AS V ON P.Placa = V.Placa;
+--CROSS APPLY (
+--    SELECT TOP 1 Imagen 
+--    FROM Fotos AS F 
+--    WHERE F.IdPublicacion = P.IdPublicacion
+--	ORDER BY F.EsInterna ASC
+--) AS F;
 GO
 
 -- Procedure para buscar las publicaciones de un usuario
@@ -498,8 +522,9 @@ BEGIN
 	marca,
 	modelo,
 	anio,
-	tipo,
-	foto
+	motor,
+	tipo
+	--foto
 	FROM vw_misPublicaciones 
 	WHERE cedula = @cedula;
 END;
@@ -583,5 +608,7 @@ BEGIN
     SELECT *
     FROM PublicacionesConFotoUnica;
 END;
-
 GO
+
+
+select * from Publicacion
