@@ -47,6 +47,8 @@ const VerPublicacion = () => {
         return resultado;
     };
 
+    
+
     useEffect(() => {
         const nuevaData = {
             placa: 'NUT-879',

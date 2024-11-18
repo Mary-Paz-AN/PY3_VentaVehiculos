@@ -2,6 +2,7 @@
 const express = require("express");
 const cors = require('cors');
 const rutasUsuario = require('./routes/RutasUsuario');
+const rutasPublicacion = require('./routes/RutasPublicacion');
 
 // Constants
 const app = express();
@@ -10,22 +11,22 @@ const PORT = process.env.PORT || 3001;
 // Manejo de JSONS
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: 'http://localhost:3001' }));
+app.use(cors());
 
-app.get('/usuario', async (req, res) => {
-  try {
-    //Iniciar la conexión con la base de datos para hacer consultado
-    const pool = await getConnection();
-    const request = pool.request();
+// Rutas
+// Usar las rutas para la gestión de los usuarios
+app.use('/api/cuenta', rutasUsuario);
 
-    // Ejecutar la consulta
-    const result = await request.query('SELECT * FROM Usuario');
-    res.json(result.recordset);
-  } catch (err) {
-    console.log('Error al ejecutar el procedimiento almacenado:', err);
-    res.status(500).send('Error al ejecutar el procedimiento almacenado');
-  }
-});
+// Usar las rutas para la gestión de publicaciones
+app.use('/api/publicaciones', rutasPublicacion);
+
+
+// Archivos del frontend 
+app.use(express.static("build"));
+
+// Iniicar el servidor
+app.listen(PORT, () => console.log(`The server started on http://localhost:${PORT}`));
+
 
 app.post('/filtrarAutosBusqueda', async (req, res) => {
   try {
@@ -104,13 +105,3 @@ app.post('/realizarReservacion', async (req, res) => {
     res.status(500).send('Error al realizar la ');
   }
 });
-
-// Rutas
-// Usar las rutas para la gestión de los usuarios
-app.use('/api/cuenta', rutasUsuario);
-
-// Archivos del frontend 
-app.use(express.static("build"));
-
-// Iniicar el servidor
-app.listen(PORT, () => console.log(`The server started on http://localhost:${PORT}`));

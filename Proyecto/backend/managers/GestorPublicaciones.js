@@ -1,4 +1,4 @@
-const Publicacion = requiere('../models/Publicacion');
+const Publicacion = require('../models/Publicacion');
 const { getConnection, sql } = require('./conexion');
 
 // Creación de las clase
@@ -52,7 +52,7 @@ class GestorPublicaciones {
 
             const publicacion = nuevaPublicacion.getPublicacion();
 
-            const resultado = await crearPublicacionBD(publicacion);
+            const resultado = await this.crearPublicacionBD(publicacion);
             if (resultado) {
                 return true;
             } else {
@@ -118,7 +118,7 @@ class GestorPublicaciones {
             if (resultado && resultado.rowsAffected && resultado.rowsAffected[0] > 0) {
                 try {
                     // Intentamos agregar las fotos, si algo falla se captura el error
-                    await addFotos(publicacion.fotosInternas, publicacion.fotosExternas, idPublicacion);
+                    await this.addFotos(publicacion.fotosInternas, publicacion.fotosExternas, idPublicacion);
                 } catch (error) {
                     console.error('Error al agregar fotos:', error);
                     throw new Error('Hubo un error al agregar las fotos a la publicación. Por favor, inténtalo de nuevo.');
@@ -190,10 +190,10 @@ class GestorPublicaciones {
     }
 
     //Usar una plantilla para craer una publicación
-    async crearPlantilla(id, data) {
+    async crearPlantilla(data) {
         try {
 
-            const datos = await verPublicacion(id);
+            const datos = await this.verPublicacion(data.id);
 
             if(!datos) {
                 throw Error('Ocurrio un errror consiguiendo los datos');
@@ -249,7 +249,7 @@ class GestorPublicaciones {
                 const publicacion = clon.getPublicacion();
 
                 //Crear la publicacion
-                const resultado = await crearPublicacionBD(publicacion);
+                const resultado = await this.crearPublicacionBD(publicacion);
                 if (resultado) {
                     return true;
                 } else {
@@ -314,7 +314,7 @@ class GestorPublicaciones {
             if (resultado && resultado.rowsAffected && resultado.rowsAffected[0] > 0) {
                 try {
                     // Intentamos agregar las fotos, si algo falla se captura el error
-                    await modificarFotos(datos.fotosInternas, datos.fotosExternas, datos.internasId, datos.externasId);
+                    await this.modificarFotos(datos.fotosInternas, datos.fotosExternas, datos.internasId, datos.externasId);
                 } catch (error) {
                     console.error('Error al modificar las fotos:', error);
                     throw new Error('Hubo un error al modificar las fotos de la publicación. Por favor, inténtalo de nuevo.');

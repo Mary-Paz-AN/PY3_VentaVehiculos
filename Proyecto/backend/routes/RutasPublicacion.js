@@ -1,0 +1,26 @@
+const express = require('express');
+const router = express.Router();
+const controladorPublicaciones = require('../controllers/ControladorPublicacion');
+
+// Ruta para crear una nueva publicación
+router.post('/v2/publicacion', controladorPublicaciones.crearPublicacion);
+
+// Ruta para crear una plantilla de publicación
+router.post('/v3/publicacion', controladorPublicaciones.crearPlantilla);
+
+// Ruta para modificar una publicación
+router.put('/misPublicaciones', controladorPublicaciones.modificarPublicacion);
+
+// Ruta para eliminar una publicación
+router.delete('/v4/publicacion/:id', controladorPublicaciones.eliminarPublicacion);
+
+// Ruta para obtener las fotos de una publicación
+router.get('/publicacion/fotos/:id', controladorPublicaciones.getFotos);
+
+// Ruta para obtener una publicación por su ID
+router.get('/v4/publicacion/:id', controladorPublicaciones.verPublicacion);
+
+// Ruta para obtener las publicaciones de un usuario
+router.get('/misPubliciones/:cedula', controladorPublicaciones.misPublicaciones);
+
+module.exports = router;

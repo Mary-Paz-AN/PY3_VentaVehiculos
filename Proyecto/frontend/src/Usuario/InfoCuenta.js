@@ -28,13 +28,13 @@ const InfoCuenta = () => {
                 setData(dataFetch);
             })
             .catch((err) => {
-                console.error(t('fetchCuenta'), err);
-                setMensaje(t('fetchCuenta'));
+                console.error("Hubo un error al cargar los datos, por favor, intente nuevamente.", err);
+                setMensaje("Hubo un error al cargar los datos, por favor, intente nuevamente.");
                 setShow(true);
             }
         );
 
-    }, [t]);
+    }, []);
 
 
     return (

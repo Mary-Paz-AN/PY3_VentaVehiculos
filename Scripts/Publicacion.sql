@@ -360,8 +360,29 @@ BEGIN
         -- Eliminar Fotos
         DELETE FROM Fotos WHERE IdPublicacion = @id;
 
+		-- Conseguir la placa asociada a la publicación
+		DECLARE @placa VARCHAR(6);
+		SELECT @placa = Placa
+		FROM Publicacion
+		WHERE IdPublicacion = @id;
+
 		-- Eliminar Publicacion
 		DELETE FROM Publicacion WHERE IdPublicacion = @id;
+
+		--Eliminar Materiales
+		DELETE FROM Materiales WHERE Placa = @placa;
+
+		--Eliminar Sensores
+		DELETE FROM Sensores WHERE Placa = @placa;
+
+		--Eliminar Mecanica
+		DELETE FROM Mecanica WHERE Placa = @placa;
+
+		--Eliminar Dimensiones
+		DELETE FROM Dimensiones WHERE Placa = @placa;
+
+		--Eliminar Vehiculo
+		DELETE FROM Vehiculo WHERE Placa = @placa;
 
         COMMIT TRANSACTION;
 
@@ -580,3 +601,7 @@ BEGIN
         (@leasing IS NULL OR P.AsociadoALeasing = @leasing);
 END;
 GO
+
+select * from Vehiculo
+
+delete from vehiculo
