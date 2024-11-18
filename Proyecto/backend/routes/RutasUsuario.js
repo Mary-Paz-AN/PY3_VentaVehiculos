@@ -16,4 +16,10 @@ router.post('/registrarse', registrarse);
 // Conseguir la información de un usuario
 router.get('/informacion/:usuario', infoUsuario);
 
+// Verificar validez de la cedula
+router.post('/v1/registrarse', usuarioController.verificarIdentificacion);
+
+// Verificar processos penales
+router.post('/v2/registrarse', usuarioController.verificarProcessoPenal);
+
 export default router;

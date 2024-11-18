@@ -93,7 +93,7 @@ const Registrarse = () => {
 
 
     // Verifica los datos que da el usuario
-    const validarDatos = () => {
+    const validarDatos = async () => {
         const errores = [];
 
         // Verificar el user
@@ -211,8 +211,16 @@ const Registrarse = () => {
             
             if(esValida){
                 //Validar identidad
+                const valida = await validarCedula(iden);
+                if(!valida) {
+                    errores.push(t('campoIdentV'));
+                }
+
                 //Validar processos penales
-                console.log('Validar');
+                const validoP = await validarProcessos(iden);
+                if(!validoP) {
+                    errores.push(t('campoIdenP'));
+                }
             } 
         }
 
@@ -293,10 +301,64 @@ const Registrarse = () => {
         return true; 
     };
 
+    //Verifica la validez de la cedula
+    const validarCedula = async (cedula) => {
+        try {
+            const respuesta = await fetch('/api/cuenta/v1/registrarse', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ cedula: cedula }),
+            });
+    
+            if (respuesta.ok) {
+                const data = await respuesta.json(); 
+
+                return data.valido; 
+            } else {
+                throw new Error(`Error: ${respuesta.status}`);
+            }
+            
+
+        } catch (error) {
+            console.error('Error:', t('fetchRegistroUsuario'));
+            setMensaje(t('fetchRegistroUsuario'));
+            setShow(true);
+        }
+    }
+
+    //Verifica si el usuario posee processos penales
+    const validarProcessos = async (cedula) => {
+        try {
+            const respuesta = await fetch('/api/cuenta/v2/registrarse', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ cedula: cedula }),
+            });
+    
+            if (respuesta.ok) {
+                const data = await respuesta.json(); 
+
+                return data.valido; 
+            } else {
+                throw new Error(`Error: ${respuesta.status}`);
+            }
+            
+
+        } catch (error) {
+            console.error('Error:', t('fetchRegistroUsuario'));
+            setMensaje(t('fetchRegistroUsuario'));
+            setShow(true);
+        }
+    }
+
     // Verifica si los datos son correctos y despues crear el usuario
     const anadirUsuario = async () => {
-
-        if (validarDatos()) {
+        const esValido = await validarDatos();
+        if (esValido) {
             try {
                 const respuesta = await fetch('/api/cuenta/registrarse', {
                     method: 'POST',

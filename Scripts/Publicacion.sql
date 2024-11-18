@@ -211,7 +211,6 @@ CREATE PROCEDURE sp_modiP
     @largo REAL,
     @ancho REAL,
     @alto REAL,
-    @cedula VARCHAR(12),
     @precio REAL,
     @negociable BIT,
     @recibeVehiculo BIT,
@@ -272,8 +271,7 @@ BEGIN
 
         -- Actualizar Publicacion
         UPDATE Publicacion
-        SET 
-            NumeroCedula = @cedula, 
+        SET  
             PrecioColones = @precio, 
             PrecioNegociable = @negociable, 
             RecibeVehiculoPago = @recibeVehiculo, 
