@@ -414,6 +414,7 @@ SELECT
 	V.Marca AS marca,
 	V.Modelo AS modelo,
 	v.Anio AS anio,
+	V.Motor AS motor,
 	V.TipoVehiculo AS tipo,
 	V.SistemaSonido AS sistemaSonido,
 	V.TipoTableroMando AS tablero,
@@ -525,9 +526,8 @@ BEGIN
 END;
 GO
 
-
 GO
-CREATE PROCEDURE FiltrarDatosVehiculos
+CREATE PROCEDURE FiltrarPublicaciones
     @marca VARCHAR(30) = NULL,
     @modelo VARCHAR(30) = NULL,
     @anio INT = NULL,
@@ -538,8 +538,8 @@ CREATE PROCEDURE FiltrarDatosVehiculos
     @transmisionTipo VARCHAR(30) = NULL,
     @puertas INT = NULL,
     @largo REAL = NULL,
-	@ancho REAL = NULL,
-	@alto REAL = NULL,
+    @ancho REAL = NULL,
+    @alto REAL = NULL,
     @materialAsientos VARCHAR(45) = NULL,
     @motor VARCHAR(30) = NULL,
     @vidriosElectricos BIT = NULL,
@@ -557,49 +557,54 @@ CREATE PROCEDURE FiltrarDatosVehiculos
     @leasing BIT = NULL
 AS
 BEGIN
-    SELECT 
-        *
-    FROM 
-        Vehiculo V
-    INNER JOIN 
-		Publicacion P ON V.Placa = P.Placa
-    LEFT JOIN 
-		Materiales MT ON V.Placa = MT.Placa
-    LEFT JOIN 
-		Sensores S ON V.Placa = S.Placa
-    LEFT JOIN 
-		Mecanica M ON V.Placa = M.Placa
-    LEFT JOIN 
-		Dimensiones D ON V.Placa = D.Placa
-    WHERE
-        (@marca IS NULL OR V.Marca = @marca) AND
-        (@modelo IS NULL OR V.Modelo = @modelo) AND
-        (@anio IS NULL OR V.Anio = @anio) AND
-        (@placa IS NULL OR V.Placa = @placa) AND
-        (@precio IS NULL OR P.PrecioColones = @precio) AND
-        (@negociable IS NULL OR P.PrecioNegociable = @negociable) AND
-        (@aceptaVehiculos IS NULL OR P.RecibeVehiculoPago = @aceptaVehiculos) AND
-        (@transmisionTipo IS NULL OR M.TipoTransmicion = @transmisionTipo) AND
-        (@puertas IS NULL OR V.CantidadPuertas = @puertas) AND
-        (@largo IS NULL OR D.Largo = @largo) AND
-        (@ancho IS NULL OR D.Ancho = @ancho) AND
-        (@alto IS NULL OR D.Alto = @alto) AND
-        (@materialAsientos IS NULL OR MT.MaterialAsientos = @materialAsientos) AND
-        (@motor IS NULL OR V.Motor = @motor) AND
-        (@vidriosElectricos IS NULL OR M.VentanasElectricas = @vidriosElectricos) AND
-        (@espejosElectricos IS NULL OR M.EspejosElectricos = @espejosElectricos) AND
-        (@sensoresTraseros IS NULL OR S.ProximidadTraseros = @sensoresTraseros) AND
-        (@sensoresDelanteros IS NULL OR S.ProximidadDelanteros = @sensoresDelanteros) AND
-        (@camaraRetroceso IS NULL OR S.CamaraRetroceso = @camaraRetroceso) AND
-        (@camara360 IS NULL OR S.Camara360 = @camara360) AND
-        (@sensoresLaterales IS NULL OR S.ProximidadLateral = @sensoresLaterales) AND
-        (@tablero IS NULL OR V.TipoTableroMando = @tablero) AND
-        (@tipoTransmision IS NULL OR M.TipoTransmicion = @tipoTransmision) AND
-        (@tapizado IS NULL OR MT.MaterialTapizado = @tapizado) AND
-        (@sonido IS NULL OR V.SistemaSonido = @sonido) AND
-        (@estadoVehiculo IS NULL OR V.Estado = @estadoVehiculo) AND
-        (@leasing IS NULL OR P.AsociadoALeasing = @leasing);
+    WITH FotosConPrioridad AS (
+        SELECT 
+            F.IdPublicacion,
+            F.foto,
+            ROW_NUMBER() OVER (PARTITION BY F.IdPublicacion ORDER BY F.Id ASC) AS RowNum
+        FROM vw_fotos AS F
+    ),
+    PublicacionesConFotoUnica AS (
+        SELECT
+            P.placa,
+            P.marca,
+            P.modelo,
+            F.foto
+        FROM vw_publicacion AS P
+        INNER JOIN FotosConPrioridad AS F
+            ON P.id = F.IdPublicacion AND F.RowNum = 1
+        WHERE
+            (@marca IS NULL OR P.marca = @marca) AND
+            (@modelo IS NULL OR P.modelo = @modelo) AND
+            (@anio IS NULL OR P.anio = @anio) AND
+            (@placa IS NULL OR P.placa = @placa) AND
+            (@precio IS NULL OR P.precio = @precio) AND
+            (@negociable IS NULL OR P.negociable = @negociable) AND
+            (@aceptaVehiculos IS NULL OR P.recibeVehiculo = @aceptaVehiculos) AND
+            (@transmisionTipo IS NULL OR P.transmision = @transmisionTipo) AND
+            (@puertas IS NULL OR P.cantidadPuertas = @puertas) AND
+            (@largo IS NULL OR P.largo = @largo) AND 
+            (@ancho IS NULL OR P.ancho = @ancho) AND
+            (@alto IS NULL OR P.alto = @alto) AND
+            (@materialAsientos IS NULL OR P.asientos = @materialAsientos) AND
+            (@motor IS NULL OR P.motor = @motor) AND
+            (@vidriosElectricos IS NULL OR P.vidriosElec = @vidriosElectricos) AND
+            (@espejosElectricos IS NULL OR P.espejosElec = @espejosElectricos) AND
+            (@sensoresTraseros IS NULL OR P.sensorTrasero = @sensoresTraseros) AND
+            (@sensoresDelanteros IS NULL OR P.sensorDelantero = @sensoresDelanteros) AND
+            (@camaraRetroceso IS NULL OR P.camaraRetroceso = @camaraRetroceso) AND
+            (@camara360 IS NULL OR P.camara360 = @camara360) AND
+            (@sensoresLaterales IS NULL OR P.sensorLateral = @sensoresLaterales) AND
+            (@tablero IS NULL OR P.tablero = @tablero) AND
+            (@tapizado IS NULL OR P.tapizado = @tapizado) AND
+            (@sonido IS NULL OR P.sistemaSonido = @sonido) AND
+            (@estadoVehiculo IS NULL OR P.estado = @estadoVehiculo) AND
+            (@leasing IS NULL OR P.leasing = @leasing)
+    )
+    SELECT *
+    FROM PublicacionesConFotoUnica;
 END;
+
 GO
 
 select * from Vehiculo

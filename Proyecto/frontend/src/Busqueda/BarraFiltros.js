@@ -32,7 +32,7 @@ const BarraFiltroBusquedaAutos = ({ traerVehiculos }) => {
     tapizado: '',
     sonido: '',
     estadoVehiculo: '',
-    leasing: false,
+    leasing: false
   });
 
   const handleChange = (e) => {

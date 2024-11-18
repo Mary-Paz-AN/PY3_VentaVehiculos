@@ -19,27 +19,40 @@ const BarraComparaciones = forwardRef((props, ref) => {
 
   // Función para navegar a la página de comparación
   const irAComparacion = () => {
-    navigate('/comparar-autos');
+    navigate('/compararAutos', {
+      state: {
+        autosSeleccionados: compararAutos
+      }
+    });
   };
 
   const ingresarAuto = (auto) => {
-    if(autosAgregados < 3){
-      compararAutos.push(auto)
+    if(compararAutos.some(elemento => elemento.id === auto.id)){
+      alert(t("alertaComparacionRepetida"));
+      return;
+    }
+    else if(autosAgregados >= 3){
+      alert(t("alertaCantidadComparacionesMaxima"));
+      return;
+    }
+    else{
+      compararAutos.push(auto);
       setCompararAutos(compararAutos);
       setAutosAgregados(autosAgregados + 1);
     }
-    else{
-      alert(t("alertaCantidadComparaciones"));
-    }
     const elemento = document.getElementById("BotonIrComparaciones");
-    if(autosAgregados > 1){
+    if(autosAgregados < 1){
       elemento.style.visibility = "hidden";
+    }
+    else{
+      elemento.style.visibility = "visible";
     }
   };
 
   const eliminarAuto = (id) => {
     const autosActualizados = compararAutos.filter(auto => auto.id !== id);
-    setAutosAgregados(autosActualizados);
+    setCompararAutos(autosActualizados);
+    setAutosAgregados(autosAgregados - 1);
   }
 
   // Exponer la función al padre
