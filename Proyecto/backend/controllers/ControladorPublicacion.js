@@ -127,8 +127,8 @@ async function getFotos (req, res) {
 // Obtener una publicación
 async function verPublicacion (req, res) {
     try {
-        const { id } = req.params; 
-        const datos = await gestorPublicaciones.verPublicacion(id);
+        const { idPublicacion } = req.params; 
+        const datos = await gestorPublicaciones.verPublicacion(idPublicacion);
 
         //Verificar que si existan datos
         if (datos) {

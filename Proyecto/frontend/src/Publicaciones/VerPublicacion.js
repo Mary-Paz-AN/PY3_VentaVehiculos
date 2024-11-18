@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, ListGroup, Carousel, Tab, Tabs } from 'react-bootstrap';
+import { Container, Row, Col, Button, ListGroup, Carousel, Tab, Tabs, Alert } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../Header';
@@ -14,6 +14,8 @@ const VerPublicacion = () => {
     const [grupoFotos, setGrupoFotos] = useState([]);
     const [fotos, setFotos] = useState([]);
     const [key, setKey] = useState('infoGeneral');
+    const [show, setShow] = useState(false);
+    const [mensaje, setMensaje] = useState('');
     const navigate = useNavigate();
 
     const [data, setData] = useState({});
@@ -47,56 +49,43 @@ const VerPublicacion = () => {
         return resultado;
     };
 
-    
+    useEffect(() => {
+        //Llama al api para conseguir la infromación
+        fetch(`/api/publicaciones/v4/publicacion/${idPublicacion}`)
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('Error: ' + res.statusText);
+                }
+
+                return res.json();
+            })
+            .then((dataFetch) => {
+                setData(dataFetch);
+            })
+            .catch((err) => {
+                console.error("Hubo un error al cargar los datos, por favor, intente nuevamente.", err);
+                setMensaje("Hubo un error al cargar los datos, por favor, intente nuevamente.");
+                setShow(true);
+            }
+        );
+
+    }, [idPublicacion]); 
 
     useEffect(() => {
-        const nuevaData = {
-            placa: 'NUT-879',
-            marca: 'Toyota',
-            modelo: 'SM-99',
-            anio: '2015',
-            tipo: 'Sedán',
-            motor: 'Diesel',
-            sistemaSonido: 'Estándar',
-            tablero: 'Ambos',
-            cantidadPuertas: '4',
-            estado: '2',
-            asientos: 'Tela',
-            tapizado: 'Plástico',
-            sensorTrasero: false,
-            sensorDelantero: false,
-            sensorLateral: false,
-            camaraRetroceso: true,
-            camara360: false,
-            traccion: '4x4',
-            vidriosElec: true,
-            espejosElec: true,
-            transmision: 'Manual',
-            largo: 120.0,
-            alto: 60.0,
-            ancho: 80.0,
-            precio: 10000.0,
-            negociable: true,
-            recibeVehiculo: false,
-            leasing: false,
-            fechaPublicacion: '2024-10-04 12:30:89',
-            fechaModificacion: '2024-10-04 12:30:89',
-            fotosInternas: ['/images/car.jpg', '/images/car.jpg', '/images/car.jpg', '/images/Carrusel1.png'], 
-            fotosExternas: ['/images/car.jpg', '/images/car.jpg', '/images/car.jpg', '/images/Carrusel2.png'],
-        };
-    
-        setData(nuevaData);
-        setImagenGrande(nuevaData.fotosExternas[0]); 
+        //Fotos predeterminadas por falta de manejo en ellas (Hay que hacer cambio)
+        const fotosInternas = ['/images/ao1.jpg', '/images/ao1-2.jpg', '/images/ao1-3.jpg', '/images/ao1-4.jpg'];
+        const fotosExternas = ['/images/ao1-5.jpg', '/images/car.jpg', '/images/Carrusel1.png', '/images/Carrusel2.png'];
+
+        setImagenGrande(fotosExternas[0]); 
 
         // Crear un solo arreglo de fotos
-        const fotosUnidas = unirFotos(nuevaData.fotosInternas, nuevaData.fotosExternas);
+        const fotosUnidas = unirFotos(fotosInternas, fotosExternas);
         setFotos(fotosUnidas);
 
         // Dividir las fotos en grupo de 4
-        const grupo = crearGrupo(nuevaData.fotosInternas, nuevaData.fotosExternas);
-        setGrupoFotos(grupo)
-    
-    }, []); 
+        const grupo = crearGrupo(fotosInternas, fotosExternas);
+        setGrupoFotos(grupo);
+    }, []);
     
 
     // LLeva al formulario crear una publicacion pero como plantilla
@@ -123,6 +112,20 @@ const VerPublicacion = () => {
         <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
             <Header />
             <div style={{margin: '20px'}}></div>
+
+            {show && (
+                <Alert 
+                    variant="warning" 
+                    className="textStyle" 
+                    onClose={() => setShow(false)} 
+                    role="alert"
+                    aria-live="assertive"
+                    dismissible
+                >
+                    <Alert.Heading>{t('advertencia')}</Alert.Heading>
+                    <p>{mensaje}</p>
+                </Alert>
+            )}
 
             <Container style={{flex: '1'}}>
                 {/* Titulo que sera la marca junto al modelo */}
@@ -153,6 +156,7 @@ const VerPublicacion = () => {
                                 controls={fotos.length > 4} 
                                 indicators={false} 
                             >
+                                <div style={{marginTop: '10px'}}></div>
                                 {grupoFotos.map((grupo, index) => (
                                     <Carousel.Item key={index}>
                                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>

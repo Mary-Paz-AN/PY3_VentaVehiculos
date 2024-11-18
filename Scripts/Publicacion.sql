@@ -504,7 +504,7 @@ INNER JOIN Vehiculo AS V ON P.Placa = V.Placa;
 --    SELECT TOP 1 Imagen 
 --    FROM Fotos AS F 
 --    WHERE F.IdPublicacion = P.IdPublicacion
---	ORDER BY F.EsInterna DESC
+--	ORDER BY F.EsInterna ASC
 --) AS F;
 GO
 

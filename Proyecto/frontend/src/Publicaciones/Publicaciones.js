@@ -41,7 +41,7 @@ const Publicaciones = () => {
         //Logica API
         const data = [
             {
-                id: 1,
+                id: 10,
                 placa: 'NUT-879',
                 marcaModelo: 'Toyota SM-99',
                 tipo: 'Sedán',

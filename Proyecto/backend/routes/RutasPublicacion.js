@@ -25,7 +25,7 @@ router.delete('/v4/publicacion/:id', controladorPublicaciones.eliminarPublicacio
 router.get('/publicacion/fotos/:id', controladorPublicaciones.getFotos);
 
 // Ruta para obtener una publicación por su ID
-router.get('/v4/publicacion/:id', controladorPublicaciones.verPublicacion);
+router.get('/v4/publicacion/:idPublicacion', controladorPublicaciones.verPublicacion);
 
 // Ruta para obtener las publicaciones de un usuario
 router.get('/misPubliciones/:cedula', controladorPublicaciones.misPublicaciones);
