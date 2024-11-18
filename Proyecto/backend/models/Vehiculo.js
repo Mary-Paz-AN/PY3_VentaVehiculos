@@ -78,31 +78,31 @@ class Vehiculo {
     }
 
     setDatosVehiculo(data) {
-        this.vehiculo.placa = data.placa;
-        this.vehiculo.marca = data.marca;
-        this.vehiculo.modelo = data.modelo;
-        this.vehiculo.anio = data.anio;
-        this.vehiculo.tipo = data.tipo;
-        this.vehiculo.motor = data.motor;
-        this.vehiculo.sistemaSonido = data.sistemaSonido;
-        this.vehiculo.tablero = data.tablero;
-        this.vehiculo.cantidadPuertas = data.cantidadPuertas;
-        this.vehiculo.estado = data.estado;
+        this.placa = data.placa;
+        this.marca = data.marca;
+        this.modelo = data.modelo;
+        this.anio = data.anio;
+        this.tipo = data.tipo;
+        this.motor = data.motor;
+        this.sistemaSonido = data.sistemaSonido;
+        this.tablero = data.tablero;
+        this.cantidadPuertas = data.cantidadPuertas;
+        this.estado = data.estado;
 
         if (this.material) {
-            this.material.setDatosMaterial();
+            this.material.setDatosMaterial(data);
         }
 
         if (this.sensor) {
-            this.sensor.setDatosSensor();
+            this.sensor.setDatosSensor(data);
         }
 
         if (this.mecanica) {
-            this.mecanica.setDatosMecanica();
+            this.mecanica.setDatosMecanica(data);
         }
 
         if (this.dimension) {
-            this.dimension.setDatosDimension();
+            this.dimension.setDatosDimension(data);
         }
     }
 

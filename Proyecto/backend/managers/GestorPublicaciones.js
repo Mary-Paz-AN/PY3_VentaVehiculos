@@ -192,7 +192,6 @@ class GestorPublicaciones {
     //Usar una plantilla para craer una publicación
     async crearPlantilla(data) {
         try {
-
             const datos = await this.verPublicacion(data.id);
 
             if(!datos) {
