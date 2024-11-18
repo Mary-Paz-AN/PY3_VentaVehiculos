@@ -1,11 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Header from '../../Header';
 import Footer from '../../Footer';
 
 const CompararAutos = (autosSeleccionados) => {
     const { t } = useTranslation();
+    const [autos, setAutos] = useState([])
+    setAutos(autosSeleccionados);
 
     return (
         <div>
@@ -13,7 +15,7 @@ const CompararAutos = (autosSeleccionados) => {
             <div className="container mt-4">
                 <h2>{t('Comparar Autos')}</h2>
                 <div className="d-flex justify-content-around flex-wrap gap-4">
-                    {autosSeleccionados.map((auto) => (
+                    {autos.map((auto) => (
                         <div
                             key={auto.id}
                             className="card p-3 border shadow-sm"
