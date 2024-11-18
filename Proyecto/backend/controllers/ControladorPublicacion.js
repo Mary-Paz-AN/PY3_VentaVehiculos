@@ -2,38 +2,58 @@
 const GestorPublicaciones = require('../managers/GestorPublicaciones');
 const gestorPublicaciones = new GestorPublicaciones();
 
-//Para crear un buffer para las fotos
-const multer = require('multer');
-const upload = multer(); 
+/* Crear una publicación
+async function crearPublicacion(req, res) {
+    try {
+        // Procesar los datos
+        const datos = req.body;  // Los datos normales
+        const fotosInternas = req.files.filter(file => file.fieldname === 'fotosInternas');
+        const fotosExternas = req.files.filter(file => file.fieldname === 'fotosExternas');
+
+        // Aquí puedes procesar los archivos si es necesario, o guardarlos en una base de datos
+
+        console.log(datos);  // Datos de la publicación
+        console.log(fotosInternas);  // Archivos de fotos internas
+        console.log(fotosExternas);  // Archivos de fotos externas
+
+        // Llamar al gestor para crear la publicación
+        const resultado = await gestorPublicaciones.crearPublicacionBD(datos, fotosInternas, fotosExternas);
+
+        // Verificar que todo salió bien y devolver la respuesta
+        if (resultado) {
+            return res.status(201).json({ message: 'Publicación creada exitosamente' });
+        } else {
+            return res.status(400).json({ message: 'Error al crear la publicación' });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
+    }
+}*/
 
 // Crear una publicación
 async function crearPublicacion(req, res) {
     try {
-        // Proccesar las imagenes 
-        upload.fields([
-            { name: 'fotosInternas'}, 
-            { name: 'fotosExternas'}   
-        ])(req, res, async (err) => {
-            if (err) {
-                console.error('Error al procesar las imágenes:', err);
-                return res.status(400).json({ message: 'Hubo un error con las imágenes cargadas' });
-            }
+        // Procesar los datos
+        const datos = req.body;  // Los datos normales
+        const fotosInternas = req.files.filter(file => file.fieldname === 'fotosInternas');
+        const fotosExternas = req.files.filter(file => file.fieldname === 'fotosExternas');
 
-            const datos = req.body;
-            datos.fotosInternas = req.files['fotosInternas'] ? req.files['fotosInternas'].map(file => file.buffer) : [];
-            datos.fotosExternas = req.files['fotosExternas'] ? req.files['fotosExternas'].map(file => file.buffer) : [];
+        // Aquí puedes procesar los archivos si es necesario, o guardarlos en una base de datos
 
-            // Llamar al gestor para crear la publicación
-            const resultado = await gestorPublicaciones.crearPublicacionBD(datos);
+        console.log(datos);  // Datos de la publicación
+        console.log(fotosInternas);  // Archivos de fotos internas
+        console.log(fotosExternas);  // Archivos de fotos externas
 
-            // Verificar que todo salió bien y devolver la respuesta
-            if (resultado) {
-                return res.status(201).json({ message: 'Publicación creada exitosamente' });
-            } else {
-                return res.status(400).json({ message: 'Error al crear la publicación' });
-            }
-        });
+        // Llamar al gestor para crear la publicación
+        const resultado = await gestorPublicaciones.crearPublicacionBD(datos, fotosInternas, fotosExternas);
 
+        // Verificar que todo salió bien y devolver la respuesta
+        if (resultado) {
+            return res.status(201).json({ message: 'Publicación creada exitosamente' });
+        } else {
+            return res.status(400).json({ message: 'Error al crear la publicación' });
+        }
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
@@ -43,29 +63,15 @@ async function crearPublicacion(req, res) {
 // Crear publicación por medio de una plantilla
 async function crearPlantilla (req, res) {
     try {
-        // Proccesar las imagenes 
-        upload.fields([
-            { name: 'fotosInternas', maxCount: 4 }, 
-            { name: 'fotosExternas', maxCount: 4 }   
-        ])(req, res, async (err) => {
-            if (err) {
-                console.error('Error al procesar las imágenes:', err);
-                return res.status(400).json({ message: 'Hubo un error con las imágenes cargadas' });
-            }
-            const data = req.body;
-            data.fotosInternas = req.files['fotosInternas'] ? req.files['fotosInternas'].map(file => file.buffer) : [];
-            data.fotosExternas = req.files['fotosExternas'] ? req.files['fotosExternas'].map(file => file.buffer) : [];
+        const data = req.body;
+        const resultado = await gestorPublicaciones.crearPlantilla(data);
 
-            const resultado = await gestorPublicaciones.crearPlantilla(data);
-
-            // Verificar que la plantilla se hicicera
-            if (resultado) {
-                return res.status(201).json({ message: 'Plantilla de publicación creada exitosamente' });
-            } else {
-                return res.status(400).json({ message: 'Error al crear la plantilla' });
-            }
-        
-        });
+        // Verificar que la plantilla se hicicera
+        if (resultado) {
+            return res.status(201).json({ message: 'Plantilla de publicación creada exitosamente' });
+        } else {
+            return res.status(400).json({ message: 'Error al crear la plantilla' });
+        }
 
     } catch (error) {
         console.error(error);
@@ -76,29 +82,15 @@ async function crearPlantilla (req, res) {
 // Modificar una publicación
 async function modificarPublicacion (req, res) {
     try {
-        // Proccesar las imagenes 
-        upload.fields([
-            { name: 'fotosInternas', maxCount: 4 }, 
-            { name: 'fotosExternas', maxCount: 4 }   
-        ])(req, res, async (err) => {
-            if (err) {
-                console.error('Error al procesar las imágenes:', err);
-                return res.status(400).json({ message: 'Hubo un error con las imágenes cargadas' });
-            }
+        const datos = req.body; 
+        const resultado = await gestorPublicaciones.modificarPublicacion(datos);
 
-            const datos = req.body; 
-            datos.fotosInternas = req.files['fotosInternas'] ? req.files['fotosInternas'].map(file => file.buffer) : [];
-            datos.fotosExternas = req.files['fotosExternas'] ? req.files['fotosExternas'].map(file => file.buffer) : [];
-
-            const resultado = await gestorPublicaciones.modificarPublicacion(datos);
-
-            //Veriifcar que la modificación se hizó
-            if (resultado) {
-                return res.status(200).json({ message: 'Publicación modificada exitosamente' });
-            } else {
-                return res.status(400).json({ message: 'Error al modificar la publicación' });
-            }
-        });
+        //Veriifcar que la modificación se hizó
+        if (resultado) {
+            return res.status(200).json({ message: 'Publicación modificada exitosamente' });
+        } else {
+            return res.status(400).json({ message: 'Error al modificar la publicación' });
+        }
 
     } catch (error) {
         console.error(error);

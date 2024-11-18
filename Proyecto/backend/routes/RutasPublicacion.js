@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const controladorPublicaciones = require('../controllers/ControladorPublicacion');
 
+/* Dependencia para las imagenes
+const multer = require('multer');
+const upload = multer({ dest: 'downloads/' });*/
+
+/* Ruta para crear una nueva publicación
+router.post('/v2/publicacion', upload.array('fotosInternas', 4), upload.array('fotosExternas', 4), controladorPublicaciones.crearPublicacion);*/
+
 // Ruta para crear una nueva publicación
 router.post('/v2/publicacion', controladorPublicaciones.crearPublicacion);
 

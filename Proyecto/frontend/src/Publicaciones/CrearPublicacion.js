@@ -121,6 +121,26 @@ const CrearPublicacion = () => {
     const tracciones = ["Sencilla", "4x4"];
     const transmisiones = ["Manual", "Automático", "Dual"];
 
+    //Convierte las imagenes a binario
+    /*const convertirABinario = (files) => {
+        const fileArray = Array.from(files);
+    
+        return Promise.all(
+            fileArray.map((file) => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsArrayBuffer(file);
+                    reader.onload = () => {
+                        const binary = new Uint8Array(reader.result);
+                        resolve(binary); // Resuelve con el binario del archivo
+                    };
+                    reader.onerror = () => reject("Error leyendo el archivo");
+                });
+            })
+        );
+    };*/
+    
+
     // Maneja los cambios de los inputs sea checkbox o sleccionador de archivos
     const handleChange = (e) => {
         const { name, type, value, checked, files } = e.target;
@@ -131,18 +151,33 @@ const CrearPublicacion = () => {
                 nuevoValor = checked;
                 break;
             case "file":
-                // Si hay archivos, los asignamos como un array
                 nuevoValor = files ? Array.from(files) : [];
                 break;
+                
+                /* Hace la conversion a binario
+                if (files) {
+                    convertirABinario(files)
+                        .then((binaries) => {
+                            setData((prevData) => ({
+                                ...prevData,
+                                [name]: binaries, 
+                            }));
+                        })
+                        .catch((error) => console.error(error));
+                }
+                return; */
+
             default:
                 nuevoValor = value;
         }
     
-        setData({
-            ...data,
+        // Actualizamos el estado para los otros tipos de inputs
+        setData((prevData) => ({
+            ...prevData,
             [name]: nuevoValor,
-        });
+        }));
     };
+    
     
     
     // Vuelve a mis publicaciones 
@@ -297,12 +332,61 @@ const CrearPublicacion = () => {
     // Guarda los datos
     const registrarAuto = async () => {
         if (verificarDatos()) {
-            console.log(data.cedula);
             try {
+                /*const formData = new FormData();
+
+                // Agregar los datos normales
+                formData.append("id", data.cedula);
+                formData.append("cedula", data.cedula);
+                formData.append("placa", data.placa);
+                formData.append("marca", data.marca);
+                formData.append("modelo", data.modelo);
+                formData.append("anio", data.anio);
+                formData.append("tipo", data.tipo);
+                formData.append("motor", data.motor);
+                formData.append("sistemaSonido", data.sistemaSonido);
+                formData.append("tablero", data.tablero);
+                formData.append("cantidadPuertas", data.cantidadPuertas);
+                formData.append("estado", data.estado);
+                formData.append("precio", data.precio);
+                formData.append("negociable", data.negociable);
+                formData.append("recibeVehiculo", data.recibeVehiculo);
+                formData.append("leasing", data.leasing);
+                formData.append("asientos", data.asientos);
+                formData.append("tapizado", data.tapizado);
+
+                // Agregar los valores booleanos
+                formData.append("sensorTrasero", data.sensorTrasero);
+                formData.append("sensorDelantero", data.sensorDelantero);
+                formData.append("sensorLateral", data.sensorLateral);
+                formData.append("camaraRetroceso", data.camaraRetroceso);
+                formData.append("camara360", data.camara360);
+                formData.append("vidriosElec", data.vidriosElec);
+                formData.append("espejosElec", data.espejosElec);
+
+                // Agregar las fotos internas y externas
+                data.fotosInternas.forEach((foto, index) => {
+                    formData.append(`fotosInternas[${index}]`, foto);
+                });
+                data.fotosExternas.forEach((foto, index) => {
+                    formData.append(`fotosExternas[${index}]`, foto);
+                });
+
+                // Agregar datos de dimensiones y mecánica
+                formData.append("traccion", data.traccion);
+                formData.append("transmision", data.transmision);
+                formData.append("largo", data.largo);
+                formData.append("alto", data.alto);
+                formData.append("ancho", data.ancho);*/
+
                 const link = isPlantilla ? '/api/publicaciones/v2/publicacion' : '/api/publicaciones/v2/publicacion';
+                console.log(data);
                 const respuesta = await fetch(link, {
                     method: 'POST',
-                    body: data,  
+                    headers: {
+                        'Content-Type': 'application/json', 
+                    },
+                    body: JSON.stringify(data) 
                 });
     
                 if (respuesta.ok) {

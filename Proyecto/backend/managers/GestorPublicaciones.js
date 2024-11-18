@@ -116,13 +116,13 @@ class GestorPublicaciones {
 
             // Verificar que se creo la publicacion
             if (resultado && resultado.rowsAffected && resultado.rowsAffected[0] > 0) {
-                try {
+                /*try {
                     // Intentamos agregar las fotos, si algo falla se captura el error
                     await this.addFotos(publicacion.fotosInternas, publicacion.fotosExternas, idPublicacion);
                 } catch (error) {
                     console.error('Error al agregar fotos:', error);
                     throw new Error('Hubo un error al agregar las fotos a la publicación. Por favor, inténtalo de nuevo.');
-                }
+                }*/
                 return true;
             } else {
                 return false;
@@ -312,13 +312,13 @@ class GestorPublicaciones {
 
             // Verificar que se creo la publicacion
             if (resultado && resultado.rowsAffected && resultado.rowsAffected[0] > 0) {
-                try {
+                /*try {
                     // Intentamos agregar las fotos, si algo falla se captura el error
                     await this.modificarFotos(datos.fotosInternas, datos.fotosExternas, datos.internasId, datos.externasId);
                 } catch (error) {
                     console.error('Error al modificar las fotos:', error);
                     throw new Error('Hubo un error al modificar las fotos de la publicación. Por favor, inténtalo de nuevo.');
-                }
+                }*/
                 return true;
             } else {
                 return false;
