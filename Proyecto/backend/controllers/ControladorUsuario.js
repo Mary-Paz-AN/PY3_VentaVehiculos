@@ -93,7 +93,7 @@ async function verificarIdentificacion(req, res) {
 
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ mensaje: 'Error al registrar el usuario. Inténtalo más tarde.' });
+        return res.status(500).json({ mensaje: 'Error al verificar la identificación. Inténtalo más tarde.' });
     }
 }
 
@@ -113,7 +113,7 @@ async function verificarProcessoPenal(req, res) {
 
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ mensaje: 'Error al registrar el usuario. Inténtalo más tarde.' });
+        return res.status(500).json({ mensaje: 'Error al verificar los processos penales. Inténtalo más tarde.' });
     }
 }
 

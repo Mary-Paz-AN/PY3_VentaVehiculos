@@ -4,4 +4,4 @@ function poseeMultas(placa) {
     return placas.includes(placa);
 }
 
-module.exports = { poseeMultas };
+export { poseeMultas };
