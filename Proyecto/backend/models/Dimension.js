@@ -32,4 +32,4 @@ class Dimension {
 
 }
 
-module.exports = Dimension;
+export default Dimension;

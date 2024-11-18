@@ -1,5 +1,5 @@
 //Relación con Vehiculo
-const Vehiculo = require('./Vehiculo');
+import Vehiculo from './Vehiculo.js';
 
 // Creación de la clase
 class Publicacion {
@@ -110,4 +110,4 @@ class Publicacion {
     }
 }
 
-module.exports = Publicacion;
+export default Publicacion;

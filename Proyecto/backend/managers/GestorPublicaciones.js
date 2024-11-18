@@ -1,5 +1,5 @@
-const Publicacion = require('../models/Publicacion');
-const { getConnection, sql } = require('./conexion');
+import Publicacion from '../models/Publicacion.js';;
+import { getConnection, sql } from './conexion.js';;
 
 // Creación de las clase
 class GestorPublicaciones {
@@ -9,25 +9,25 @@ class GestorPublicaciones {
         try {
             //Crea una instancia de pubicación
             const nuevaPublicacion = new Publicacion(
-                datos.cedula, 
-                datos.precio, 
-                datos.negociable, 
-                datos.recibeVehiculo, 
-                datos.leasing, 
-                datos.fotosInternas, 
+                datos.cedula,
+                datos.precio,
+                datos.negociable,
+                datos.recibeVehiculo,
+                datos.leasing,
+                datos.fotosInternas,
                 datos.fotosExternas
             );
 
             nuevaPublicacion.setInfoVehiculo(
-                datos.placa, 
-                datos.marca, 
-                datos.modelo, 
-                datos.anio, 
-                datos.tipo, 
-                datos.motor, 
-                datos.sistemaSonido, 
-                datos.tablero, 
-                datos.cantidadPuertas, 
+                datos.placa,
+                datos.marca,
+                datos.modelo,
+                datos.anio,
+                datos.tipo,
+                datos.motor,
+                datos.sistemaSonido,
+                datos.tablero,
+                datos.cantidadPuertas,
                 datos.estado
             );
 
@@ -70,7 +70,7 @@ class GestorPublicaciones {
         try {
             //Conexión a la base de datos
             const pool = await getConnection();
-            const request =  pool.request();
+            const request = pool.request();
 
             //Asignar los parámetros de entrada
             request.input('placa', sql.VarChar, publicacion.placa);
@@ -127,7 +127,7 @@ class GestorPublicaciones {
             } else {
                 return false;
             }
-            
+
         } catch (error) {
             console.error('Error en sp_crearP:', error);
             throw new Error('Error al crear la publicación. Por favor, vuelva a inténtalo.');
@@ -141,9 +141,9 @@ class GestorPublicaciones {
             const pool = await getConnection();
 
             let j = 0;
-            for(let i = 0; i < 8; i++) {
-                if(i < 4) {
-                    const request =  pool.request();
+            for (let i = 0; i < 8; i++) {
+                if (i < 4) {
+                    const request = pool.request();
 
                     //Parametros
                     let foto = internas[i];
@@ -160,7 +160,7 @@ class GestorPublicaciones {
                     }
 
                 } else {
-                    const request =  pool.request();
+                    const request = pool.request();
 
                     //Parametros
                     let foto = externas[j];
@@ -178,11 +178,11 @@ class GestorPublicaciones {
 
                     j++;
                 }
-            } 
+            }
 
             return true;
 
-        } catch(error) {
+        } catch (error) {
             console.error('Error en sp_fotosP:', error);
             throw new Error('Hubo un error al agregar las fotos a la publicación. Por favor, inténtalo de nuevo.');
         }
@@ -194,31 +194,31 @@ class GestorPublicaciones {
         try {
             const datos = await this.verPublicacion(data.id);
 
-            if(!datos) {
+            if (!datos) {
                 throw Error('Ocurrio un errror consiguiendo los datos');
             } else {
 
                 //Crea una instancia de pubicación para usarla como plantilla
                 const nuevaPublicacion = new Publicacion(
-                    datos.cedula, 
-                    datos.precio, 
-                    datos.negociable, 
-                    datos.recibeVehiculo, 
-                    datos.leasing, 
-                    datos.fotosInternas, 
+                    datos.cedula,
+                    datos.precio,
+                    datos.negociable,
+                    datos.recibeVehiculo,
+                    datos.leasing,
+                    datos.fotosInternas,
                     datos.fotosExternas
                 );
 
                 nuevaPublicacion.setInfoVehiculo(
-                    datos.placa, 
-                    datos.marca, 
-                    datos.modelo, 
-                    datos.anio, 
-                    datos.tipo, 
-                    datos.motor, 
-                    datos.sistemaSonido, 
-                    datos.tablero, 
-                    datos.cantidadPuertas, 
+                    datos.placa,
+                    datos.marca,
+                    datos.modelo,
+                    datos.anio,
+                    datos.tipo,
+                    datos.motor,
+                    datos.sistemaSonido,
+                    datos.tablero,
+                    datos.cantidadPuertas,
                     datos.estado
                 );
 
@@ -268,7 +268,7 @@ class GestorPublicaciones {
         try {
             //Conexión a la base de datos
             const pool = await getConnection();
-            const request =  pool.request();
+            const request = pool.request();
 
             //Asignar los parámetros de entrada
             request.input('placa', sql.VarChar, datos.placa);
@@ -321,7 +321,7 @@ class GestorPublicaciones {
             } else {
                 return false;
             }
-            
+
         } catch (error) {
             console.error('Error en sp_modiP:', error);
             throw new Error('Error al modificar la publicación. Por favor, vuelva a inténtalo.');
@@ -335,9 +335,9 @@ class GestorPublicaciones {
             const pool = await getConnection();
 
             let j = 0;
-            for(let i = 0; i < 8; i++) {
-                if(i < 4) {
-                    const request =  pool.request();
+            for (let i = 0; i < 8; i++) {
+                if (i < 4) {
+                    const request = pool.request();
 
                     //Parametros
                     let foto = internas[i];
@@ -354,7 +354,7 @@ class GestorPublicaciones {
                     }
 
                 } else {
-                    const request =  pool.request();
+                    const request = pool.request();
 
                     //Parametros
                     let foto = externas[j];
@@ -372,11 +372,11 @@ class GestorPublicaciones {
 
                     j++;
                 }
-            } 
+            }
 
             return true;
 
-        } catch(error) {
+        } catch (error) {
             console.error('Error en sp_modiFotosP:', error);
             throw new Error('Hubo un error al modificar las fotos de la publicación. Por favor, inténtalo de nuevo.');
         }
@@ -389,13 +389,13 @@ class GestorPublicaciones {
             // Iniciar la conexión a la BD
             const pool = await getConnection();
             const request = pool.request();
-            
+
             // Asignar los parámetros de entrada
             request.input('idPublicacion', sql.Int, id);
 
             //Ejecutar el store procedure
             const resultado = await request.execute('sp_fotos');
-            
+
             // Verificar que el resultado si exista
             if (resultado.recordset.length > 0) {
                 return resultado.recordset[0];
@@ -414,7 +414,7 @@ class GestorPublicaciones {
         try {
             //Conexión a la base de datos
             const pool = await getConnection();
-            const request =  pool.request();
+            const request = pool.request();
 
             //Parametro
             request.input('id', sql.Int, id);
@@ -429,7 +429,7 @@ class GestorPublicaciones {
 
             return true;
 
-        } catch(error) {
+        } catch (error) {
             console.error('Error en sp_eliminarP:', error);
             throw new Error('Hubo un error al eliminar la publicación. Por favor, inténtalo de nuevo.');
         }
@@ -442,13 +442,13 @@ class GestorPublicaciones {
             // Iniciar la conexión a la BD
             const pool = await getConnection();
             const request = pool.request();
-            
+
             // Asignar los parámetros de entrada
             request.input('idPublicacion', sql.Int, id);
 
             //Ejecutar el store procedure
             const resultado = await request.execute('sp_publicacion');
-            
+
             // Verificar que el resultado si exista
             if (resultado.recordset.length > 0) {
                 const dataPublicacion = resultado.recordset[0];
@@ -483,13 +483,13 @@ class GestorPublicaciones {
             // Iniciar la conexión a la BD
             const pool = await getConnection();
             const request = pool.request();
-            
+
             // Asignar los parámetros de entrada
             request.input('cedula', sql.VarChar, cedula);
 
             //Ejecutar el store procedure
             const resultado = await request.execute('sp_misPublicaciones');
-            
+
             // Verificar que el resultado si exista
             if (resultado.recordset.length > 0) {
                 return resultado.recordset;
@@ -513,7 +513,80 @@ class GestorPublicaciones {
 
     }
 
+    /**
+     * Función para ejecutar el procedimiento almacenado `FiltrarPublicaciones`.
+     * @param {Object} parametros - Parámetros para el procedimiento almacenado.
+     * @returns {Promise<Array>} Resultados de la consulta.
+     */
+    async verPublicacionesFiltradas({
+        marca = null,
+        modelo = null,
+        anio = null,
+        placa = null,
+        precio = null,
+        negociable = null,
+        aceptaVehiculos = null,
+        transmisionTipo = null,
+        puertas = null,
+        largo = null,
+        ancho = null,
+        alto = null,
+        materialAsientos = null,
+        motor = null,
+        vidriosElectricos = null,
+        espejosElectricos = null,
+        sensoresTraseros = null,
+        sensoresDelanteros = null,
+        camaraRetroceso = null,
+        camara360 = null,
+        sensoresLaterales = null,
+        tablero = null,
+        tipoTransmision = null,
+        tapizado = null,
+        sonido = null,
+        estadoVehiculo = null,
+        leasing = null,
+    }) {
+        // Crear la solicitud para el procedimiento almacenado
+        const pool = getConnection();
+        const request = pool.request();
+
+        // Agregar todos los parámetros al request
+        request.input("marca", sql.VarChar(30), marca);
+        request.input("modelo", sql.VarChar(30), modelo);
+        request.input("anio", sql.Int, anio);
+        request.input("placa", sql.VarChar(6), placa);
+        request.input("precio", sql.Int, precio);
+        request.input("negociable", sql.Bit, negociable);
+        request.input("aceptaVehiculos", sql.Bit, aceptaVehiculos);
+        request.input("transmisionTipo", sql.VarChar(30), transmisionTipo);
+        request.input("puertas", sql.Int, puertas);
+        request.input("largo", sql.Float, largo);
+        request.input("ancho", sql.Float, ancho);
+        request.input("alto", sql.Float, alto);
+        request.input("materialAsientos", sql.VarChar(45), materialAsientos);
+        request.input("motor", sql.VarChar(30), motor);
+        request.input("vidriosElectricos", sql.Bit, vidriosElectricos);
+        request.input("espejosElectricos", sql.Bit, espejosElectricos);
+        request.input("sensoresTraseros", sql.Bit, sensoresTraseros);
+        request.input("sensoresDelanteros", sql.Bit, sensoresDelanteros);
+        request.input("camaraRetroceso", sql.Bit, camaraRetroceso);
+        request.input("camara360", sql.Bit, camara360);
+        request.input("sensoresLaterales", sql.Bit, sensoresLaterales);
+        request.input("tablero", sql.VarChar(30), tablero);
+        request.input("tipoTransmision", sql.VarChar(30), tipoTransmision);
+        request.input("tapizado", sql.VarChar(30), tapizado);
+        request.input("sonido", sql.VarChar(30), sonido);
+        request.input("estadoVehiculo", sql.Int, estadoVehiculo);
+        request.input("leasing", sql.Bit, leasing);
+
+        // Ejecutar el procedimiento almacenado
+        const result = await request.execute("FiltrarPublicaciones");
+
+        // Retornar los resultados
+        return result.recordset;
+    }
 
 }
 
-module.exports = GestorPublicaciones;
+export default GestorPublicaciones;

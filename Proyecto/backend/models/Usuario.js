@@ -1,5 +1,5 @@
-const InformacionUsuario = require('./InformacionUsuario'); 
-const Direccion = require('./Direccion');
+import InformacionUsuario from './InformacionUsuario.js'; 
+import Direccion from './Direccion.js';
 
 // Creación de la clase Usuario
 class Usuario {
@@ -47,4 +47,4 @@ class Usuario {
     }
 }
 
-module.exports = Usuario;
+export default Usuario;

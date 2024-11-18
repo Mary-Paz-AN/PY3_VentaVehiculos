@@ -1,4 +1,4 @@
-import EstadoPago from "./EstadoPago";
+import EstadoPago from "./EstadoPago.js";
 
 class Pago{
   constructor(sistemaC){

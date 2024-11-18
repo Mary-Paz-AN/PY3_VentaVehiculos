@@ -1,9 +1,9 @@
 // Importar el gestor y crear su instancia para poder usar sus métodos
-const GestorPublicaciones = require('../managers/GestorPublicaciones');
+import GestorPublicaciones from "../managers/GestorPublicaciones.js";
 const gestorPublicaciones = new GestorPublicaciones();
 
-/* Crear una publicación
-async function crearPublicacion(req, res) {
+// Crear una publicación
+export async function crearPublicacion(req, res) {
     try {
         // Procesar los datos
         const datos = req.body;  // Los datos normales
@@ -29,47 +29,10 @@ async function crearPublicacion(req, res) {
         console.error(error);
         return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
     }
-}*/
-
-// Crear una publicación
-async function crearPublicacion(req, res) {
-    try {
-        const datos = req.body; 
-        const resultado = await gestorPublicaciones.crearPublicacion(datos);
-
-        // Verificar que todo salió bien y devolver la respuesta
-        if (resultado) {
-            return res.status(201).json({ message: 'Publicación creada exitosamente' });
-        } else {
-            return res.status(400).json({ message: 'Error al crear la publicación' });
-        }
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
-    }
 }
 
-// Crear publicación por medio de una plantilla
-async function crearPlantilla (req, res) {
-    try {
-        const data = req.body;
-        const resultado = await gestorPublicaciones.crearPlantilla(data);
-
-        // Verificar que la plantilla se hicicera
-        if (resultado) {
-            return res.status(201).json({ message: 'Plantilla de publicación creada exitosamente' });
-        } else {
-            return res.status(400).json({ message: 'Error al crear la plantilla' });
-        }
-
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
-    }
-};
-
 // Modificar una publicación
-async function modificarPublicacion (req, res) {
+export async function modificarPublicacion(req, res) {
     try {
         const datos = req.body; 
         const resultado = await gestorPublicaciones.modificarPublicacion(datos);
@@ -85,10 +48,10 @@ async function modificarPublicacion (req, res) {
         console.error(error);
         return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
     }
-};
+}
 
 // Eliminar una publicación
-async function eliminarPublicacion (req, res) {
+export async function eliminarPublicacion(req, res) {
     try {
         const { idPublicacion } = req.params; 
         const resultado = await gestorPublicaciones.eliminarPublicacion(idPublicacion);
@@ -107,7 +70,7 @@ async function eliminarPublicacion (req, res) {
 };
 
 // Obtener las fotos de una publicación
-async function getFotos (req, res) {
+export async function getFotos (req, res) {
     try {
         const { id } = req.params;
         const fotos = await gestorPublicaciones.getFotos(id);
@@ -122,10 +85,10 @@ async function getFotos (req, res) {
         console.error(error);
         return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
     }
-};
+}
 
 // Obtener una publicación
-async function verPublicacion (req, res) {
+export async function verPublicacion(req, res) {
     try {
         const { idPublicacion } = req.params; 
         const datos = await gestorPublicaciones.verPublicacion(idPublicacion);
@@ -140,10 +103,10 @@ async function verPublicacion (req, res) {
         console.error(error);
         return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
     }
-};
+}
 
-// Obtener las publicaciones de usuario
-async function misPublicaciones (req, res) {
+// Crear publicación a partir de una plantilla
+export async function crearPlantilla(req, res) {
     try {
         const { cedula } = req.params;
         const publicaciones = await gestorPublicaciones.misPublicaciones(cedula);
@@ -158,6 +121,72 @@ async function misPublicaciones (req, res) {
         console.error(error);
         return res.status(500).json({ message: 'Hubo un error al procesar la solicitud' });
     }
-};
+}
 
-module.exports = { crearPublicacion, crearPlantilla, modificarPublicacion, eliminarPublicacion, getFotos, verPublicacion, misPublicaciones };
+export async function filtrarAutos(req, res) {
+    try {
+        // Desestructuramos el JSON del cuerpo de la solicitud
+        const {
+          marca,
+          modelo,
+          año,
+          placa,
+          precio,
+          negociable,
+          aceptaVehiculos,
+          transmisionTipo,
+          puertas,
+          dimensiones: { largo, ancho, alto },
+          materialAsientos,
+          motor,
+          vidriosElectricos,
+          espejosElectricos,
+          sensoresTraseros,
+          sensoresDelanteros,
+          camaraRetroceso,
+          camara360,
+          sensoresLaterales,
+          tablero,
+          tipoTransmision,
+          tapizado,
+          sonido,
+          estadoVehiculo,
+          leasing,
+        } = req.body;
+    
+        const filtrado = gestorPublicaciones.verPublicacionesFiltradas(
+          marca,
+          modelo,
+          año,
+          placa,
+          precio,
+          negociable,
+          aceptaVehiculos,
+          transmisionTipo,
+          puertas,
+          largo,
+          ancho,
+          alto,
+          materialAsientos,
+          motor,
+          vidriosElectricos,
+          espejosElectricos,
+          sensoresTraseros,
+          sensoresDelanteros,
+          camaraRetroceso,
+          camara360,
+          sensoresLaterales,
+          tablero,
+          tipoTransmision,
+          tapizado,
+          sonido,
+          estadoVehiculo,
+          leasing
+        )
+    
+        res.json(filtrado);
+      } catch (err) {
+        console.error("Error al procesar los datos:", err);
+        res.status(500).send("Error interno del servidor");
+      }
+}

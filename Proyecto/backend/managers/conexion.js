@@ -1,5 +1,8 @@
-const sql = require('mssql');
-const os = require('os');
+import mssql from 'mssql';
+import osModule from 'os';
+
+const sql = mssql;
+const os = osModule;
 
 // Define el nombre de usuario y de contraseña
 const serverName = os.hostname();
@@ -33,7 +36,7 @@ const configSql = {
 }
 
 //Iniciar la conexión
-const getConnection = async ( ) => {
+export async function getConnection () {
     try {
         const pool = await sql.connect(configSql);
 
@@ -43,4 +46,4 @@ const getConnection = async ( ) => {
     }
 }
 
-module.exports = { getConnection, sql };
+export {sql}

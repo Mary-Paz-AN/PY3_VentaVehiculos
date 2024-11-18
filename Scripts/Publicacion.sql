@@ -275,8 +275,7 @@ BEGIN
             PrecioColones = @precio, 
             PrecioNegociable = @negociable, 
             RecibeVehiculoPago = @recibeVehiculo, 
-            AsociadoALeasing = @leasing,
-			FechaEdicion = GETDATE()
+            AsociadoALeasing = @leasing
         WHERE Placa = @placa;
 
         -- Confirmar la transacci�n
@@ -357,31 +356,10 @@ BEGIN
         BEGIN TRANSACTION;
 
         -- Eliminar Fotos
-        --DELETE FROM Fotos WHERE IdPublicacion = @id;
-
-		-- Conseguir la placa asociada a la publicación
-		DECLARE @placa VARCHAR(6);
-		SELECT @placa = Placa
-		FROM Publicacion
-		WHERE IdPublicacion = @id;
+        DELETE FROM Fotos WHERE IdPublicacion = @id;
 
 		-- Eliminar Publicacion
 		DELETE FROM Publicacion WHERE IdPublicacion = @id;
-
-		--Eliminar Materiales
-		DELETE FROM Materiales WHERE Placa = @placa;
-
-		--Eliminar Sensores
-		DELETE FROM Sensores WHERE Placa = @placa;
-
-		--Eliminar Mecanica
-		DELETE FROM Mecanica WHERE Placa = @placa;
-
-		--Eliminar Dimensiones
-		DELETE FROM Dimensiones WHERE Placa = @placa;
-
-		--Eliminar Vehiculo
-		DELETE FROM Vehiculo WHERE Placa = @placa;
 
         COMMIT TRANSACTION;
 
@@ -412,7 +390,7 @@ SELECT
 	V.Placa AS placa,
 	V.Marca AS marca,
 	V.Modelo AS modelo,
-	V.Anio AS anio,
+	v.Anio AS anio,
 	V.Motor AS motor,
 	V.TipoVehiculo AS tipo,
 	V.SistemaSonido AS sistemaSonido,
@@ -459,7 +437,6 @@ BEGIN
 		marca,
 		modelo,
 		anio,
-		motor,
 		tipo,
 		sistemaSonido,
 		tablero,
@@ -493,18 +470,17 @@ SELECT
 	V.Placa AS placa,
 	V.Marca AS marca,
 	V.Modelo AS modelo,
-	V.Anio AS anio,
-	V.Motor AS motor,
-	V.TipoVehiculo AS tipo
-	--F.Imagen AS foto
+	v.Anio AS anio,
+	V.TipoVehiculo AS tipo,
+	F.Imagen AS foto
 FROM Publicacion AS P
-INNER JOIN Vehiculo AS V ON P.Placa = V.Placa;
---CROSS APPLY (
---    SELECT TOP 1 Imagen 
---    FROM Fotos AS F 
---    WHERE F.IdPublicacion = P.IdPublicacion
---	ORDER BY F.EsInterna ASC
---) AS F;
+INNER JOIN Vehiculo AS V ON P.Placa = V.Placa
+CROSS APPLY (
+    SELECT TOP 1 Imagen 
+    FROM Fotos AS F 
+    WHERE F.IdPublicacion = P.IdPublicacion
+	ORDER BY F.EsInterna DESC
+) AS F;
 GO
 
 -- Procedure para buscar las publicaciones de un usuario
@@ -520,93 +496,9 @@ BEGIN
 	marca,
 	modelo,
 	anio,
-	motor,
-	tipo
-	--foto
+	tipo,
+	foto
 	FROM vw_misPublicaciones 
 	WHERE cedula = @cedula;
 END;
 GO
-
-GO
-CREATE PROCEDURE FiltrarPublicaciones
-    @marca VARCHAR(30) = NULL,
-    @modelo VARCHAR(30) = NULL,
-    @anio INT = NULL,
-    @placa VARCHAR(6) = NULL,
-    @precio INT = NULL,
-    @negociable BIT = NULL,
-    @aceptaVehiculos BIT = NULL,
-    @transmisionTipo VARCHAR(30) = NULL,
-    @puertas INT = NULL,
-    @largo REAL = NULL,
-    @ancho REAL = NULL,
-    @alto REAL = NULL,
-    @materialAsientos VARCHAR(45) = NULL,
-    @motor VARCHAR(30) = NULL,
-    @vidriosElectricos BIT = NULL,
-    @espejosElectricos BIT = NULL,
-    @sensoresTraseros BIT = NULL,
-    @sensoresDelanteros BIT = NULL,
-    @camaraRetroceso BIT = NULL,
-    @camara360 BIT = NULL,
-    @sensoresLaterales BIT = NULL,
-    @tablero VARCHAR(30) = NULL,
-    @tipoTransmision VARCHAR(30) = NULL,
-    @tapizado VARCHAR(30) = NULL,
-    @sonido VARCHAR(30) = NULL,
-    @estadoVehiculo INT = NULL,
-    @leasing BIT = NULL
-AS
-BEGIN
-    WITH FotosConPrioridad AS (
-        SELECT 
-            F.IdPublicacion,
-            F.foto,
-            ROW_NUMBER() OVER (PARTITION BY F.IdPublicacion ORDER BY F.Id ASC) AS RowNum
-        FROM vw_fotos AS F
-    ),
-    PublicacionesConFotoUnica AS (
-        SELECT
-            P.placa,
-            P.marca,
-            P.modelo,
-            F.foto
-        FROM vw_publicacion AS P
-        INNER JOIN FotosConPrioridad AS F
-            ON P.id = F.IdPublicacion AND F.RowNum = 1
-        WHERE
-            (@marca IS NULL OR P.marca = @marca) AND
-            (@modelo IS NULL OR P.modelo = @modelo) AND
-            (@anio IS NULL OR P.anio = @anio) AND
-            (@placa IS NULL OR P.placa = @placa) AND
-            (@precio IS NULL OR P.precio = @precio) AND
-            (@negociable IS NULL OR P.negociable = @negociable) AND
-            (@aceptaVehiculos IS NULL OR P.recibeVehiculo = @aceptaVehiculos) AND
-            (@transmisionTipo IS NULL OR P.transmision = @transmisionTipo) AND
-            (@puertas IS NULL OR P.cantidadPuertas = @puertas) AND
-            (@largo IS NULL OR P.largo = @largo) AND 
-            (@ancho IS NULL OR P.ancho = @ancho) AND
-            (@alto IS NULL OR P.alto = @alto) AND
-            (@materialAsientos IS NULL OR P.asientos = @materialAsientos) AND
-            (@motor IS NULL OR P.motor = @motor) AND
-            (@vidriosElectricos IS NULL OR P.vidriosElec = @vidriosElectricos) AND
-            (@espejosElectricos IS NULL OR P.espejosElec = @espejosElectricos) AND
-            (@sensoresTraseros IS NULL OR P.sensorTrasero = @sensoresTraseros) AND
-            (@sensoresDelanteros IS NULL OR P.sensorDelantero = @sensoresDelanteros) AND
-            (@camaraRetroceso IS NULL OR P.camaraRetroceso = @camaraRetroceso) AND
-            (@camara360 IS NULL OR P.camara360 = @camara360) AND
-            (@sensoresLaterales IS NULL OR P.sensorLateral = @sensoresLaterales) AND
-            (@tablero IS NULL OR P.tablero = @tablero) AND
-            (@tapizado IS NULL OR P.tapizado = @tapizado) AND
-            (@sonido IS NULL OR P.sistemaSonido = @sonido) AND
-            (@estadoVehiculo IS NULL OR P.estado = @estadoVehiculo) AND
-            (@leasing IS NULL OR P.leasing = @leasing)
-    )
-    SELECT *
-    FROM PublicacionesConFotoUnica;
-END;
-GO
-
-
-select * from Publicacion

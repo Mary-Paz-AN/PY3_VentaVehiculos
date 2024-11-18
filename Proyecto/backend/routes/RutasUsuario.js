@@ -1,20 +1,20 @@
-const express = require('express');
-const router = express.Router();
+import { Router } from 'express';
+const router = Router();
 
 // Controlador
-const usuarioController = require('../controllers/ControladorUsuario');
+import { iniciarSesionUsuario, iniciarSesionCorreo, registrarse, infoUsuario } from '../controllers/ControladorUsuario.js';
 
 // Iniciar sesión con un usuario
-router.post('/iniciarSesion/usuario', usuarioController.iniciarSesionUsuario);
+router.post('/iniciarSesion/usuario', iniciarSesionUsuario);
 
 // Iniicar sesión con el correo
-router.post('/iniciarSesion/correo', usuarioController.iniciarSesionCorreo);
+router.post('/iniciarSesion/correo', iniciarSesionCorreo);
 
 // Registrar un usuario
-router.post('/registrarse', usuarioController.registrarse);
+router.post('/registrarse', registrarse);
 
 // Conseguir la información de un usuario
-router.get('/informacion/:usuario', usuarioController.infoUsuario);
+router.get('/informacion/:usuario', infoUsuario);
 
 // Verificar validez de la cedula
 router.post('/v1/registrarse', usuarioController.verificarIdentificacion);
@@ -22,4 +22,4 @@ router.post('/v1/registrarse', usuarioController.verificarIdentificacion);
 // Verificar processos penales
 router.post('/v2/registrarse', usuarioController.verificarProcessoPenal);
 
-module.exports = router;
+export default router;

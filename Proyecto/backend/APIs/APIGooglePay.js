@@ -1,6 +1,6 @@
 class APIGooglePay {
   constructor() {
-    this.api = "APIGooglePay";
+    this.api = "APIGooglePay.js";
   }
 
   configurarAPI() {

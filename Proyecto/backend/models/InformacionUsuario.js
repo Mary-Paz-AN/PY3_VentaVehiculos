@@ -31,4 +31,4 @@ class InformacionUsuario {
     }
 }
 
-module.exports = InformacionUsuario;
+export default InformacionUsuario;
