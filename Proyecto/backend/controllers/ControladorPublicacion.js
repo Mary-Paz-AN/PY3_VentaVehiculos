@@ -90,8 +90,8 @@ async function modificarPublicacion (req, res) {
 // Eliminar una publicación
 async function eliminarPublicacion (req, res) {
     try {
-        const { id } = req.params; 
-        const resultado = await gestorPublicaciones.eliminarPublicacion(id);
+        const { idPublicacion } = req.params; 
+        const resultado = await gestorPublicaciones.eliminarPublicacion(idPublicacion);
 
         //Verificar que la publicación se elimine exitosamente
         if (resultado) {

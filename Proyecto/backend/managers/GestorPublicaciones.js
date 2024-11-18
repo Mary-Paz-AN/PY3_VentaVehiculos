@@ -401,22 +401,7 @@ class GestorPublicaciones {
             
             // Verificar que el resultado si exista
             if (resultado.recordset.length > 0) {
-                const dataPublicacion = resultado.recordset[0];
-
-                // Pasar a YYYY-MM-DD HH:MM:SS
-                if (dataPublicacion.fechaPublicacion) {
-                    const fechaConHora = dataPublicacion.fechaPublicacion.toISOString();
-                    const [fecha, hora] = fechaConHora.split('T');
-                    dataPublicacion.fechaPublicacion = `${fecha} ${hora.split('.')[0]}`; 
-                }
-
-                if (dataPublicacion.fechaModificacion) {
-                    const fechaConHora = dataPublicacion.fechaModificacion.toISOString();
-                    const [fecha, hora] = fechaConHora.split('T');
-                    dataPublicacion.fechaModificacion = `${fecha} ${hora.split('.')[0]}`; 
-                }
-
-                return dataPublicacion;
+                return resultado.recordset[0];
             } else {
                 return false;
             }
@@ -469,7 +454,22 @@ class GestorPublicaciones {
             
             // Verificar que el resultado si exista
             if (resultado.recordset.length > 0) {
-                return resultado.recordset[0];
+                const dataPublicacion = resultado.recordset[0];
+
+                // Pasar a YYYY-MM-DD HH:MM:SS
+                if (dataPublicacion.fechaPublicacion) {
+                    const fechaConHora = dataPublicacion.fechaPublicacion.toISOString();
+                    const [fecha, hora] = fechaConHora.split('T');
+                    dataPublicacion.fechaPublicacion = `${fecha} ${hora.split('.')[0]}`; 
+                }
+
+                if (dataPublicacion.fechaModificacion) {
+                    const fechaConHora = dataPublicacion.fechaModificacion.toISOString();
+                    const [fecha, hora] = fechaConHora.split('T');
+                    dataPublicacion.fechaModificacion = `${fecha} ${hora.split('.')[0]}`; 
+                }
+
+                return dataPublicacion;
             } else {
                 return false;
             }

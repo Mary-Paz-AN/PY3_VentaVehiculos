@@ -65,7 +65,6 @@ const Publicaciones = () => {
                             return res.json();
                         })
                         .then((dataFetch) => {
-                            console.log(dataFetch);
                             SetPublicaciones(dataFetch);
                         })
                         .catch((err) => {
@@ -98,6 +97,26 @@ const Publicaciones = () => {
     const modificarPublicacion = (idPublicacion) => {
         navigate(`/publicaciones/modificarPublicacion/${idPublicacion}`);
     }
+    
+    // Elimina la publicaion por medio de la id y actualiza la pagina
+    const eliminarPublicacion = async (idPublicacion) => {
+        try {
+            const respuesta = await fetch(`/api/publicaciones/v4/publicacion/${idPublicacion}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            if (respuesta.ok) {
+                fetchData(); 
+            } else {
+                throw new Error(`Error: ${respuesta.status}`);
+            }
+        } catch (error) {
+            console.error('Error al eliminar la publicación:', error);
+        }
+    };
 
     return (
         <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
@@ -181,7 +200,7 @@ const Publicaciones = () => {
                                                     <Button onClick={() => modificarPublicacion(publicacion.id)} variant="success" style={{ width: '100%' }}>✎</Button>
                                                 </Col>
                                                 <Col xs={12} md={4} className="text-center">
-                                                    <Button variant="danger" style={{ width: '100%' }}>🗑</Button>{/** */}
+                                                    <Button onClick={() => eliminarPublicacion(publicacion.id)} variant="danger" style={{ width: '100%' }}>🗑</Button>
                                                 </Col>
                                             </Row>
                                         </Container>

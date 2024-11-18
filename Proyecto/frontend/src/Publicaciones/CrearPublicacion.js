@@ -13,7 +13,6 @@ const CrearPublicacion = () => {
     const [isPlantilla, setPlantilla] = useState(false);
     const [show, setShow] = useState(false);
     const [mensaje, setMensaje] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
     const [data, setData] = useState({
@@ -95,19 +94,9 @@ const CrearPublicacion = () => {
                 setPlantilla(true);
             } catch (error) {
                 console.error('Error al decodificar la plantilla:', error);
-            } finally {
-                setIsLoading(false);
             }
         }
     }, [plantilla]);
-    
-    //Loading para la plantilla
-    if (isLoading) {
-        return (
-            <Container className="flex-grow-1 d-flex justify-content-center align-items-center" aria-labelledby="cargando">
-                <h1 style={{color: "#1f365d"}}>{t('cargando')}</h1>
-            </Container>);
-    }
 
     // Lista para precargar los selects
     const tiposVehiculo = ["Sedán", "Camioneta", "Sedán de lujo", "SUV", "Miniván"];

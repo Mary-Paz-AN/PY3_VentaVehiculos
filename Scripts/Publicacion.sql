@@ -277,7 +277,8 @@ BEGIN
             PrecioColones = @precio, 
             PrecioNegociable = @negociable, 
             RecibeVehiculoPago = @recibeVehiculo, 
-            AsociadoALeasing = @leasing
+            AsociadoALeasing = @leasing,
+			FechaEdicion = GETDATE()
         WHERE Placa = @placa;
 
         -- Confirmar la transacci�n
@@ -607,5 +608,7 @@ BEGIN
     SELECT *
     FROM PublicacionesConFotoUnica;
 END;
-
 GO
+
+
+select * from Publicacion

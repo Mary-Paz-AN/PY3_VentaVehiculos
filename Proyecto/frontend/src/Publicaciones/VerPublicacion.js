@@ -51,7 +51,7 @@ const VerPublicacion = () => {
 
     useEffect(() => {
         //Llama al api para conseguir la infromación
-        fetch(`/api/publicaciones/v4/publicacion/${idPublicacion}`)
+        fetch(`/api/publicaciones/v1/publicacion/${idPublicacion}`)
             .then((res) => {
                 if (!res.ok) {
                     throw new Error('Error: ' + res.statusText);
