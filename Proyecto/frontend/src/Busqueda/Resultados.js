@@ -12,7 +12,7 @@ const BuscarAutos = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const [autos, setAutos] = useState([{"id": 1, "marca": "Toyota", "modelo": "Tercel", "imagen": "/images/Carrusel1.png"}, {"id": 2, "marca": "Hyundai", "modelo": "Elantra", "imagen": "/images/Carrusel2.png"}, {"id": 3, "marca": "Nissan", "modelo": "Sentra", "imagen": "/images/Carrusel3.png"}, {"id": 4, "marca": "Kia", "modelo": "Rio", "imagen": "/images/Carrusel3.png"}]);
+  const [autos, setAutos] = useState([]);
 
   const traerVehiculos = async (datosJSON) => {
     try {
@@ -31,6 +31,7 @@ const BuscarAutos = () => {
 
       const data = await response.json(); // Suponiendo que el servidor responde con JSON
       console.log("Vehículos recibidos:", data);
+      setAutos(data);
 
       return data; // Devuelve los datos recibidos si es necesario
     } catch (error) {
@@ -58,24 +59,35 @@ const BuscarAutos = () => {
         </div>
 
         {/* Resultados de búsqueda */}
-        <div class={styles.resultadosAutos}>
+        <div className={styles.resultadosAutos}>
           <div className="row">
             {autos.map((auto) => (
-              <div key={auto.id} className="col-md-4 mb-4">
+              <div key={auto.id} className="col-md-4 mb-4 d-flex justify-content-center">
                 <div className={`card ${styles['result-card']}`}>
                   {/* Imagen del vehículo */}
-                  <img src={auto.imagen} alt={`${auto.marca} ${auto.modelo}`} className={`card-img-top ${styles['auto-imagen']}`} />
+                  <img
+                    src="/images/logo.png"
+                    alt={`${auto.marca} ${auto.modelo}`}
+                    className={`card-img-top ${styles['auto-imagen']}`}
+                  />
 
                   <div className="card-body">
                     {/* Marca y modelo */}
                     <h6 className="card-title">{auto.marca}</h6>
                     <p className="card-text">{auto.modelo}</p>
+                    <p><strong className="card-text">₡{auto.precio}</strong></p>
 
                     {/* Botones Ver y Comparar */}
-                    <button className="btn btn-primary mr-2" onClick={() => navigate(`/ver-auto/${auto.id}`)}>
+                    <button
+                      className="btn btn-primary mr-2"
+                      onClick={() => navigate(`/detalleVehiculo/${auto.id}`)}
+                    >
                       {t('ver')}
                     </button>
-                    <button className="btn btn-secondary" onClick={() => handleAgregarAuto(auto.id, auto.marca, auto.modelo)}>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => handleAgregarAuto(auto.id, auto.marca, auto.modelo)}
+                    >
                       {t('comparar')}
                     </button>
                   </div>
@@ -85,7 +97,7 @@ const BuscarAutos = () => {
           </div>
         </div>
         <div>
-          <BarraComparaciones ref={barraRef}/>
+          <BarraComparaciones ref={barraRef} />
         </div>
       </div>
 

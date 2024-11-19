@@ -457,13 +457,13 @@ class GestorPublicaciones {
                 if (dataPublicacion.fechaPublicacion) {
                     const fechaConHora = dataPublicacion.fechaPublicacion.toISOString();
                     const [fecha, hora] = fechaConHora.split('T');
-                    dataPublicacion.fechaPublicacion = `${fecha} ${hora.split('.')[0]}`; 
+                    dataPublicacion.fechaPublicacion = `${fecha} ${hora.split('.')[0]}`;
                 }
 
                 if (dataPublicacion.fechaModificacion) {
                     const fechaConHora = dataPublicacion.fechaModificacion.toISOString();
                     const [fecha, hora] = fechaConHora.split('T');
-                    dataPublicacion.fechaModificacion = `${fecha} ${hora.split('.')[0]}`; 
+                    dataPublicacion.fechaModificacion = `${fecha} ${hora.split('.')[0]}`;
                 }
 
                 return dataPublicacion;
@@ -514,23 +514,26 @@ class GestorPublicaciones {
     }
 
     /**
-     * Función para ejecutar el procedimiento almacenado `FiltrarPublicaciones`.
-     * @param {Object} parametros - Parámetros para el procedimiento almacenado.
-     * @returns {Promise<Array>} Resultados de la consulta.
-     */
+ * Función para ejecutar el procedimiento almacenado `FiltrarPublicaciones`.
+ * @param {Object} parametros - Parámetros para el procedimiento almacenado.
+ * @returns {Promise<Array>} Resultados de la consulta.
+ */
     async verPublicacionesFiltradas({
         marca = null,
         modelo = null,
         anio = null,
-        placa = null,
-        precio = null,
+        precioMin = null,
+        precioMax = null,
         negociable = null,
         aceptaVehiculos = null,
-        transmisionTipo = null,
+        tipoTransmision = null,
         puertas = null,
-        largo = null,
-        ancho = null,
-        alto = null,
+        largoMin = null,
+        largoMax = null,
+        anchoMin = null,
+        anchoMax = null,
+        altoMin = null,
+        altoMax = null,
         materialAsientos = null,
         motor = null,
         vidriosElectricos = null,
@@ -541,29 +544,31 @@ class GestorPublicaciones {
         camara360 = null,
         sensoresLaterales = null,
         tablero = null,
-        tipoTransmision = null,
         tapizado = null,
         sonido = null,
         estadoVehiculo = null,
         leasing = null,
     }) {
         // Crear la solicitud para el procedimiento almacenado
-        const pool = getConnection();
+        const pool = await getConnection();
         const request = pool.request();
 
         // Agregar todos los parámetros al request
         request.input("marca", sql.VarChar(30), marca);
         request.input("modelo", sql.VarChar(30), modelo);
         request.input("anio", sql.Int, anio);
-        request.input("placa", sql.VarChar(6), placa);
-        request.input("precio", sql.Int, precio);
+        request.input("precioMin", sql.Int, precioMin);
+        request.input("precioMax", sql.Int, precioMax);
         request.input("negociable", sql.Bit, negociable);
         request.input("aceptaVehiculos", sql.Bit, aceptaVehiculos);
-        request.input("transmisionTipo", sql.VarChar(30), transmisionTipo);
+        request.input("transmisionTipo", sql.VarChar(30), tipoTransmision);
         request.input("puertas", sql.Int, puertas);
-        request.input("largo", sql.Float, largo);
-        request.input("ancho", sql.Float, ancho);
-        request.input("alto", sql.Float, alto);
+        request.input("largoMin", sql.Float, largoMin);
+        request.input("largoMax", sql.Float, largoMax);
+        request.input("anchoMin", sql.Float, anchoMin);
+        request.input("anchoMax", sql.Float, anchoMax);
+        request.input("altoMin", sql.Float, altoMin);
+        request.input("altoMax", sql.Float, altoMax);
         request.input("materialAsientos", sql.VarChar(45), materialAsientos);
         request.input("motor", sql.VarChar(30), motor);
         request.input("vidriosElectricos", sql.Bit, vidriosElectricos);
@@ -574,7 +579,6 @@ class GestorPublicaciones {
         request.input("camara360", sql.Bit, camara360);
         request.input("sensoresLaterales", sql.Bit, sensoresLaterales);
         request.input("tablero", sql.VarChar(30), tablero);
-        request.input("tipoTransmision", sql.VarChar(30), tipoTransmision);
         request.input("tapizado", sql.VarChar(30), tapizado);
         request.input("sonido", sql.VarChar(30), sonido);
         request.input("estadoVehiculo", sql.Int, estadoVehiculo);
@@ -582,11 +586,47 @@ class GestorPublicaciones {
 
         // Ejecutar el procedimiento almacenado
         const result = await request.execute("FiltrarPublicaciones");
+        const recordset = result.recordset;
 
         // Retornar los resultados
-        return result.recordset;
+        return recordset;
     }
 
+    async ConsultarVehiculo({
+        placa = null
+    }){
+        // Crear la solicitud para el procedimiento almacenado
+        const pool = await getConnection();
+        const request = pool.request();
+
+        // Agregar todos los parámetros al request
+        request.input("placa", sql.VarChar(6), placa);
+
+        // Ejecutar el procedimiento almacenado
+        const result = await request.execute("MostrarInformacionAuto");
+        const recordset = result.recordset;
+
+        // Retornar los resultados
+        return recordset[0];
+    }
+
+    async MostrarPublicacionBusqueda({
+        placa = null
+    }){
+        // Crear la solicitud para el procedimiento almacenado
+        const pool = await getConnection();
+        const request = pool.request();
+
+        // Agregar todos los parámetros al request
+        request.input("placa", sql.VarChar(6), placa);
+
+        // Ejecutar el procedimiento almacenado
+        const result = await request.execute("MostrarPublicacionBusqueda");
+        const recordset = result.recordset;
+
+        // Retornar los resultados
+        return recordset[0];
+    }
 }
 
 export default GestorPublicaciones;

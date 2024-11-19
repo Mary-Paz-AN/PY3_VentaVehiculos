@@ -16,6 +16,7 @@ import ModificarPublicacion from './Publicaciones/ModificarPublicacion';
 import BuscarAutos from './Busqueda/Resultados';
 import CompararAutos from './Busqueda/Comparaciones/PaginaComparaciones';
 import ReservarAuto from './Reservaciones/PantallaReservacion';
+import DetalleVehiculo from './Busqueda/VerAuto/VerAuto';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -34,6 +35,7 @@ root.render(
           <Route path="/buscarAutos" element={<BuscarAutos />} />
           <Route path="/compararAutos" element={<CompararAutos />} />
           <Route path="/reservarAuto" element={<ReservarAuto />} />
+          <Route path="/detalleVehiculo/:id" element={<DetalleVehiculo />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

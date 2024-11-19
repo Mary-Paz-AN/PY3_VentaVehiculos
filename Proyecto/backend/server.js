@@ -1,5 +1,5 @@
 //Controladores de las funciones.
-import { filtrarAutos } from "./controllers/ControladorPublicacion.js";
+import { consultarVehiculo, filtrarAutos, mostrarPublicacionBusqueda } from "./controllers/ControladorPublicacion.js";
 
 // Dependency for the proper functioning of the server
 import expressModule from 'express';
@@ -36,4 +36,12 @@ app.listen(PORT, () => console.log(`The server started on http://localhost:${POR
 
 app.post('/filtrarAutosBusqueda', async (req, res) => {
   filtrarAutos(req, res)
+});
+
+app.post('/consultarVehiculo', async (req, res) => {
+  consultarVehiculo(req, res)
+});
+
+app.post('/mostrarPublicacionBusqueda', async (req, res) => {
+  mostrarPublicacionBusqueda(req, res)
 });

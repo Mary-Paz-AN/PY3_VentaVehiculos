@@ -248,7 +248,19 @@ i18n.use(initReactI18next).init( {
             alertaCantidadComparacionesMinima: "Es necesario comparar al menos dos autos", 
             alertaComparacionRepetida: "No es posible comparar los mismos autos", 
             campoIdentV: "La identificación no es válida.", 
-            campoIdenP: "La persona con esta identificación tiene procesos penales abiertos, por lo que no puede crear una cuenta."
+            campoIdenP: "La persona con esta identificación tiene procesos penales abiertos, por lo que no puede crear una cuenta.",
+            tipoTransmision: "Tipo de transmisión",
+            precioMin: "Precio mínimo",
+            precioMax: "Precio máximo",
+            largoMin: "Largo mínimo",
+            largoMax: "Largo máximo",
+            anchoMin: "Anchura mínima",
+            anchoMax: "Anchura máxima",
+            altoMax: "Altura máxima",
+            altoMin: "Altura mínima",
+            si: "Sí",
+            no: "No",
+            informacionVendedor: "Información del vendedor"
         },
     },
     en: {
@@ -494,8 +506,19 @@ i18n.use(initReactI18next).init( {
           alertaCantidadComparacionesMinima: "You cannot compare fewer than two cars", 
           alertaComparacionRepetida: "You cannot compare the same cars", 
           campoIdentV: "The identification is not valid.", 
-          campoIdenP: "The person with this identification has open criminal proceedings and cannot create an account."
-
+          campoIdenP: "The person with this identification has open criminal proceedings and cannot create an account.",
+          tipoTransmision: "Transmission type",
+          precioMin: "Minimum price",
+          precioMax: "Maximum price",
+          largoMin: "Minimum length",
+          largoMax: "Maximum length",
+          anchoMin: "Minimum width",
+          anchoMax: "Maximum width",
+          altoMax: "Maximum height",
+          altoMin: "Minimum height",
+          si: "Yes",
+          no: "No",
+          informacionVendedor: "Seller information"
       },
     },
   },

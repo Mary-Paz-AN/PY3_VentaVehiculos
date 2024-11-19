@@ -41,10 +41,7 @@ const BarraComparaciones = forwardRef((props, ref) => {
       setAutosAgregados(autosAgregados + 1);
     }
     const elemento = document.getElementById("BotonIrComparaciones");
-    if(autosAgregados < 1){
-      elemento.style.visibility = "hidden";
-    }
-    else{
+    if(autosAgregados > 0){
       elemento.style.visibility = "visible";
     }
   };
@@ -53,6 +50,10 @@ const BarraComparaciones = forwardRef((props, ref) => {
     const autosActualizados = compararAutos.filter(auto => auto.id !== id);
     setCompararAutos(autosActualizados);
     setAutosAgregados(autosAgregados - 1);
+    const elemento = document.getElementById("BotonIrComparaciones");
+    if(autosAgregados <= 2){
+      elemento.style.visibility = "hidden";
+    }
   }
 
   // Exponer la función al padre

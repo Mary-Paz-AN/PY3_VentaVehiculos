@@ -138,68 +138,36 @@ export async function misPublicaciones(req, res) {
 
 export async function filtrarAutos(req, res) {
     try {
-        // Desestructuramos el JSON del cuerpo de la solicitud
-        const {
-          marca,
-          modelo,
-          año,
-          placa,
-          precio,
-          negociable,
-          aceptaVehiculos,
-          transmisionTipo,
-          puertas,
-          dimensiones: { largo, ancho, alto },
-          materialAsientos,
-          motor,
-          vidriosElectricos,
-          espejosElectricos,
-          sensoresTraseros,
-          sensoresDelanteros,
-          camaraRetroceso,
-          camara360,
-          sensoresLaterales,
-          tablero,
-          tipoTransmision,
-          tapizado,
-          sonido,
-          estadoVehiculo,
-          leasing,
-        } = req.body;
-    
-        const filtrado = gestorPublicaciones.verPublicacionesFiltradas(
-          marca,
-          modelo,
-          año,
-          placa,
-          precio,
-          negociable,
-          aceptaVehiculos,
-          transmisionTipo,
-          puertas,
-          largo,
-          ancho,
-          alto,
-          materialAsientos,
-          motor,
-          vidriosElectricos,
-          espejosElectricos,
-          sensoresTraseros,
-          sensoresDelanteros,
-          camaraRetroceso,
-          camara360,
-          sensoresLaterales,
-          tablero,
-          tipoTransmision,
-          tapizado,
-          sonido,
-          estadoVehiculo,
-          leasing
-        )
+        
+        const filtrado =  await gestorPublicaciones.verPublicacionesFiltradas(req.body)
     
         res.json(filtrado);
       } catch (err) {
-        console.error("Error al procesar los datos:", err);
+        console.log("Error al procesar los datos:", err);
+        res.status(500).send("Error interno del servidor");
+      }
+}
+
+export async function consultarVehiculo(req, res) {
+    try {
+        
+        const informacionVehiculo =  await gestorPublicaciones.ConsultarVehiculo(req.body);
+    
+        res.json(informacionVehiculo);
+      } catch (err) {
+        console.log("Error al procesar los datos:", err);
+        res.status(500).send("Error interno del servidor");
+      }
+}
+
+export async function mostrarPublicacionBusqueda(req, res) {
+    try {
+        
+        const informacionVehiculo =  await gestorPublicaciones.MostrarPublicacionBusqueda(req.body);
+    
+        res.json(informacionVehiculo);
+      } catch (err) {
+        console.log("Error al procesar los datos:", err);
         res.status(500).send("Error interno del servidor");
       }
 }
