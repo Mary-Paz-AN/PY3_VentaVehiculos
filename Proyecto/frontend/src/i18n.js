@@ -260,7 +260,9 @@ i18n.use(initReactI18next).init( {
             altoMin: "Altura mínima",
             si: "Sí",
             no: "No",
-            informacionVendedor: "Información del vendedor"
+            informacionVendedor: "Información del vendedor",
+            fotos: "Fotos",
+            especificaciones: "Especificaciones"
         },
     },
     en: {
@@ -518,7 +520,9 @@ i18n.use(initReactI18next).init( {
           altoMin: "Minimum height",
           si: "Yes",
           no: "No",
-          informacionVendedor: "Seller information"
+          informacionVendedor: "Seller information",
+          fotos: "Photos",
+          especificaciones: "Specs"
       },
     },
   },

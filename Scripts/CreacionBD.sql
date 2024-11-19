@@ -5,7 +5,7 @@ GO
 USE AutosUsados;
 GO
 
----------- Creaci�n de las tablas ---------
+---------- Creacion de las tablas ---------
 ----- Usuario ---
 CREATE TABLE Usuario (
 	NumeroCedula VARCHAR(12) PRIMARY KEY NOT NULL, 

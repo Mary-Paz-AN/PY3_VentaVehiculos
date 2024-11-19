@@ -3,25 +3,33 @@ import Pago from "../models/Pago.js";
 import APIGooglePay from "../APIs/APIGooglePay.js";
 import APIPayPal from "../APIs/APIPayPal.js";
 import APISafetyPay from "../APIs/APISafePay.js";
+import { getConnection, sql } from './conexion.js';
 
 class GestorReservaciones{
   constructor(){
     this.Reservaciones = {};
   }
 
-  crearReserva(identificacionUsuario, identificacionEmpresa, fechaReserva, lugar, metodoPago){
+  async crearReserva({
+    identificacionUsuario,
+    identificacionEmpresa,
+    fechaReserva,
+    lugar,
+    metodoPago}){
     const nuevaReservacion = new Reservacion(identificacionEmpresa, identificacionEmpresa, fechaReserva, lugar);
-    const metodoPagoSeleccionado = seleccionarMetodoPago(metodoPago);
+    const metodoPagoSeleccionado = this.seleccionarMetodoPago(metodoPago);
     const pago = new Pago(metodoPagoSeleccionado);
     const informacionReservacion = {"reservacion": nuevaReservacion, "pago": pago};
     this.Reservaciones[identificacionUsuario + fechaReserva] = informacionReservacion;
+    await this.pagar(2000, "Identificador",identificacionUsuario + fechaReserva);
+    return {respuesta: true};
   }
 
   seleccionarMetodoPago(idMetodoPago){
-    if(idMetodoPago == 1){
+    if(idMetodoPago === "1"){
       return new APIGooglePay();
     }
-    else if(idMetodoPago == 2){
+    else if(idMetodoPago === "2"){
       return new APIPayPal();
     }
     else{
@@ -29,8 +37,23 @@ class GestorReservaciones{
     }
   }
 
-  pagar(monto, identificador, identificadorPago){
-    return this.Reservaciones.identificadorPago.pago.pagar(monto, identificador);
+  async pagar(monto, identificador, identificadorPago){
+    this.Reservaciones[identificadorPago].pago.pagar(monto, identificador);
+    await this.guardarReservacion(this.Reservaciones[identificadorPago].reservacion)
+  }
+
+  /**
+   * 
+   * @param {Reservacion} reservacion 
+   */
+  async guardarReservacion(reservacion){
+    const pool = await getConnection();
+    const request = pool.request();
+    request.input("IdentificadorUsuario", sql.VarChar(45), reservacion.IdentificacionUsuario);
+    request.input("IdentificadorEmpresa", sql.VarChar(45), reservacion.IdentificacionEmpresa);
+    request.input("FechaDeVisita", sql.DateTimeOffset, reservacion.FechaReserva);
+    request.input("Lugar", sql.VarChar(45), reservacion.Lugar);
+    const result = await request.execute("AgregarReservacion");
   }
 }
 

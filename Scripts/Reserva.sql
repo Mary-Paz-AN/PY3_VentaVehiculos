@@ -2,24 +2,25 @@ USE AutosUsados;
 
 GO
 CREATE PROCEDURE AgregarReservacion
-@IdReservacion	INT = NULL,
-@IdentificadorUsuario VARCHAR(12) = NULL,
-@IdentificadorEmpresa VARCHAR(12) = NULL,
-@FechaDeVisita DATETIMEOFFSET(2) = NULL,
-@Lugar VARCHAR(25) = NULL
+    @IdentificadorUsuario VARCHAR(12),
+    @IdentificadorEmpresa VARCHAR(12),
+    @FechaDeVisita DATETIMEOFFSET(2),
+    @Lugar VARCHAR(25)
 AS
 BEGIN
-	INSERT
-		Reservacion(IdReservacion,
-		IdentificadorUsuario,
-		IdentificadorEmpresa,
-		FechaDeVisita,
-		Lugar)
-	VALUES
-		(
-		@IdReservacion,
-		@IdentificadorUsuario,
-		@IdentificadorEmpresa,
-		@FechaDeVisita,
-		@Lugar)
-END
+    SET NOCOUNT ON;
+
+    -- Generar el próximo ID
+    DECLARE @NuevoId INT;
+
+    SELECT @NuevoId = ISNULL(MAX(IdReservacion), 0) + 1
+    FROM Reservacion;
+
+	PRINT @NuevoId
+
+    -- Insertar los datos
+    INSERT INTO Reservacion (IdReservacion, IdentificadorUsuario, IdentificadorEmpresa, FechaDeVisita, Lugar)
+    VALUES (@NuevoId, @IdentificadorUsuario, @IdentificadorEmpresa, @FechaDeVisita, @Lugar);
+END;
+
+SELECT * FROM Reservacion

@@ -1,15 +1,17 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './DetalleVehiculo.module.css';
 import Header from '../../Header';
 import Footer from '../../Footer';
+import { getUsuario } from '../../Usuario/Acceso';
 
 const DetalleVehiculo = () => {
   const { t } = useTranslation();
   const [publicacion, setPublicacion] = useState({});
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const traerVehiculo = async () => {
@@ -42,7 +44,14 @@ const DetalleVehiculo = () => {
   };
 
   const manejarReserva = () => {
-    alert(t('reservaRealizada'));
+    if(getUsuario() === null){
+      alert('Para reservar un auto debe iniciar sesion');
+    }
+    else{
+      navigate('/reservarAuto',{
+        state: {publicacion}
+      });
+    }
   };
 
   return (

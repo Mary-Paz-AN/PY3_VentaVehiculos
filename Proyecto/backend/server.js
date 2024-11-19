@@ -1,5 +1,6 @@
 //Controladores de las funciones.
 import { consultarVehiculo, filtrarAutos, mostrarPublicacionBusqueda } from "./controllers/ControladorPublicacion.js";
+import { crearReservacion } from "./controllers/ControladorReserva.js";
 
 // Dependency for the proper functioning of the server
 import expressModule from 'express';
@@ -44,4 +45,8 @@ app.post('/consultarVehiculo', async (req, res) => {
 
 app.post('/mostrarPublicacionBusqueda', async (req, res) => {
   mostrarPublicacionBusqueda(req, res)
+});
+
+app.post('/crearReservacion', async (req, res) => {
+  crearReservacion(req, res)
 });
