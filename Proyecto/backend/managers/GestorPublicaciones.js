@@ -1,5 +1,7 @@
-import Publicacion from '../models/Publicacion.js';;
-import { getConnection, sql } from './conexion.js';;
+import Publicacion from '../models/Publicacion.js';
+import { getConnection, sql } from './conexion.js';
+import { esPlacaValida } from '../APIs/APIRegistroCivil.js';
+import { poseeMultas } from '../APIs/APICosevi.js';
 
 // Creación de las clase
 class GestorPublicaciones {
@@ -504,13 +506,13 @@ class GestorPublicaciones {
     }
 
     // Verificar que la placa sea valida
-    verificarPlaca(placa) {
-
+    async verificarPlaca(placa) {
+        return esPlacaValida(placa);
     }
 
     //Verificar que el vehiculo no cuente con multas 
-    verificarMultas(placa) {
-
+    async verificarMultas(placa) {
+        return poseeMultas(placa);
     }
 
     /**

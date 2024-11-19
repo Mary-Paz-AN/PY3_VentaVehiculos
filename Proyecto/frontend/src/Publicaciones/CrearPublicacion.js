@@ -331,7 +331,7 @@ const CrearPublicacion = () => {
     //Validar si la placa es valida y existe
     const validarPlaca = async (placa) => {
         try {
-            const respuesta = await fetch('/api/cuenta/v1/registrarse', {
+            const respuesta = await fetch('/api/cuenta/v1/publicacion/vehiculo', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -358,7 +358,7 @@ const CrearPublicacion = () => {
     //Validar si el vehiculo posee multas o algún otro processo
     const validarMulta = async (placa) => {
         try {
-            const respuesta = await fetch('/api/cuenta/v1/registrarse', {
+            const respuesta = await fetch('/api/cuenta/v2/publicacion/vehiculo', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

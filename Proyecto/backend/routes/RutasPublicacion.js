@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { crearPublicacion, crearPlantilla, modificarPublicacion, eliminarPublicacion, getFotos, verPublicacion, misPublicaciones } from '../controllers/ControladorPublicacion.js';
+import { crearPublicacion, crearPlantilla, modificarPublicacion, eliminarPublicacion, getFotos, verPublicacion, misPublicaciones, verificarPlaca, verificarMultas } from '../controllers/ControladorPublicacion.js';
 
 /* Dependencia para las imagenes
 const multer = require('multer');
@@ -29,5 +29,11 @@ router.get('/v1/publicacion/:idPublicacion', verPublicacion);
 
 // Ruta para obtener las publicaciones de un usuario
 router.get('/misPubliciones/:cedula', misPublicaciones);
+
+// Ruta para verificar la placa
+router.post('/v1/publicacion/vehiculo', verificarPlaca);
+
+// Ruta para verificar si existen multas
+router.post('/v2/publicacion/vehiculo', verificarMultas);
 
 export default router;

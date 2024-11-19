@@ -136,6 +136,46 @@ export async function misPublicaciones(req, res) {
     }
 }
 
+//Verificar la placa
+export async function verificarPlaca(req, res) {
+    const { placa } = req.body;
+    
+    try {
+        const resultado = await gestorAcceso.verificarPlaca(placa);
+
+        // Verificar que se hizó la inserción a la base de datos
+        if (resultado) {
+            return res.status(201).json({ valido: true });
+        } else {
+            return res.status(201).json({ valido: false });
+        }
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ mensaje: 'Error al verificar la placa. Inténtalo más tarde.' });
+    }
+}
+
+//Verificar si el vehiculo posee una multa
+export async function verificarMultas(req, res) {
+    const { placa } = req.body;
+    
+    try {
+        const resultado = await gestorAcceso.verificarMultas(placa);
+
+        // Verificar que se hizó la inserción a la base de datos
+        if (resultado) {
+            return res.status(201).json({ valido: true });
+        } else {
+            return res.status(201).json({ valido: false });
+        }
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ mensaje: 'Error verificar las multas. Inténtalo más tarde.' });
+    }
+}
+
 export async function filtrarAutos(req, res) {
     try {
         
